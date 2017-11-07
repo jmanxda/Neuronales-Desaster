@@ -1,0 +1,148 @@
+%-------------------------------------------
+%% Zusätzliche Pakete werden geladen
+%\documentclass[a4paper,12pt,titlepage]{article}  
+\documentclass[a4paper, 12pt, titlepage]{scrartcl} % Schrift- und Papiergröße werden eingestellt  
+\usepackage[top=3cm, bottom=3cm, left=2.5cm, right=2.5cm]{geometry} % Korrekturrand wird eingestellt
+\usepackage[ngerman]{babel}             % Dokumentsprache wird auf deutsch gesetzt
+\usepackage[onehalfspacing]{setspace}   % Zeilenabstand wird auf 1,5 gesetzt
+\usepackage{color}                      % Ermöglicht die Änderung der Schriftfarbe
+\usepackage{graphicx}                   % Ermöglicht das Einbinden von Bildern
+\usepackage{fancyhdr}                   % Ermöglicht die freie Bearbeitung der Fuß und Kopfzeilen
+\usepackage{tocloft}                    % Ermöglicht das anpassen des Inhaltsverzeichnisses
+\usepackage{wrapfig}                    % Ermöglicht textumschlossene Abbildungen
+\usepackage{array}                      % Ermöglicht das Anpassen von Tabellen
+
+%-------------------------------------------
+%% Fonteinstellungen abhängig vom Compiler
+%% Quellen: https://en.wikibooks.org/wiki/LaTeX/Fonts
+%%          https://www.sharelatex.com/learn/XeLaTeX
+%%          https://tex.stackexchange.com/questions/12565/load-fonts-that-are-in-a-fonts-directory
+\usepackage{ifxetex}                    % Ermöglicht das Prüfen ob XeLaTeX benutz wird
+    \ifxetex
+    \usepackage{fontspec}
+    \defaultfontfeatures{Ligatures=TeX} % To support LaTeX quoting style
+    \setmainfont[%                      % Times New Roman (aus Windows) wird als Standardschrift gesetzt
+        Path = Fonts/,%                 % Dateien Pfad wird auf Fonts/ gesetzt
+        BoldFont=timesbd.ttf,%
+        ItalicFont=timesi.ttf,%
+        BoldItalicFont=timesbi.ttf,%
+        ]{times.ttf}
+\else
+    \usepackage[T1]{fontenc}            % Liefert die meisten Text-Zeichen für westeuropäische Sprachen
+    \usepackage[utf8]{inputenc}         % Ermöglicht die direkte Eingabe der Umlaute
+    \usepackage{mathptmx}               % Times wird als Standardschrift gesetzt
+\fi
+
+%-------------------------------------------
+%% Pakete für das Erstellen von Refferenzen
+\usepackage{varioref}
+\usepackage{hyperref} % Erweitert die Referenzmöglichkeiten
+\usepackage{cleveref}
+
+%-------------------------------------------
+%% Pakete für das Erstellen des Literaturverzeichnisses
+\usepackage[babel,german=quotes]{csquotes}  % Verwendet die deutsche Art der Anführungszeichen
+\usepackage[backend=biber, style=authoryear, citestyle=authoryear, maxitems=1]{biblatex}
+
+\DefineBibliographyStrings{german}{%    % Verändert beim zitieren "u.a." zu "et al." und "und" zu "and"
+  andothers = {et al.},
+  and       = {and}
+}
+\addbibresource{10_literatur.bib}       % Fügt die Literaturverzeichnisdatei ein
+\setlength{\bibitemsep}{10pt}           % Stellt den Zeilenabstand zwischen den Literaturverzeichnis Einträgen ein
+%-------------
+%% Erstellt ein Makro welches prüft ob die eingegebene Variable leer ist
+\def\ifempty#1{% 
+\def\temp{#1}%
+\ifx\temp\empty%
+}
+%-------------
+%% Erstellt mit \fcite ein Zitat in der Fußzeile in der Form "Vgl. Kramer (2009), S. 2."
+\newcommand{\fcite}[2][]{%              
+\ifempty{#1}%
+\footnote{Vgl.~\citeauthor{#2}~(\citeyear{#2}).}%
+\else%
+\footnote{Vgl.~\citeauthor{#2}~(\citeyear{#2}),~S.~#1.}%
+\fi%
+}
+%-------------
+%% Statt \textcite kann nun auch \citet verwendet werden
+\newcommand{\citet}[2][]{%              
+    \ifempty{#1}
+        \citeauthor{#2}~(\citeyear{#2})
+    \else
+        \citeauthor{#2}~(\citeyear{#2}),~S.~#1
+    \fi
+}
+
+%-------------------------------------------
+%% Pakete für die richtige Darstellung von Fußnoten
+\usepackage[bottom]{footmisc}           % Setzt die Fußnoten ans Ende der Seite
+\usepackage{caption}
+%\usepackage{savefnmark}
+%\footnotesep\baselineskip
+%\deffootnote{0.6cm}{1em}{\makebox[0.6cm][l]{\thefootnotemark}}
+\setkomafont{footnote}{\fontsize{10pt}{10.5pt}\selectfont}  % Stellt die Fußnotengröße auf 10 ein
+\setlength{\footnotesep}{10pt}                              % Sellt den Fußnotenzeilenabstand auf einfachen Zeilenabstand ein
+
+%-------------------------------------------
+\usepackage{lipsum}                     % Erstellt blindtext
+
+%-------------------------------------------
+%% Deckblatt
+\usepackage{pdfpages}                   % Ermöglicht das Einbinden von PDF Dokumenten (wird verwendet für die Einbindung der Aufgabenstellung)
+\usepackage[[showboxes,absolute]{textpos}   % Ermöglicht das Setzen von Inhalt an einem beliebigen Ort
+\usepackage{tikz}
+
+\newcommand\Mygrid{%                        % Erzeugt ein Grid für textpos mit \Mygrid        
+\tikz[
+  remember picture,
+  overlay,
+  yscale=-1,
+  xstep=\TPHorizModule,ystep=\TPVertModule,
+  yshift=0pt,xshift=0pt]
+  \draw (current page.north west) grid (current page.south east);}
+
+%  yshift=13pt,xshift=4pt]
+%-------------------------------------------
+%\usepackage{amsmath}
+%\usepackage{adjustbox}
+
+\setlength{\parindent}{0pt}             % Entfernt den Einzug der ersten Zeile
+
+\pagestyle{fancy}                       % Ermöglicht benutzerdefinierte Kopf- und Fußzeilen
+\lhead{}
+\chead{}
+\rhead{\thepage}                        % Seitenangabe oben rechts
+\cfoot{} 
+\renewcommand{\headrulewidth}{0pt}      % Breite des Dekostriches in der Kopfzeile
+\renewcommand{\footrulewidth}{0pt}      % Breite des Dekostriches in der Fußzeile
+
+\newcommand{\titel}{Modellierung und Prognose von Strompreisen durch Neuronale Netze}   % Erstellt eine Variable mit dem Titel der Arbeit
+\newcommand{\abgabedatum}{!!13. April 2018!!}   % Erstellt eine Variable mit dem Abgabedatum der Arbeit
+\newcommand{\name}{Dennis Albrecht}     % Erstellt eine Variable mit dem Namen des Verfassers
+
+\newcommand\blankpage{%                 % Ermöglicht die Erstellung leerer Seiten mit \blankpage
+    \null
+    \thispagestyle{empty}%
+    \newpage%
+}
+
+\renewcommand{\cftsecleader}{\textbf{\cftdotfill{\cftdotsep}}} % Füllt den Leerraum der Sectionenangaben im Inhaltsverzeichnis mit Punkten bis zur Seitenzahl (standardmäßig bei article-class nur ab subsections)
+
+\newcommand{\farbig}[2][red]{\textcolor{#1}{#2}}      % Ermöglicht text mit \farbig{text} rot einzufärben
+
+%-------------------------------------------
+%% Einstellungen für die richtige Nummerierung von Fußnoten und Hyperlinks
+%% Quelle: https://tex.stackexchange.com/questions/41626/wrapfigure-footnote-hyperlinks
+\makeatletter
+\newcommand{\wrapfigfoot}{%
+\addtocounter{footnote}{+1}%
+\addtocounter{Hfootnote}{+1}%
+\global\let\Hy@saved@currentHref\@currentHref%
+\hyper@makecurrent{Hfootnote}%
+\global\let\Hy@footnote@currentHref\@currentHref%
+\global\let\@currentHref\Hy@saved@currentHref%
+}
+\makeatother
+%-------------------------------------------

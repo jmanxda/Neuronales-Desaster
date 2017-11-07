@@ -1,0 +1,19 @@
+%-------------
+%% Einstellungen für die richtige Darstellung von Fußnoten und Hyperlinks
+\AtEndDocument{%
+\ifnum\value{Hfootnote}=\value{footnote}%OK
+  \PackageInfo{footnote}{%
+    Number of Hyperfootnotes \arabic{Hfootnote} = number of footnotes \arabic{footnote}!
+    \MessageBreak%
+    }
+\else
+  \PackageError{footnote}{%
+    Hyperfootnote \arabic{Hfootnote} != footnote \arabic{footnote}!%
+   }{Did you make a mistake with\MessageBreak%
+     \string\footnotemark , \string\footnotetext , or \MessageBreak%
+     \string\addtocounter { Hfootnote or footnote } ?%
+   }
+\fi%
+%\thispagestyle{empty}    
+}
+%-------------

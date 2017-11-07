@@ -1,0 +1,55 @@
+%% Used Compiler: pdfLaTeX / XlaTeX
+%% Diese Arbeit wurde unter Berücksichtigung der Hinweise_Abschlussarbeiten_22.11.2013.pdf, die durch das
+%% Institut für Finanzwirtschaft an der TU-Braunschweig bereitgestellt wird, erstellt.
+
+\input{000_Einstellungen_anfang.tex}
+
+\begin{document}
+
+%---------------------------------------------------------------------------------
+%% Titelseite
+
+%\input{01_titelseiten}  
+
+%---------------------------------------------------------------------------------
+\newpage
+%---------------------------------------------------------------------------------
+%% Vorlauf
+
+\pagenumbering{Roman}
+
+\input{02_verzeichnis}
+
+%---------------------------------------------------------------------------------
+\newpage
+%---------------------------------------------------------------------------------
+%% Hauptteil
+
+\pagenumbering{arabic}
+
+\input{03_einleitung}
+\input{04_theorie}
+\input{05_strommarkt}
+\input{06_stata}
+%\input{07_diskussion}
+\input{08_zusammenfassung}
+\input{09_ausblick}
+
+%---------------------------------------------------------------------------------
+\newpage
+%---------------------------------------------------------------------------------
+%% Schluss
+
+\pagenumbering{roman}
+
+\section{Literaturverzeichnis}
+
+\printbibliography
+
+
+%\bibliographystyle{alpha}               % Stil des Literaturverzeichnisses 
+%\bibliography{10_literatur}             % Aufruf des Literaturverzeichnisses
+
+
+\input{000_Einstellungen_ende.tex}
+\end{document}
