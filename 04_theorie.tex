@@ -47,7 +47,7 @@ Aus der Untersuchung von biologischen Abläufen im Nervensystem von Wirbeltieren
 \end{equation}
 
 anschließend wird die gewichtete Summe~$\varphi(x)$ über die Aktivierungsfunktion~$\sigma(x)$ als Ausgang~$y$ an das nächste Neuron übergeben. Klassische Aktivierungsfunktionen sind die \hbox{Heaviside-,} die lineare Schwellwert-, die Fermifunktion und der Tangens Hyperbolicus\footnote{Vgl. \citet[5]{neuralnet_intro} und \citet[39 f]{dkriesel07}.}.\\
-Im allgemeinen können NN anhand der folgenden vier Kriterien charakterisiert werden\fcite[7 ff]{characterisation_4}:%
+Im allgemeinen können NN anhand der folgenden drei Kriterien charakterisiert werden\fcite[7 ff]{characterisation_4}:%
 
 \begin{enumerate}
 \item%
@@ -76,37 +76,31 @@ Recurrent (Feedback): In der deutschsprachigen Literatur als rückgekoppelte ode
 \end{itemize}
 
 \item%
-Nach dem Lernalgorithmus. Dieser ermöglicht es das Netzwerk zu trainieren. Die heutzutage benutzten Algorithmen werden in drei Gruppen unterteilt:
+Nach dem Lernalgorithmus. Dieser ermöglicht es das Netzwerk zu trainieren. Die heutzutage benutzten Algorithmen werden in drei Gruppen unterteilt\footnote{Vgl. \citet[55]{dkriesel07}.\label{kriesel55}}:
 
 \begin{itemize}
 \item[\textbf{$\bullet$}]%
-Supervised learning (überwachtes Lernen): Die Trainingsbeispiele bestehen aus einer Menge an Eingangsinformationen und den dazugehörigen Ausbangsinformationen. Das Ziel ist es die Differenz zwischen der tatsächlichen Ausgabe des Netzwerks und den vorliegenden Ausgangsinformationen zu minimieren\footnote{Vgl. \citet[55]{dkriesel07}.\label{kriesel55}}.
+Supervised learning (überwachtes Lernen): Die Trainingsbeispiele bestehen aus einer Menge an Eingangsinformationen und den dazugehörigen Ausbangsinformationen. Das Ziel ist es die Differenz zwischen der tatsächlichen Ausgabe des Netzwerks und den vorliegenden Ausgangsinformationen zu minimieren.
 
 \item[\textbf{$\bullet$}]%
-Reinforcement learning (bestärkendes Lernen):
+Reinforcement learning (bestärkendes Lernen): Plakativ kann diese Lernmethode als Zuckerbrot und Peitsche bezeichnet werden bzw. lernen durch Belohnung und Bestrafung. Hierbei werden die Eingangsinformationen zur Verfügung gestellt und die Ausgabe des Netzwerkes wird anhand einer Nutzenfunktion bewertet. Wird die Ausgabe als gut/schlecht angesehen so werden die zugehörigen Verbindungen gestärkt/geschwächt\footnote{Vgl. \citet[201]{dkriesel07} und \citet[A2.3:5]{Fiesler96}.}. 
 
 \item[\textbf{$\bullet$}]%
-Unsupervised learning (unüberwachtes Lernen): Wird auch als selbstorganisiertes (self organized) Lernen bezeichnet. Die Trainingsbeispiele bestehen hierbei nur aus Eingansinformationen. Das Netzwerk versucht aus den Eingansinformationen selbst Ähnlichkeiten zu erkennen\footref{kriesel55}.
-\begin{itemize}
-\item[\textbf{$\triangleright$}]%
-competitive
-\item[\textbf{$\triangleright$}]%
-noncompetitive
-\end{itemize}
+Unsupervised learning (unüberwachtes Lernen): Wird auch als selbstorganisiertes (self organized) Lernen bezeichnet. Die Trainingsbeispiele bestehen hierbei nur aus Eingansinformationen. Das Netzwerk versucht aus den Eingansinformationen selbstständig Ähnlichkeiten zu erkennen.
+Unüberwachte Lernmethoden werden noch unterteilt in konkurrierendes (competitive) und nicht konkurrierendes (noncompetitive) Lernverfahren. Der unterschied besteht darin dass bei dem konkurrierenden Verfahren in einem Netzwerk einzelne Gruppen von Neuronen um die Aktivität konkurrieren\fcite[B3.3:5]{Fiesler96}.
 
 Zusätzlich unterscheidet man unter allen drei Lernmethoden zwei Lernarten\fcite[A2.3:3]{Fiesler96}: 
 \item[$\circ$]%
-off-line learning
+off-line learning: Auch Batch-Trainingsverfahren genannt. Hierbei wird die Netzwerkausgabe nach einer Menge von Eingangsinformationnen ausgewertet und anschließend werden die Gewichte angepasst.
 
 \item[$\circ$]%
-on-line learning
+on-line learning: Hier werden die Gewichte nach jeder einzelnen Beobachtung der gesamten Eingangsinformationen angepasst. 
 
 \end{itemize}
 
-\item%
-Nach dem \farbig{Ausgabealgorithmus}.
-
 \end{enumerate}
+
+\citet{characterisation_4} nennen vier Charakterisierungskriterien wobei als viertes Kriterium der Informationsgewinnungsalgorithmus (recall algorithm) aufgeführt ist. In dieser Arbeit wird auf dieses Kriterium verzichtet, da weder \citet{characterisation_4} Beispiele aufführen noch in anderer Literatur dieses Kriterium eine Erwähnung findet.
 
 %\lipsum
 
