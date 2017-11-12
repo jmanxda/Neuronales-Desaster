@@ -3,9 +3,9 @@
 %---------------------------------------------------------------------------------
 %% Theorie
 
-\section{Was sind neuronale Netze?}
+\section{Neuronale Netze}
 %\farbig{[Erklärung der neuronalen Netze... vielfältige Anwendungsgebiete... Hier erforderlich Netze zur Zeitreihenvorhersage]}
-
+%\setlength{\intextsep}{0pt}%
 \begin{wrapfigure}{r}{0.5\textwidth}
     \centering
         \includegraphics[width=0.5\textwidth]{Bilder/BNN_ANN.png}
@@ -18,11 +18,9 @@
 \wrapfigfoot\footnotetext{\autoref{fig:BNN_ANN} a) und \autoref{tab:BNN_ANN} wurden aus\citet[2]{sen_an} übersetzt und angepasst.}
 %\citet[\pno~2~ff.]{sen_an}
 
-Künstliche neuronale Netze (engl. artificial neural networks)~(NN) sind augenblicklich eine Disziplin der Computional Intelligence~(CI). Diese fasst verschiedene an die Natur angepasste Berechnungsmethoden zusammen. Weitere Methoden der CI sind Fuzzy-Systeme~(FS), Evolutionäre Algorithmen~(EA), Schwarmintelligenz~(SI) und Künstliche Immunsysteme~(AIS).\fcite[11 ff]{Kroll16} Obwohl sich diese Arbeit wesentlich mit NN beschäftigt wird, wird an dieser Stelle auf weitere CI-Methoden hingewiesen, da in der Literatur hybride CI-Systeme bekannt sind und auch genutzt werden.
+Ein künstliches neuronales Netz (engl. artificial neural networks)~(NN) ist ein mathematische Konstrukt. Es bildet ein informationsverarbeitendes System welches aus einer Vielzahl einfacher Einheiten den sogenannten Neuronen besteht. Entstanden ist es Anfang der 40er Jahre des letzten Jahrhunderts\fcite[A1.1:1]{Fiesler96} aus der Untersuchung von biologischen Abläufen im Nervensystem von Wirbeltieren, wo Sinneseindrücke des Körpers aufgenommen und mit Hilfe diverser neuronaler Netze verarbeitet werden. 
+\autoref{fig:BNN_ANN} zeigt eine Gegenüberstellung eines künstlichen und biologischen Neurons und \autoref{tab:BNN_ANN} die Analogie seiner Bestandteile. Das zurzeit prominenteste künstliche Neuron (die kleinste Einheit im Netzwerk), dargestellt in \hbox{\autoref{fig:BNN_ANN} b)}, wird nach \citet{perceptron_ros58} als Perzeptron bezeichnet. Es summiert zunächst die gewichteten Eingänge mit $\varphi (x)=\sum_{i=1}^{n}x_{i}\omega_{i}$, anschließend wird die gewichtete Summe~$\varphi(x)$ über die Aktivierungsfunktion~$\sigma(x)$ als Ausgang~$y$ an das nächste Neuron übergeben.%
 
-Es gibt Problemstellungen die mit klassischen mathematischen Modellen und Algorithmen gar nicht oder nur schwer zu lösen sind. Einige Beispiele wären die Gesichtserkennung oder die Erkennung von menschlicher Sprache. Unser Gehirn erkennt Gesichter und Sprachen aber anscheinend ohne größere Anstrengung.
-
-%\begingroup
 \setlength{\intextsep}{0pt}%
 %\setlength{\columnsep}{10pt}%
 \begin{wraptable}{l}{6.4cm}
@@ -37,16 +35,18 @@ Es gibt Problemstellungen die mit klassischen mathematischen Modellen und Algori
     \end{tabular}
     \label{tab:BNN_ANN}
 \end{wraptable}
-%\endgroup
 
-Aus der Untersuchung von biologischen Abläufen im Nervensystem von Wirbeltieren, wo Sinneseindrücke des Körpers aufgenommen und mit Hilfe diverser neuronaler Netze verarbeitet werden, entstanden Anfang der 40er Jahre des letzten Jahrhunderts\fcite[A1.1:1]{Fiesler96} mathematische Konstrukte die heute als künstliche neuronale Netze bezeichnet werden. 
-\autoref{fig:BNN_ANN} zeigt eine Gegenüberstellung von künstlicher und biologischer neuronaler Netze und \autoref{tab:BNN_ANN} die Analogie der Bestandteile eines Neurons. Das zurzeit prominenteste künstliche Neuron (die kleinste Einheit im Netzwerk), dargestellt in \hbox{\autoref{fig:BNN_ANN} b)}, wird nach \citet{perceptron} als Perzeptron bezeichnet. Es summiert zunächst die gewichteten Eingänge:
+Klassische Aktivierungsfunktionen sind dabei die \hbox{Heaviside-,} die lineare Schwellwert-, die Fermifunktion und der Tangens Hyperbolicus\footnote{Vgl. \citet[5]{neuralnet_intro} und \citet[39 f]{dkriesel07}.}.\\
 
-\begin{equation}
-\varphi (x)=\sum_{i=1}^{n}x_{i}\omega_{i}~,
-\end{equation}
+Es gibt Problemstellungen die mit klassischen mathematischen Modellen und Algorithmen gar nicht oder nur schwer zu lösen sind. Neuronale Netze unterscheiden sich zu klassischen Algorithmen durch ihre Lernfähigkeit. Ohne explizite Programmierung sind sie in der Lage eine Aufgabe anhand von Trainingsbeispielen zu erlernen. Einige Beispiele wären die Gesichtserkennung oder die Erkennung von menschlicher Sprache.
+\newpage
 
-anschließend wird die gewichtete Summe~$\varphi(x)$ über die Aktivierungsfunktion~$\sigma(x)$ als Ausgang~$y$ an das nächste Neuron übergeben. Klassische Aktivierungsfunktionen sind die \hbox{Heaviside-,} die lineare Schwellwert-, die Fermifunktion und der Tangens Hyperbolicus\footnote{Vgl. \citet[5]{neuralnet_intro} und \citet[39 f]{dkriesel07}.}.\\
+Künstliche neuronale Netze sind augenblicklich eine Disziplin der Computional Intelligence~(CI), welches wiederum einen Teilbereich der Künstlichenintelligenz (artificial intelligence)~(AI) darstellt. Diese fasst verschiedene von der Natur inspirierte Berechnungsmethoden zusammen. Weitere Methoden der CI sind Fuzzy-Systeme~(FS), Evolutionäre Algorithmen~(EA), Schwarmintelligenz~(SI) und Künstliche Immunsysteme~(AIS).\fcite[11 ff]{Kroll16} Obwohl sich diese Arbeit wesentlich mit NN beschäftigen wird, wird an dieser Stelle auf weitere CI-Methoden hingewiesen, da in der Literatur hybride CI-Systeme bekannt sind und auch genutzt werden.
+
+\subsection{Charakterisierung und Anwendung künstlicher neuronaler Netze}
+
+Da es nicht das NN gibt sondern viele unterschiedliche Arten, die teilweise spezielle Anwendungsgebiete finden, werden in diesem Unterkapitel Charakterisierungskriterien für NN vorgestellt. Schließlich wird ein Überblick über mögliche Anwendungsgebiete gegeben.\\
+
 Im allgemeinen können NN anhand der folgenden drei Kriterien charakterisiert werden\fcite[7 ff]{characterisation_4}:%
 
 \begin{enumerate}
@@ -55,8 +55,8 @@ Nach der Art des verwendeten Neurons.\\
 Dazu gibt es in der Literatur vielfältige Beispiele. \citet{Fiesler96} zählen einige Beispiele im Kapitel B1 auf und weisen auf Unterschiede hin. Als Beispiel wird dort das bereits erwähnte Perceptron beschrieben. Dann gehen sie auf das Neuron des Hopfield-Netzwerkes ein, bei dem das Neuron ein Teilchen beschreibt welches sich in einem Magnetfeld ausrichtet. Ein eher exotischer Vertreter der dort nicht erwähnt wird ist das Fuzzy-Neuron von \citet{fuzzy-neuron}, welches nach der Aktivierung mehrere mögliche Zustände einnehmen kann und seine Anwendung in der Mustererkennug findet.
 
 \item%
-Nach der Verbindungsarchitektur.\\
-Sie beschreibt wie die Neuronen in einem Netzwerk verbunden sind.
+Nach der Topologie buw. der Verbindungsarchitektur.\\
+Sie beschreibt wie Neuronen in einem Netzwerk verbunden sind.
 Es werden folgende Architekturen unterschieden:
 \begin{itemize}
 \item[\textbf{$\bullet$}]%
@@ -83,7 +83,7 @@ Nach dem Lernalgorithmus. Dieser ermöglicht es das Netzwerk zu trainieren. Die 
 Supervised learning (überwachtes Lernen): Die Trainingsbeispiele bestehen aus einer Menge an Eingangsinformationen und den dazugehörigen Ausbangsinformationen. Das Ziel ist es die Differenz zwischen der tatsächlichen Ausgabe des Netzwerks und den vorliegenden Ausgangsinformationen zu minimieren.
 
 \item[\textbf{$\bullet$}]%
-Reinforcement learning (bestärkendes Lernen): Plakativ kann diese Lernmethode als Zuckerbrot und Peitsche bezeichnet werden bzw. lernen durch Belohnung und Bestrafung. Hierbei werden die Eingangsinformationen zur Verfügung gestellt und die Ausgabe des Netzwerkes wird anhand einer Nutzenfunktion bewertet. Wird die Ausgabe als gut/schlecht angesehen so werden die zugehörigen Verbindungen gestärkt/geschwächt\footnote{Vgl. \citet[201]{dkriesel07} und \citet[A2.3:5]{Fiesler96}.}. 
+Reinforcement learning (bestärkendes Lernen): Plakativ kann diese Lernmethode als Zuckerbrot und Peitsche bezeichnet werden bzw. lernen durch Belohnung und Bestrafung. Hierbei werden die Eingangsinformationen zur Verfügung gestellt und die Ausgabe des Netzwerkes wird anhand einer Belohnungsfunktion bewertet. Wird die Ausgabe als gut/schlecht angesehen so werden die zugehörigen Verbindungen gestärkt/geschwächt\footnote{Vgl. \citet[201]{dkriesel07} und \citet[A2.3:5]{Fiesler96}.}. 
 
 \item[\textbf{$\bullet$}]%
 Unsupervised learning (unüberwachtes Lernen): Wird auch als selbstorganisiertes (self organized) Lernen bezeichnet. Die Trainingsbeispiele bestehen hierbei nur aus Eingansinformationen. Das Netzwerk versucht aus den Eingansinformationen selbstständig Ähnlichkeiten zu erkennen.
@@ -100,17 +100,25 @@ on-line learning: Hier werden die Gewichte nach jeder einzelnen Beobachtung der 
 
 \end{enumerate}
 
-\citet{characterisation_4} nennen vier Charakterisierungskriterien wobei als viertes Kriterium der Informationsgewinnungsalgorithmus (recall algorithm) aufgeführt ist. In dieser Arbeit wird auf dieses Kriterium verzichtet, da weder \citet{characterisation_4} Beispiele aufführen noch in anderer Literatur dieses Kriterium eine Erwähnung findet.
+Vollständigkeitshalber wird erwähnt dass \citet{characterisation_4} vier Charakterisierungskriterien nennen. Wobei als viertes Kriterium der Informationsgewinnungsalgorithmus (recall algorithm) aufgeführt ist. In dieser Arbeit wird auf dieses Kriterium verzichtet, da weder \citet{characterisation_4} Einteilung/Auflistung aufführen noch in anderer Literatur dieses Kriterium eine Erwähnung findet.\\
+
+Es gibt vielfältige Anwendungsgebiete für NN. Angefangen bei Optimierungsproblemen, wo das Ziel es ist optimale Werte für ein gegebenes System zu finden. Über die Datenverarbeiteung, wo Bild- bzw. Sprachinformationen verarbeitet, generiert oder komprimiert werden sollen. Bis zur Klassifikation/Erkennung von Mustern, wo es darum geht aus einer Dantemenge zusammenhängende Muster zu erkennen. Weitere Anwendungen sind die Kontrelle/Regelung von industriellen Anlagen und die wichtigste (bezogen auf diese Arbeit) ist die Funktionsapproximation bzw. Zeitreihenmodellierung, wo die Beziehung aus Eingangsinformationen und dem gewünschtem Ausgang zu finden gilt. Dies sind einige kurz umrissene Anwendungsbeispiele. In der Literatur werden deutlich mehr aufgeführt.\footnote{Vgl. \citet[224]{Kroll16}, \citet[15]{comp_int_07} und \citet[F1 ff]{Fiesler96}.}\\
+
+%\farbig{NN sind Black-Box und Analyse ist schwer aber es gibt in der Literatur mögliche Analyseverfahren.}
+
+
+\subsection{Gängige Modelle}
+
+\subsubsection{Multilayerperzeptrons (MLP)}
+
+\subsubsection{Radiale Basisfunktionen (RBF)}
+
+\subsubsection{Self Organizing Maps (SOM)}
+
+\subsubsection{Hopfield-Netzwerk}
+
 
 %\lipsum
-
-%\begin{figure}[h]
-%	\centering
-%	    \includegraphics[width=0.5\linewidth]{Bilder/BNN_ANN.png}
-%	\caption{Gegenüberstellung eines Ausschnittes aus einem biologischen neuronalen Netz a) und einem künstlichen neuronalen Netz b).}
-%	\label{fig:BNN_ANN}
-%\end{figure}
-
 
 
 %\subsection{Multilayerperzeptrons (MLP)}
