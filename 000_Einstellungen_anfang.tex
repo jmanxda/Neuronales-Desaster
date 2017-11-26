@@ -7,15 +7,28 @@
 %% Zusätzliche Pakete werden geladen
 %\documentclass[a4paper,12pt,titlepage]{article}  
 \documentclass[a4paper, 12pt, titlepage]{scrartcl} % Schrift- und Papiergröße werden eingestellt  
-\usepackage[top=3cm, bottom=3cm, left=2.5cm, right=2.5cm]{geometry} % Korrekturrand wird eingestellt
+\usepackage[top=2.5cm, bottom=2cm, left=2.5cm, right=2.5cm]{geometry} % Korrekturrand wird eingestellt
 \usepackage[ngerman]{babel}             % Dokumentsprache wird auf deutsch gesetzt
-\usepackage[onehalfspacing]{setspace}   % Zeilenabstand wird auf 1,5 gesetzt
-\usepackage{color}                      % Ermöglicht die Änderung der Schriftfarbe
+\usepackage{xcolor}                     % Ermöglicht die Änderung der Schriftfarbe
 \usepackage{graphicx}                   % Ermöglicht das Einbinden von Bildern
 \usepackage{fancyhdr}                   % Ermöglicht die freie Bearbeitung der Fuß und Kopfzeilen
 \usepackage{tocloft}                    % Ermöglicht das anpassen des Inhaltsverzeichnisses
 \usepackage{wrapfig}                    % Ermöglicht textumschlossene Abbildungen
 \usepackage{array}                      % Ermöglicht das Anpassen von Tabellen
+\usepackage{amsmath}                    % Erweitert die Mathematikumgebung
+%\usepackage{caption,subcaption}
+%\usepackage{subfig}                     % Ermöglicht mehrere Bilder in  einer Abbildung
+%\usepackage{fp}                         % Ermöglicht Kalkulationen innerhalb von LaTeX
+
+
+%-------------------------------------------
+%% Stellt Zeilenabstand auf Word vergleichbaren Abstand von 1,5 
+%\usepackage[onehalfspacing]{setspace}   % Zeilenabstand wird auf 1,5 gesetzt
+\usepackage{setspace}
+%\FPeval\zeilenabstand{175/122}            % Berechnet den Wert innerhalb der Klammern und speichert ihn in der Variable \zeilenabstand
+\setstretch{1.428}
+
+
 
 %-------------------------------------------
 %% Fonteinstellungen abhängig vom Compiler
@@ -44,6 +57,23 @@
 \usepackage{hyperref} % Erweitert die Referenzmöglichkeiten
 \usepackage{cleveref}
 
+
+%-------------------------------------------
+%% Pakete für das Erstellen von Grafiken
+\usepackage{tikz-cd}                    % Ermöglicht das Erstellen von Grafiken
+\usetikzlibrary{arrows,intersections}
+
+%-------------------------------------------
+%% Pakete für die richtige Darstellung von Fußnoten
+\usepackage[bottom]{footmisc}           % Setzt die Fußnoten ans Ende der Seite
+\usepackage{caption}
+%\usepackage{bigfoot}
+%\usepackage{savefnmark}
+%\footnotesep\baselineskip
+%\deffootnote{0.6cm}{1em}{\makebox[0.6cm][l]{\thefootnotemark}}
+\setkomafont{footnote}{\fontsize{10pt}{10.5pt}\selectfont}  % Stellt die Fußnotengröße auf 10 ein
+\setlength{\footnotesep}{13.5pt}                              % Sellt den Fußnotenzeilenabstand auf einfachen Zeilenabstand ein
+
 %-------------------------------------------
 %% Pakete für das Erstellen des Literaturverzeichnisses
 \usepackage[babel,german=quotes]{csquotes}  % Verwendet die deutsche Art der Anführungszeichen
@@ -62,13 +92,13 @@
 \ifx\temp\empty%
 }
 %-------------
-%% Erstellt mit \fcite ein Zitat in der Fußzeile in der Form "Vgl. Kramer (2009), S. 2."
-\newcommand{\fcite}[2][]{%              
-\ifempty{#1}%
-\footnote{Vgl.~\citeauthor{#2}~(\citeyear{#2}).}%
-\else%
-\footnote{Vgl.~\citeauthor{#2}~(\citeyear{#2}),~S.~#1.}%
-\fi%
+%% Erstellt mit \citef ein Zitat in der Fußzeile in der Form "Vgl. Kramer (2009), S. 2."
+\newcommand{\citef}[2][]{%              
+    \ifempty{#1}%
+        \footnote{Vgl.~\citeauthor{#2}~(\citeyear{#2}).}%
+    \else%
+        \footnote{Vgl.~\citeauthor{#2}~(\citeyear{#2}),~S.~#1.}%
+    \fi%
 }
 %-------------
 %% Statt \textcite kann nun auch \citet verwendet werden
@@ -79,16 +109,12 @@
         \citeauthor{#2}~(\citeyear{#2}),~S.~#1%
     \fi%
 }
-
-%-------------------------------------------
-%% Pakete für die richtige Darstellung von Fußnoten
-\usepackage[bottom]{footmisc}           % Setzt die Fußnoten ans Ende der Seite
-\usepackage{caption}
-%\usepackage{savefnmark}
-%\footnotesep\baselineskip
-%\deffootnote{0.6cm}{1em}{\makebox[0.6cm][l]{\thefootnotemark}}
-\setkomafont{footnote}{\fontsize{10pt}{10.5pt}\selectfont}  % Stellt die Fußnotengröße auf 10 ein
-\setlength{\footnotesep}{10pt}                              % Sellt den Fußnotenzeilenabstand auf einfachen Zeilenabstand ein
+%-------------
+%% Erstellt mit \citemp ein Platzhalterzitat
+\newcommand\citemp{%              
+\def\footnotelayout{\color{red}}%
+        \footnote{\farbig{Vgl.~Platzhalter~(0000),~S.~1.}}%
+}
 
 %-------------------------------------------
 \usepackage{lipsum}                     % Erstellt blindtext
@@ -110,7 +136,7 @@
 
 %  yshift=13pt,xshift=4pt]
 %-------------------------------------------
-%\usepackage{amsmath}
+
 %\usepackage{adjustbox}
 
 \setlength{\parindent}{0pt}             % Entfernt den Einzug der ersten Zeile
