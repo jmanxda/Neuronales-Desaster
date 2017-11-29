@@ -61,7 +61,8 @@
 %-------------------------------------------
 %% Pakete für das Erstellen von Grafiken
 \usepackage{tikz-cd}                    % Ermöglicht das Erstellen von Grafiken
-\usetikzlibrary{arrows,intersections}
+\usepackage{relsize}                    % Ermöglicht die Fontgröße zu skalieren
+\usetikzlibrary{arrows,calc,intersections,shapes}
 
 %-------------------------------------------
 %% Pakete für die richtige Darstellung von Fußnoten
@@ -116,6 +117,21 @@
         \footnote{\farbig{Vgl.~Platzhalter~(0000),~S.~1.}}%
 }
 
+
+%-------------------------------------------
+%% Erstellt eine TODO-Box
+
+\newcommand{\farbig}[2][red]{\textcolor{#1}{#2}}      % Ermöglicht text mit \farbig{text} rot einzufärben
+
+\newcommand{\todo}[1]{
+\begin{figure}[!htb]
+    \centering
+    \tikz \node[draw,text width=.8\textwidth,align=left]{\textbf{TODO:}\\\farbig{#1}.};
+    %\fbox{\parbox{.8\textwidth}{\textbf{TODO:}\\\farbig{#1}}}
+\end{figure}
+}
+
+
 %-------------------------------------------
 \usepackage{lipsum}                     % Erstellt blindtext
 
@@ -160,8 +176,6 @@
 }
 
 \renewcommand{\cftsecleader}{\textbf{\cftdotfill{\cftdotsep}}} % Füllt den Leerraum der Sectionenangaben im Inhaltsverzeichnis mit Punkten bis zur Seitenzahl (standardmäßig bei article-class nur ab subsections)
-
-\newcommand{\farbig}[2][red]{\textcolor{#1}{#2}}      % Ermöglicht text mit \farbig{text} rot einzufärben
 
 %-------------------------------------------
 %% Einstellungen für die richtige Nummerierung von Fußnoten und Hyperlinks

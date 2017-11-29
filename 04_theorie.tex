@@ -36,7 +36,7 @@ Ein künstliches neuronales Netz (engl. artificial neural networks)~(NN) ist ein
 
 \autoref{fig:BNN_ANN} zeigt eine Gegenüberstellung eines künstlichen und biologischen Neurons. Dabei können die Dendriten eines biologischen Neurons als Informationseingang, das Axon als Informationsausgang, die Synapsen als Gewichte und die Soma als Summen- und Aktivierungsfunktion des künstlichen Neurons angesehen werden. 
 
-\farbig{Als Grundmodell für das ktinstliche Neuron diente das neurophysiologische Vorbild, das auf McCulloch und Pitts (aaO.) zurtickzufUhren ist. Diese betrachteten ein Neuron als eine Art Addierer der ankommenden Impulse, die durch die Dendriten (Eingangs-kanale) aufgenommen werden. Die Aktivitaten, mit einer bestimmten Gewichtung, werden im Soma (Korper des Neurons mit Zellkem) summiert und, sofem die Summe einen bestimmten Schwellwertüberschreitet, wird die Information durch das Axon (Ausgangskanal) weitergeleitet. Der Kontakt zu den anderen Neuronen findet tiber Synapsen (elektrochemische Kontakte) statt. Diese konnen die kontaktierten Neuronen hemmen bzw. erregen (vgl. Stanley und Bak, 1991; Brause, 1991; Schoneburg u.a., 1990; Ritter u.a., 1991)  $doi:https://doi.org/10.1007/978-3-322-83450-8_2 - S.17$}
+\todo{Als Grundmodell für das ktinstliche Neuron diente das neurophysiologische Vorbild, das auf McCulloch und Pitts (aaO.) zurtickzufUhren ist. Diese betrachteten ein Neuron als eine Art Addierer der ankommenden Impulse, die durch die Dendriten (Eingangs-kanale) aufgenommen werden. Die Aktivitaten, mit einer bestimmten Gewichtung, werden im Soma (Korper des Neurons mit Zellkem) summiert und, sofem die Summe einen bestimmten Schwellwertüberschreitet, wird die Information durch das Axon (Ausgangskanal) weitergeleitet. Der Kontakt zu den anderen Neuronen findet tiber Synapsen (elektrochemische Kontakte) statt. Diese konnen die kontaktierten Neuronen hemmen bzw. erregen (vgl. Stanley und Bak, 1991; Brause, 1991; Schoneburg u.a., 1990; Ritter u.a., 1991)  $doi:https://doi.org/10.1007/978-3-322-83450-8\_2 - S.17$}
 
 
 Das zurzeit prominenteste künstliche Neuron (die kleinste Einheit im Netzwerk), dargestellt in \hbox{\autoref{fig:BNN_ANN} b)}, wird nach \citet{perceptron_ros58} als Perceptron bezeichnet. Es summiert zunächst die gewichteten Eingangsinformationen mit $\varphi (x)=\sum_{i=1}^{n}x_{i}\omega_{i}$, anschließend wird die gewichtete Summe~$\varphi(x)$ über die Aktivierungsfunktion~$\sigma(x)$ als Ausgang~$y$ an das nächste Neuron übergeben.
@@ -64,14 +64,7 @@ Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wo
     \centering
         %---------------------------------------------------------------
         %% Heaviside
-        \begin{tikzpicture}[scale=.7,font=\scriptsize,thick,>=stealth',dot/.style = {
-            draw,
-            fill = white,
-            circle,
-            inner sep = 0pt,
-            minimum size = 4pt
-            }
-        ]
+        \begin{tikzpicture}[scale=.7,font=\scriptsize,thick,>=stealth']
             \coordinate (O) at (0,0);
             % horizontal axis
             \draw[->] (-0.3,0) -- (4,0) coordinate[label = {right:$x$}] (xmax);
@@ -86,14 +79,7 @@ Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wo
         \end{tikzpicture}
         %---------------------------------------------------------------
         %% lineare Schwellwertfunktion
-        \begin{tikzpicture}[scale=.7,font=\scriptsize,thick,>=stealth',dot/.style = {
-            draw,
-            fill = white,
-            circle,
-            inner sep = 0pt,
-            minimum size = 4pt
-            }
-        ]
+        \begin{tikzpicture}[scale=.7,font=\scriptsize,thick,>=stealth']
             \coordinate (O) at (0,0);
             % horizontal axis
             \draw[->] (-0.3,0) -- (4,0) coordinate[label = {right:$x$}] (xmax);
@@ -108,14 +94,7 @@ Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wo
         \end{tikzpicture}
         %---------------------------------------------------------------
         %% Fermifunktion
-        \begin{tikzpicture}[scale=.7,font=\scriptsize,thick,>=stealth',dot/.style = {
-            draw,
-            fill = white,
-            circle,
-            inner sep = 0pt,
-            minimum size = 4pt
-            }
-        ]
+        \begin{tikzpicture}[scale=.7,font=\scriptsize,thick,>=stealth']
             \draw[white] (1,-2) -- (3,2);
             \draw[scale=.5,domain=-4:4,smooth,variable=\x,lightgray]      plot ({\x+4},{4*(1/(exp(-\x/.2)+1))});
             \draw[scale=.5,domain=-4:4,smooth,variable=\x,lightgray]      plot ({\x+4},{4*(1/(exp(-\x/.5)+1))});
@@ -128,14 +107,7 @@ Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wo
         \end{tikzpicture}
         %---------------------------------------------------------------
         %% Tangens Hyperbolicus
-        \begin{tikzpicture}[scale=.7,font=\scriptsize,thick,>=stealth',dot/.style = {
-            draw,
-            fill = white,
-            circle,
-            inner sep = 0pt,
-            minimum size = 4pt
-            }
-        ]
+        \begin{tikzpicture}[scale=.7,font=\scriptsize,thick,>=stealth']
             \coordinate (O) at (0,0);
             % horizontal axis
             \draw[->] (-0.3,0) -- (4,0) coordinate[label = {right:$x$}] (xmax);
@@ -225,7 +197,65 @@ Im vorherigen Kapitel wurde die Charakterisierung der NN beleuchtet und einige N
 \subsubsection{Perceptrons (SLP)/(MLP)}
 \begin{figure}[!htb]
     \centering
-        \includegraphics[width=.5\textwidth]{Bilder/MLP/slp.png}
+        %---------------------------------------------------------------
+        %% SLP
+        %-----------------------------------------
+        %% linkes Bild
+        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
+        \def\layersep{2}            % vertikal distance between the layers
+        \def\neuronsep{1.5}         % Horizontal distance between neurons
+        \def\dlsize{1.3}            % distance between node and layer lable
+        \def\inout{\layersep*.65}   % Size of in- and output-arrow
+        \def\siz{.8}                % neuronsize
+        \def\y{3}                   % Start of the most upper layer
+        \def\n{5}                   % Amount of input neurons
+        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
+        \tikzstyle{annot} = [text width=4em, text centered]
+        \tikzset{fontscale/.style = {font=\relsize{#1}}}
+        % Draw the left input layer nodes
+            \foreach \name / \xn in {1,...,\n}{
+            % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+                \node[neuron] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) [fontscale=2] {$i_{\name}$};
+                \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
+            }
+        % Draw the output layer node
+                \node[neuron, below of=Il-3] (Ol) [fontscale=2] {$\Omega$};
+                \node[node distance=\inout cm, below of=Ol] (Onl) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol) edge (Onl);
+        % Connect every node in the input layer with the output layer
+            \foreach \source in {1,...,\n}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Ol);
+        % Annotate the layers
+                \node[annot,right of=Il-\n, node distance=\dlsize cm] (il) {\textbf{Input layer}};
+                \node[annot,below of=il] {\textbf{Output layer}};
+        %-----------------------------------------
+        %% rechtes Bild
+            \tikzset{
+                ident/.pic={
+                \draw[semithick] (-\siz/4,-\siz/4) -- (\siz/4,\siz/4);
+            }}
+        % Draw the right input layer nodes
+                \node (Ir) at ($(il)+(\dlsize,0)$) {};
+            \foreach \name / \xn in {1,...,\n}{
+        % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+                \node[neuron] (Ir-\name) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
+                \node[above of=Ir-\name, node distance=\inout cm] (Inr-\name) {};
+                \pic at (Ir-\name) {ident};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\name) edge (Ir-\name);
+            } 
+        % Draw the output layer node
+                \node[neuron,circle split, below of=Ir-3,inner sep=2pt] (Or) [fontscale=2] 
+                    {\includegraphics[width=0.3cm]{Bilder/Sigma.png} \nodepart{lower} \includegraphics[width=0.3cm]{Bilder/sigma.png}};
+                \node[node distance=\inout cm, below of=Or] (Onr) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or) edge (Onr);
+        % Connect every node in the input layer with the output layer
+            \foreach \source in {1,...,\n}
+                \draw [->,arrows={-Stealth[length=7pt]},every node/.style={fill=white,inner sep=1pt}] 
+                (Ir-\source) edge  (Or) 
+                node at ($(Ir-\source)!.4!(Or)$) {$w_{\source}$};
+\end{tikzpicture}
+        %\includegraphics[width=.5\textwidth]{Bilder/MLP/slp.png}
     \caption{SLP mit fünf Eingabeneuronen $i_n$ und einem Ausgabeneuron $\Omega$.}
     \label{fig:SLP}
 \end{figure}
