@@ -39,7 +39,7 @@ Ein künstliches neuronales Netz (engl. artificial neural networks)~(NN) ist ein
 \todo{Als Grundmodell für das ktinstliche Neuron diente das neurophysiologische Vorbild, das auf McCulloch und Pitts (aaO.) zurtickzufUhren ist. Diese betrachteten ein Neuron als eine Art Addierer der ankommenden Impulse, die durch die Dendriten (Eingangs-kanale) aufgenommen werden. Die Aktivitaten, mit einer bestimmten Gewichtung, werden im Soma (Korper des Neurons mit Zellkem) summiert und, sofem die Summe einen bestimmten Schwellwertüberschreitet, wird die Information durch das Axon (Ausgangskanal) weitergeleitet. Der Kontakt zu den anderen Neuronen findet tiber Synapsen (elektrochemische Kontakte) statt. Diese konnen die kontaktierten Neuronen hemmen bzw. erregen (vgl. Stanley und Bak, 1991; Brause, 1991; Schoneburg u.a., 1990; Ritter u.a., 1991)  $doi:https://doi.org/10.1007/978-3-322-83450-8\_2 - S.17$}
 
 
-Das zurzeit prominenteste künstliche Neuron (die kleinste Einheit im Netzwerk), dargestellt in \hbox{\autoref{fig:BNN_ANN} b)}, wird nach \citet{perceptron_ros58} als Perceptron bezeichnet. Es summiert zunächst die gewichteten Eingangsinformationen mit $\varphi (x)=\sum_{i=1}^{n}x_{i}\omega_{i}$, anschließend wird die gewichtete Summe~$\varphi(x)$ über die Aktivierungsfunktion~$\sigma(x)$ als Ausgang~$y$ an das nächste Neuron übergeben.
+Das zurzeit prominenteste künstliche Neuron (die kleinste Einheit im Netzwerk), dargestellt in \hbox{\autoref{fig:BNN_ANN} b)}, wird nach \citet{perceptron_ros58} als Perceptron bezeichnet. Es verarbeitet die Eingangssignale über die Propagierungsfunktion. In \autoref{fig:BNN_ANN} b) ist es die Summenfunktion. So summiert es zunächst die gewichteten Eingangsinformationen mit $\varphi (x)=\sum_{i=1}^{n}x_{i}\omega_{i}$, anschließend wird die gewichtete Summe~$\varphi(x)$ über die Aktivierungsfunktion~$\sigma(x)$ als Ausgang~$y$ an das nächste Neuron übergeben.
 %
 %
 %\setlength{\intextsep}{0pt}%
@@ -204,31 +204,39 @@ Im vorherigen Kapitel wurde die Charakterisierung der NN beleuchtet und einige N
         \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
         \def\layersep{2}            % vertikal distance between the layers
         \def\neuronsep{1.5}         % Horizontal distance between neurons
-        \def\dlsize{1.3}            % distance between node and layer lable
+        \def\dlsize{1.5}            % distance between node and layer lable
         \def\inout{\layersep*.65}   % Size of in- and output-arrow
         \def\siz{.8}                % neuronsize
         \def\y{3}                   % Start of the most upper layer
-        \def\n{5}                   % Amount of input neurons
+        \def\ni{5}                  % Amount of input neurons
+        \def\no{2}                  % Amount of output neurons
         \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
-        \tikzstyle{annot} = [text width=4em, text centered]
-        \tikzset{fontscale/.style = {font=\relsize{#1}}}
+        \tikzstyle{annot} = [text width=5em, text centered]
+        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
+        \newcommand{\neurono}[2][]{
+            \node[neuron,circle split,inner sep=2pt] (#1) at (#2)
+                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} \includegraphics[width=0.225cm]{Bilder/sigma.png}};
+        }
+
         % Draw the left input layer nodes
-            \foreach \name / \xn in {1,...,\n}{
+            \foreach \name / \xn in {1,...,\ni}{
             % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-                \node[neuron] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) [fontscale=2] {$i_{\name}$};
+                \node[neuron,fontscale=15] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
                 \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
                 \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
             }
         % Draw the output layer node
-                \node[neuron, below of=Il-3] (Ol) [fontscale=2] {$\Omega$};
-                \node[node distance=\inout cm, below of=Ol] (Onl) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol) edge (Onl);
+            \foreach \name / \xn in {1,...,\no}{
+                \node[neuron,fontscale=15] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\y-\layersep) {$\Omega_{\xn}$};
+                \node[node distance=\inout cm, below of=Ol-\xn] (Onl) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onl);
         % Connect every node in the input layer with the output layer
-            \foreach \source in {1,...,\n}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Ol);
+            \foreach \source in {1,...,\ni}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Ol-\xn);
+                }
         % Annotate the layers
-                \node[annot,right of=Il-\n, node distance=\dlsize cm] (il) {\textbf{Input layer}};
-                \node[annot,below of=il] {\textbf{Output layer}};
+                \node[annot,right of=Il-\ni, node distance=\dlsize cm] (il) {\textbf{Eingabe- schicht}};
+                \node[annot,below of=il] {\textbf{Ausgabe- schicht}};
         %-----------------------------------------
         %% rechtes Bild
             \tikzset{
@@ -236,8 +244,8 @@ Im vorherigen Kapitel wurde die Charakterisierung der NN beleuchtet und einige N
                 \draw[semithick] (-\siz/4,-\siz/4) -- (\siz/4,\siz/4);
             }}
         % Draw the right input layer nodes
-                \node (Ir) at ($(il)+(\dlsize,0)$) {};
-            \foreach \name / \xn in {1,...,\n}{
+                \node[xshift=\dlsize cm] (Ir) at (il) {};
+            \foreach \name / \xn in {1,...,\ni}{
         % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
                 \node[neuron] (Ir-\name) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
                 \node[above of=Ir-\name, node distance=\inout cm] (Inr-\name) {};
@@ -245,15 +253,19 @@ Im vorherigen Kapitel wurde die Charakterisierung der NN beleuchtet und einige N
                 \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\name) edge (Ir-\name);
             } 
         % Draw the output layer node
-                \node[neuron,circle split, below of=Ir-3,inner sep=2pt] (Or) [fontscale=2] 
-                    {\includegraphics[width=0.3cm]{Bilder/Sigma.png} \nodepart{lower} \includegraphics[width=0.3cm]{Bilder/sigma.png}};
-                \node[node distance=\inout cm, below of=Or] (Onr) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or) edge (Onr);
+            \foreach \name / \xn in {1,...,\no}{
+                \neurono[Or-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-\layersep)$}
+
+                \node[node distance=\inout cm, below of=Or-\xn] (Onr) {};
+                
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or-\xn) edge (Onr);
+                
         % Connect every node in the input layer with the output layer
-            \foreach \source in {1,...,\n}
-                \draw [->,arrows={-Stealth[length=7pt]},every node/.style={fill=white,inner sep=1pt}] 
-                (Ir-\source) edge  (Or) 
-                node at ($(Ir-\source)!.4!(Or)$) {$w_{\source}$};
+            \foreach \source in {1,...,\ni}
+                \draw [->,arrows={-Stealth[length=7pt]},every node/.style={fill=white,inner sep=1pt,fontscale=7}] 
+                (Ir-\source) edge  (Or-\xn) 
+                node at ($(Ir-\source)!.3+.18*(\xn-1)!(Or-\xn)$) {$w_{\source,\xn}$};
+            }
 \end{tikzpicture}
         %\includegraphics[width=.5\textwidth]{Bilder/MLP/slp.png}
     \caption{SLP mit fünf Eingabeneuronen $i_n$ und einem Ausgabeneuron $\Omega$.}
@@ -265,22 +277,100 @@ Um das SLP zu trainieren gibt es den Perceptron-Lernalgorithmus und die Delta-Re
 \\
 
 \begin{figure}[!htb]
-  \parbox[b]{.5\linewidth}{
-  \centering
-    \includegraphics[width=0.4\textwidth]{Bilder/MLP/mlp_1h.png}
-  
-  
-  }%
-%\hspace{.1\linewidth}%
-\parbox[b]{.5\linewidth}{%
-        \includegraphics[width=0.5\textwidth]{Bilder/MLP/mlp_2h.png}
+    \centering
+    %---------------------------------------------------------------
+        %% MLP
+        %-----------------------------------------
+        %% linkes Bild
+        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
+        \def\layersep{1.8}            % vertikal distance between the layers
+        \def\neuronsep{1.8}         % Horizontal distance between neurons
+        \def\dlsize{2}            % distance between node and layer lable
+        \def\inout{\layersep*.65}   % Size of in- and output-arrow
+        \def\siz{.8}                % neuronsize
+        \def\y{5}                   % Start of the most upper layer
+        \def\ni{3}                  % Amount of input neurons
+        \def\nh{4}                  % Amount of hidden neurons
+        \def\no{2}                  % Amount of output neurons
+        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
+        \tikzstyle{annot} = [text width=6em, text centered]
+        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
 
-%\subcaption{This is just a short document to show thatwe can place the sub-caption where we want to.}
-}
+        \newcommand{\neurono}[2][]{
+            \node[neuron,circle split,inner sep=2pt] (#1) at (#2)
+                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} \includegraphics[width=0.225cm]{Bilder/sigma.png}};
+        }
+        % Draw the left input layer nodes
+            \foreach \name / \xn in {1,...,\ni}{
+            % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+                \node[neuron,fontscale=15] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
+                \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
+            }
+        % Draw the hidden layer node
+            \foreach \name / \xn in {1,...,\nh}{
+                \node[neuron,fontscale=15] (Hl-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},\y-\layersep) {$h_{\xn}$};
+                \node[node distance=\inout cm, below of=Hl-\xn] (Hnl) {};
+        % Connect every node in the inner layer with the hidden layer
+            \foreach \source in {1,...,\ni}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Hl-\xn);
+                }
+        % Draw the output layer node
+            \foreach \name / \xn in {1,...,\no}{
+                \node[neuron,fontscale=15] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\y-2*\layersep) {$\Omega_{\xn}$};
+                \node[node distance=\inout cm, below of=Ol-\xn] (Onl) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onl);
+        % Connect every node in the hidden layer with the output layer
+            \foreach \source in {1,...,\nh}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Hl-\source) edge (Ol-\xn);
+                }
+        % Annotate the layers
+            \ifthenelse{\ni>\nh}{
+                \node[annot,right of=Il-\ni, node distance=\dlsize cm] (il) {\textbf{Eingabe- schicht}};
+                \node[annot,below of=il] (hl) {\textbf{Verdeckte- schicht}};
+            }{
+                \node[annot,right of=Hl-\nh, node distance=\dlsize cm] (hl) {\textbf{Verdeckte- schicht}};
+                \node[annot,above of=hl] (il) {\textbf{Eingabe- schicht}};
+            }
+                \node[annot,below of=hl] {\textbf{Ausgabe- schicht}};
+        %-----------------------------------------
+        %% rechtes Bild
+            \tikzset{
+                ident/.pic={
+                \draw[semithick] (-\siz/4,-\siz/4) -- (\siz/4,\siz/4);
+            }}
+        % Draw the right input layer nodes
+                \coordinate (tIr) at ($(il)-(Il-\ni)$);
+                \coordinate (ttIr) at (tIr |- 0,0);
+                \coordinate (Ir) at ($(il)+(ttIr)$);
+            \foreach \name / \xn in {1,...,\ni}{
+        % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+                \node[neuron] (Ir-\name) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
+                \node[above of=Ir-\name, node distance=\inout cm] (Inr-\name) {};
+                \pic at (Ir-\name) {ident};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\name) edge (Ir-\name);
+            }
+        % Draw the right hidden layer node
+            \foreach \name / \xn in {1,...,\nh}{
+                \neurono[Hr-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},-\layersep)$}
+                \node[node distance=\inout cm, below of=Hr-\xn] (Hnr) {};
+        % Connect every node in the input layer with the hidden layer
+            \foreach \source in {1,...,\ni}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Ir-\source) edge  (Hr-\xn);
+            }            
 
-  %\subfloat[]{\label{a)}\includegraphics[width=0.4\textwidth]{Bilder/MLP/mlp_1h.png}}
-  %\subfloat[]{\label{b)}\includegraphics[width=0.4\textwidth]{Bilder/MLP/mlp_2h.png}}
-  
+                \node[fill=white,inner sep=1pt,fontscale=10] at ($(Hr-1)+({(\nh-1)*\neuronsep/2},\layersep*.5)$) {$\dots\,w_{i,h}\,\dots$};
+        % Draw the right output layer node
+            \foreach \name / \xn in {1,...,\no}{
+                \neurono[Or-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-2*\layersep)$}
+                \node[node distance=\inout cm, below of=Or-\xn] (Onr) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or-\xn) edge (Onr);
+        % Connect every node in the hidden layer with the output layer
+            \foreach \source in {1,...,\nh}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Hr-\source) edge  (Or-\xn);
+            }
+                \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.5)$) {$\dots\,w_{h,\Omega}\,\dots$};
+\end{tikzpicture}
     \caption{MLP mit verdeckten Neuronen $h_n$ und einer verdeckten Schicht links bzw. zwei verdeckten Schichten rechts.}
     \label{fig:MLP}
 \end{figure}
@@ -291,6 +381,104 @@ Um das MLP zu trainieren gibt es das sogenannt Backpropagation Verfahren das zu 
 
 
 \subsubsection{Radiale Basisfunktionen (RBF)}
+\begin{figure}[!htb]
+    \centering
+    %---------------------------------------------------------------
+        %% RBF
+        %-----------------------------------------
+        %% linkes Bild
+        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
+        \def\layersep{1.8}          % vertikal distance between the layers
+        \def\neuronsep{1.8}         % Horizontal distance between neurons
+        \def\dlsize{2}              % distance between node and layer lable
+        \def\inout{\layersep*.65}   % Size of in- and output-arrow
+        \def\siz{.8}                % neuronsize
+        \def\y{5}                   % Start of the most upper layer
+        \def\ni{3}                  % Amount of input neurons
+        \def\nh{4}                  % Amount of hidden neurons
+        \def\no{2}                  % Amount of output neurons
+        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
+        \tikzstyle{annot} = [text width=5em, text centered]
+        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
+        \tikzset{
+                ident/.pic={
+                \draw[semithick] (-\siz/#1,-\siz/#1) -- (\siz/#1,\siz/#1);
+            }}
+        \newcommand{\neurono}[3][]{%
+        \ifthenelse{\equal{#3}{0}}{%
+            \node[neuron,circle split,inner sep=1pt,fontscale=6] (#1) at (#2)
+                    { $\mathbf{||c,x||}$ \nodepart{lower} };
+                    
+            \node[fontscale=6] at ($(#2.lower)-(0,\siz/4)$){\textbf{Gauß}};
+            }{
+            \node[neuron,circle split,inner sep=1.3pt] (#1) at (#2)
+                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} };
+            \pic at ($(#1.lower)-(0,\siz/8)$) {ident=#3};
+            }}
+        % Draw the left input layer nodes
+            \foreach \name / \xn in {1,...,\ni}{
+            % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+                \node[neuron,fontscale=15] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
+                \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
+            }
+        % Draw the hidden layer node
+            \foreach \name / \xn in {1,...,\nh}{
+                \node[neuron] (Hl-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},\y-\layersep) [fontscale=15] {$h_{\xn}$};
+                \node[node distance=\inout cm, below of=Hl-\xn] (Hnl) {};
+        % Connect every node in the inner layer with the hidden layer
+            \foreach \source in {1,...,\ni}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Hl-\xn);}
+        % Draw the output layer node
+            \foreach \name / \xn in {1,...,\no}{
+                \node[neuron] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\y-2*\layersep) [fontscale=15] {$\Omega_{\xn}$};
+                \node[node distance=\inout cm, below of=Ol-\xn] (Onl) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onl);
+        % Connect every node in the hidden layer with the output layer
+            \foreach \source in {1,...,\nh}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Hl-\source) edge (Ol-\xn);}
+        % Annotate the layers
+            \ifthenelse{\ni>\nh}{
+                \node[annot,right of=Il-\ni, node distance=\dlsize cm] (il) {\textbf{Eingabe- schicht}};
+                \node[annot,below of=il] (hl) {\textbf{Verdeckte- schicht}};
+            }{
+                \node[annot,right of=Hl-\nh, node distance=\dlsize cm] (hl) {\textbf{Verdeckte-/RBF- schicht}};
+                \node[annot,above of=hl] (il) {\textbf{Eingabe- schicht}};
+            }
+                \node[annot,below of=hl] {\textbf{Ausgabe- schicht}};
+        %-----------------------------------------
+        %% rechtes Bild
+        % Draw the right input layer nodes
+                \coordinate (tIr) at ($(il)-(Il-\ni)$);
+                \coordinate (ttIr) at (tIr |- 0,0);
+                \coordinate (Ir) at ($(il)+(ttIr)$);
+            \foreach \name / \xn in {1,...,\ni}{
+        % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+                \node[neuron] (Ir-\name) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
+                \node[above of=Ir-\name, node distance=\inout cm] (Inr-\name) {};
+                \pic at (Ir-\name) {ident=4};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\name) edge (Ir-\name);}
+        % Draw the right hidden layer node
+            \foreach \name / \xn in {1,...,\nh}{
+                \neurono[Hr-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},-\layersep)$}{0}
+                \node[node distance=\inout cm, below of=Hr-\xn] (Hnr) {};
+        % Connect every node in the input layer with the hidden layer
+            \foreach \source in {1,...,\ni}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Ir-\source) edge  (Hr-\xn);}
+        % Draw the right output layer node
+            \foreach \name / \xn in {1,...,\no}{
+                \neurono[Or-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-2*\layersep)$}{6}
+                \node[node distance=\inout cm, below of=Or-\xn] (Onr) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or-\xn) edge (Onr);
+        % Connect every node in the hidden layer with the output layer
+            \foreach \source in {1,...,\nh}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Hr-\source) edge  (Or-\xn);
+            }
+                \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.5)$) {$\dots\, w_{h,\Omega}\,\dots$};
+        \end{tikzpicture}
+    \caption{MLP mit verdeckten Neuronen $h_n$ und einer verdeckten Schicht links bzw. zwei verdeckten Schichten rechts.}
+    \label{fig:RBF}
+\end{figure}
 
 RBFs sind feed-forward Netze und ähnlich wie die Perceptrons schichtartig aufgebaut. Dabei besitzt jedes Neuron einer Schicht eine Verbindung zu jedem Neuron der nachfolgenden Schicht (diese Art der Verbindung zwischen den Schichten wird auch Vollverknüpfung genannt). RBFs besitzen aber genau drei Schichten und somit nur eine verdeckte Schicht. Die erste Schicht dient ebenfalls wie bei den Perceptrons nur der Verteilung der Eingabedaten an die nächste Schicht ohne jegliche Verarbeitung. Die zweite Schicht besteht aus verdeckten Neuronen die auch als RBF-Neuronen bezeichnet werden. Jedes Neuron beinhaltet eine radiale Basisfunktion. Dies sind stets positive und radialsymmetrische Funktionen. Sie besitzen ein Maximum in der Mitte und streben gegen Null je weiter sich die Funktion vom Mittelpunkt entfernt. Eine typische Basisfunktion ist hierbei die gaußsche Glockenkurve. Die Ausgabe eines RBF-Neurons gibt daher Auskunft über die nähe der Eingabedaten zum Mittelpunkt der Basisfunktion. Schließlich sind die verdeckten Neuronen über eine gewichtete Verbindung mit den Ausgabeneuronen verknüpft. Die Ausgabeneurone summieren die Ausgabe der RBF-Neuronen und geben die Summe ohne weitere Verarbeitung weiter.
 
