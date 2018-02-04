@@ -1,0 +1,45 @@
+% !TEX root = 00_arbeit.tex
+
+%---------------------------------------------------------------------------------
+%% Anhang
+
+%-------------------------------------------
+%% Resettet den Abbildungszähler
+%% Quelle:https://stackoverflow.com/questions/3391540/renumbering-figure-in-latex
+\makeatletter 
+\renewcommand{\thefigure}{A-\@arabic\c@figure}
+\makeatother
+\setcounter{figure}{0}
+
+\section{Anhang}
+
+\subsection{XOR bzw. exklusiv Oder}\label{sec:XOR}
+
+\begin{figure}[!h]
+\centering
+\begin{circuitikz}
+\draw (0,0)         node[european xor port] (xor)   {} 
+      (xor.in 1)    node[left]                      {A}
+      (xor.in 2)    node[left]                      {B}
+      (xor.out)     node[right]                     {Y}
+      ;
+\end{circuitikz}
+%\includegraphics{test}
+\hspace{1cm}
+\begin{tabular}{cc|c}
+A & B & Y \\
+\hline
+0& 0 & 0 \\
+0& 1 & 1 \\
+1& 0 & 1 \\
+1& 1 & 0 
+\end{tabular}
+\caption{Blockschaltbild des XOR-Gatters links und rechts die zugehörige Wahrheitstabelle.}
+\label{fig_a:XOR}
+\end{figure}
+
+Das exklusive Oder bzw. XOR-Gatter ist ein Begriff aus dem Bereich der Logik. Mit der Gleichung:%
+%
+$$Y=\left ( \overline{A}  \land B \right)\lor \left ( A \land \overline{B} \right ).$$
+Der Ausgang dieses Gatters ist dann~\glqq 1\grqq~wenn eine ungerade Anzahl an Eingängen auf~\glqq 1\grqq~liegt und die restlichen auf~\glqq 0\grqq. Das Blockschaltbild und die Wahrheitstabelle sind in \autoref{fig_a:XOR} dargestellt.
+

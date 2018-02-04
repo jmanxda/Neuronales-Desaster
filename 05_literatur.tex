@@ -1,0 +1,91 @@
+% !TEX root = 00_arbeit.tex
+
+%---------------------------------------------------------------------------------
+%% Literaturrecherche
+
+\section{Literaturübersicht über die aktuelle Preismodellierung auf Strommärkten}
+
+
+
+Elektrizität ist eine besonderes Gut, dessen Erzeugung und Verbrauch gleichzeitig erfolgt. Die Erzeugung dieses Gutes kann kontrolliert werden. Wobei das Speichern von Elektrizität in einem industriellen Maßstab sich als schwierig gestaltet. Daher beeinflusst die Nachfrage maßgeblich die zu generierende Menge. Aus diesem Grund verläuft der Handel, im Gegensatz zu anderen Finanz- oder Gütermärkten, oft auf dem sogenannten „Day-ahead“-Markt. Der Strom wird dabei für die Stunde des nächsten Tages ge- und verkauft. Diese Handelsweise ist für die Marktakteure notwendig, um die Produktions- und Abnahmekapazitäten einander anzupassen. Auf den meisten Märkten müssen die Marktakteure bis zu einer Frist ihre 24 Gebote abgeben. Nach Ablauf der Frist erstellt der Marktbetereiber, unter Berücksichtigung aller Gebote, den Gleichgewichtspreis (engl.: market clearing price) für jede der 24 Stunden. Produzenten deren Gebot niedriger bzw. Konsumenten deren Gebot höher oder gleich dem Gleichgewichtspreis ist, bekommen den Zuschlag.\citef[7]{Weron2014} Um den Gleichgewichtspreis des nächsten Tages vorherzusagen und ein Gebot möglichst nah am Gleichgewichtspreis abzugeben gibt es vielfältige Ansätze.
+
+Einen guten Überblick über vorgeschlagene Modelle zur Strompreisvorhersage geben \citet{Aggarwal2009}, \citet{Cerjan2013} und \citet{Weron2014} in ihren Reviews. Zunächst können die Modelle in einen lang-/mittelfristigen und kurzfristigen Vorhersagehorizont eingeteilt werden. Zu dem lang- und mittelfristigen Vorhersagehorizont werden folgende Modelle angewandt:
+\begin{itemize}
+\item[\textbf{$\bullet$}]%
+Multi-Agenten bzw. Spieltheorie Modelle, bei denen versucht wird das Verhalten der unterschiedlichen Agenten/Akteure auf dem Markt zu simulieren.
+
+\item[\textbf{$\bullet$}]%
+Fundamentale Modelle, bei denen physikalische Faktoren einen Einfluss auf die Preisdynamik ausüben.
+
+\item[\textbf{$\bullet$}]%
+Reduzierte Modelle, welche die statistischen Eigenschaften des zeitlichen Preisverlaufes mit Hilfe der Auswertung von Risiken und Derivaten erklären.
+\end{itemize}
+
+Für den kurzfristigen Vorhersagehorizont werden die nachfolgenden Modelle angewandt:
+%Zusammenfassend lassen sich die Modelle in folgende Kategorien einteilen:
+%\citet{Weron2014} hat die vorgeschlagenen Modelle zur Preisvorhersage in in fünf Kategorien eingeteilt:\footnote{\,In der Literatur vorkommende Modelle sind oftmals hybride Lösungen, die aus mehreren der genannten Kategorien bestehen.}
+\begin{itemize}
+\item[\textbf{$\bullet$}]%
+Statistische Modelle, welche aus linearer Regression von Zeitreihen und ökonometrischen Modellen bestehen.
+
+\item[\textbf{$\bullet$}]%
+Komputerbasierte/künstliche Intelligenz (CI), die in Verbindung mit Lern-,Evolutions- und Fuzzyalgorithmen komplexe dynamische Systeme abbilden kann.
+\end{itemize}
+
+Wobei die komputerbasierte/künstliche Intelligenz unterteilt wird in: 
+\begin{itemize}
+\item[\textbf{$\bullet$}]%
+Künstliche Neuronale Netze
+
+\item[\textbf{$\bullet$}]%
+Data-Mining Modelle
+\end{itemize}
+
+Da nicht ein Modell alle Faktoren die zum schließlichen Preis führen erfassen kann werden in der Literatur hybride aus einigen der genannten Modelle untersucht, um die Preisvorhersage zu prezisieren.
+
+
+Diese Arbeit konzentriert sich auf die letzte Kategorie in der die NN einzuordnen sind. \citet{Panapakidis2016} haben eine Übersicht über die bis dato genutzten NN basierten Modelle zu vorhersage des "day-ahead"\--Elektrizitätspreises vorgestellt. In Anlehnung hieran erfolgt eine Literaturüberblick der letzten zwei Jahre.
+
+
+
+
+%Hierzu wird ein Überblick über die Anwendung der NN zur vorhersage des Strompreises aus der Literatur  gegeben.
+\todo{Übersichtstabelle der Paper erstellen}
+
+
+
+\citet{Keles2016} verwenden zur Vorhersage des "day-ahead"\--Preises am European Power Exchange (EPEX) ein MLP. Sie bezeichnen es als ein drei schichtiges Feed-Forward Netzwerk mit einem Ausgangsneuron und stellen verschiedene Konfigurationen des Netzwerkes gegenüber. Sie Vergleichen den Tangenshyperbolicus mit der logistischen Funktion (eine vereinfachte Version der Fermifunktion sihe \autoref{fig:funktion}) als Aktivierungsfunktion und erzielen mit der logistischen Funktion die besseren Ergebnisse. Als Gütekriterium benutzen sie das RMSE und MAD Maß.\todo{verweiß auf Gütemaße}
+
+\citet{Jiang2016} nutzen ein hybrides System aus mehreren CI Methoden, um relevante Eingabedaten für das Training eines RBF Netzwerkes zu bekommen. Sie wenden ihre Methode auf den US amerikanischen PJM-Markt an, um den Elektrizitätspreis des nächsten Tages vorherzusagen. Zur Auswertung ihrer Ergebnisse benutzen sie das MAPE, RMSE und MAE Maß.
+
+\citet{Monteiro2016} benutzen zur Berechnung verschiedener Vorhersageintervalle auf dem Iberischen Elektrizitätsmarkt MIBEL ein MLP Netzwerk. Sie untersuchen verschiedene Eingabevariablen und die Anzahl an Neuronen der verdeckten Schicht bestimmen sie mit $2n+1$, wobei $n$ für die Anzahl der Eingabevariablen steht. Zur bewertung der Ergebnisse kommt das MAPE Maß zum Einsatz.
+
+\begin{table}[h]
+%\centering
+\label{tab:ann_lit}
+\caption{\farbig{Literaturauflistung}}
+\begin{tabularx}{\textwidth}{llZZ}
+\toprule
+Verweis                 &  Modell   & Markt                     & Performancemaß            \\
+\midrule
+\citet{Keles2016}       & MLP       & EPEX                      & RMSE, MAD                 \\
+\citet{Bobinaite2016}   & MLP       & Nord Pool                 & MAPE                      \\
+\citet{Jiang2016}       & RBF       & PJM                       & MAPE, RMSE, MAE           \\
+\citet{Feijoo2016}      & SVM       & PJM                       & MAPE, RMSE, MAE           \\
+\citet{Monteiro2016}    & MLP       & MIBEL                     & MAPE                      \\
+\citet{Osorio2016}      & ANFIS     & Spain; PJM                & MAPE                      \\
+\citet{Sandhu2016}      & MLP       & Ontario                   & MAPE, RMSE, MAE           \\
+\citet{Yang2017}        & KELM      & PJM; Spain; Australia     & MAPE, RMSE, MAE, U1, U2   \\
+\citet{Wang2017}        & MLP       & EPEX(France); Australia   & MAPE, RMSE, MAE, TIC      \\
+\citet{Singh2017}       & !GNM!       & !!!   & !!!      \\
+
+\citet{Marcos2017}      & MLP       & Iberian                   & MAPE, MSE                 \\
+\citet{Domanski2017}    & MLP       & Australien; Polen         & MSE, APE                  \\
+\citet{Gao2017}         & MLP       & EPEX(UK)                  & RMSE                      \\
+\citet{Mandal2017}      & MLP,RNN   & PJM                       & MAPE, FMSE, MAE           \\
+\citet{Lago2018}        & DNN(MLP)  & Belgien/Frankreich        & sMAPE                     \\
+
+
+\bottomrule
+\end{tabularx}
+\end{table}

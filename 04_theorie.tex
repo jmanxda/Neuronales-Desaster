@@ -7,7 +7,7 @@
 
 In diesem Kapitel werden zunächst biologische und künstliche neuronale Netze verglichen. Gefolgt von einer Motivation über die Verwendung künstlicher neuronaler Netze (zukünftig als NN bezeichnet) und der Einordnung der NN in die aktuelle Forschungslanschaft. Als nächstes werden die Charakterisierungskriterien für NN vorgestellt und ein Überblick über mögliche Anwendungsgebiete für NN gegeben. Anschließend wird ein Überblick über die Funktionsweise gängiger Modelle gegeben und die Netzwerkmodelle gegenübergestellt.
 
-\subsection{Einleitung in Neuronale Netze}
+\subsection{Globaler Überblick über Neuronale Netze}\label{sec:einf_neuro}
 %\farbig{[Erklärung der neuronalen Netze... vielfältige Anwendungsgebiete... Hier erforderlich Netze zur Zeitreihenvorhersage]}
 %\setlength{\intextsep}{0pt}%
 
@@ -30,16 +30,16 @@ Ein künstliches neuronales Netz (engl. artificial neural networks)~(NN) ist ein
     \label{fig:BNN_ANN}
 \end{figure}
 
-\addtocounter{footnote}{-1}     %  -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
+\addtocounter{footnote}{-1}     % -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
 \addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
 \wrapfigfoot\footnotetext{\autoref{fig:BNN_ANN} a) wurde aus\citet[2]{sen_an} übersetzt und angepasst.}
 
-\autoref{fig:BNN_ANN} zeigt eine Gegenüberstellung eines künstlichen und biologischen Neurons. Dabei können die Dendriten eines biologischen Neurons als Informationseingang, das Axon als Informationsausgang, die Synapsen als Gewichte und die Soma als Summen- und Aktivierungsfunktion des künstlichen Neurons angesehen werden. 
+\autoref{fig:BNN_ANN} zeigt eine Gegenüberstellung eines künstlichen und biologischen Neurons. Dieser Vergleich ist auf \citet{kneuron} zurückzuführen. Sie formulierten die Funktion eines Neurons wie folgt:\\ Ankommende Informationen werden von den Dendriten aufegenommen. Daraufhin wird die Aktivität der Dendriten  mit einer bestimmten Gewichtung im Soma summiert und wenn ein bestimmter Schwellwert überschritten ist, wird die Information durch das Axon weitergeleitet. Die Kontaktstellen der Neuronen untereinander bilden die Synapsen. Welche das kontaktierte Neuron erregen oder hemmen können.\citef[17]{bio_neuron} Hirbei können die Dendriten eines biologischen Neurons als Informationseingang, das Axon als Informationsausgang, die Synapsen als Gewichte und die Soma als Propagierungs- und Aktivierungsfunktion des künstlichen Neurons angesehen werden. Die Aufgabe der Propagierungsfunktion ist es die ankommenden Signale zu verarbeiten und für die Aktivierrungsfunktion vorzubereiten. Wobei die Aktivierungsfunktion dann entscheidet wie mit den Informationen umgegangen werden soll.
 
-\todo{Als Grundmodell für das ktinstliche Neuron diente das neurophysiologische Vorbild, das auf McCulloch und Pitts (aaO.) zurtickzufUhren ist. Diese betrachteten ein Neuron als eine Art Addierer der ankommenden Impulse, die durch die Dendriten (Eingangs-kanale) aufgenommen werden. Die Aktivitaten, mit einer bestimmten Gewichtung, werden im Soma (Korper des Neurons mit Zellkem) summiert und, sofem die Summe einen bestimmten Schwellwertüberschreitet, wird die Information durch das Axon (Ausgangskanal) weitergeleitet. Der Kontakt zu den anderen Neuronen findet tiber Synapsen (elektrochemische Kontakte) statt. Diese konnen die kontaktierten Neuronen hemmen bzw. erregen (vgl. Stanley und Bak, 1991; Brause, 1991; Schoneburg u.a., 1990; Ritter u.a., 1991)  $doi:https://doi.org/10.1007/978-3-322-83450-8\_2 - S.17$}
+%\todo{Als Grundmodell für das künstliche Neuron diente das neurophysiologische Vorbild, das auf McCulloch und Pitts (aaO.) zurtickzuführen ist. Diese betrachteten ein Neuron als eine Art Addierer der ankommenden Impulse, die durch die Dendriten (Eingangs-kanäle) aufgenommen werden. Die Aktivitaten, mit einer bestimmten Gewichtung, werden im Soma (Korper des Neurons mit Zellkem) summiert und, sofern die Summe einen bestimmten Schwellwert überschreitet, wird die Information durch das Axon (Ausgangskanal) weitergeleitet. Der Kontakt zu den anderen Neuronen findet über Synapsen (elektrochemische Kontakte) statt. Diese können die kontaktierten Neuronen hemmen bzw. erregen (vgl. Stanley und Bak, 1991; Brause, 1991; Schoneburg u.a., 1990; Ritter u.a., 1991)  $doi:https://doi.org/10.1007/978-3-322-83450-8\_2 - S.17$}
 
-
-Das zurzeit prominenteste künstliche Neuron (die kleinste Einheit im Netzwerk), dargestellt in \hbox{\autoref{fig:BNN_ANN} b)}, wird nach \citet{perceptron_ros58} als Perceptron bezeichnet. Es verarbeitet die Eingangssignale über die Propagierungsfunktion. In \autoref{fig:BNN_ANN} b) ist es die Summenfunktion. So summiert es zunächst die gewichteten Eingangsinformationen mit $\varphi (x)=\sum_{i=1}^{n}x_{i}\omega_{i}$, anschließend wird die gewichtete Summe~$\varphi(x)$ über die Aktivierungsfunktion~$\sigma(x)$ als Ausgang~$y$ an das nächste Neuron übergeben.
+Das zurzeit prominenteste künstliche Neuron, dargestellt in \hbox{\autoref{fig:BNN_ANN} b)}, wird nach \citet{perceptron_ros58} als Perceptron bezeichnet. %Es verarbeitet zunächst die Eingangssignale über die Propagierungsfunktion (in \autoref{fig:BNN_ANN} b) ist es die Summenfunktion).
+So summiert es zunächst die gewichteten Eingangsinformationen mit der Propagierungsfunktion $\varphi (x)=\sum_{i=1}^{n}x_{i}\omega_{i}$, anschließend wird die gewichtete Summe~$\varphi(x)$ über die Aktivierungsfunktion~$\sigma(x)$ als Ausgang~$y$ an das nächste Neuron übergeben.
 %
 %
 %\setlength{\intextsep}{0pt}%
@@ -57,8 +57,7 @@ Das zurzeit prominenteste künstliche Neuron (die kleinste Einheit im Netzwerk),
 %    \label{tab:BNN_ANN}
 %\end{wraptable}
 %
-
-Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wobei die \hbox{Heaviside-,} die lineare Schwellwertfunktion und der Tangens Hyperbolicus bipolar dargestellt sind (Wertebereich [-1,1]) aber auch unipolar (Wertebereich [0,1]) darstellbar sind. Die Fermifunktion weist zwar nur einen Wertebereich von [0,1] auf aber durch den Temperaturfaktor kann sie an die Heavisidefunktion angenährt werden und hat den Vorteil der Differenzierbarkeit.\footnote{Vgl. \citet[5]{neuralnet_intro} und \citet[39 f]{dkriesel07}.}
+Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wobei die \hbox{Heaviside-,} die lineare Schwellwertfunktion und der Tangens Hyperbolicus bipolar dargestellt sind (Wertebereich [-1,1]) aber auch unipolar (Wertebereich [0,1]) verwendet werden können. Die Fermifunktion weist zwar nur einen Wertebereich von [0,1] auf aber durch den Temperaturfaktor kann sie an die Heavisidefunktion angenährt werden und hat den Vorteil der Differenzierbarkeit.\footnote{\,Vgl. \citet[5]{neuralnet_intro} und \citet[39 f]{dkriesel07}.}
 
 \begin{figure}[!htb]
     \centering
@@ -117,15 +116,20 @@ Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wo
             \draw[scale=0.5,domain=-4:4,smooth,variable=\x,black] plot ({\x+4},{4*tanh(\x)});
         \end{tikzpicture}
 
-    \caption{Typische Funktionen die als Aktivierungsfunktion angewendet werden.}
+    \caption{Typische Funktionen die als Aktivierungsfunktion angewendet werden.\protect\footnotemark{}}
     \label{fig:funktion}
 \end{figure}
+\addtocounter{footnote}{-1}     %  -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
+\addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
+\wrapfigfoot\footnotetext{\,\autoref{fig:funktion} wurde in Anlehnung an \citet[5]{neuralnet_intro} Figure 1.5 erstellt.}
+
+%\,\autoref{fig:SOM_top} wurde aus \citet[274]{Kroll16} übernommen.
 
 Es gibt Problemstellungen die mit klassischen mathematischen Modellen und Algorithmen gar nicht oder nur schwer zu lösen sind. Neuronale Netze unterscheiden sich zu klassischen Algorithmen durch ihre Lernfähigkeit. Ohne explizite Programmierung sind sie in der Lage eine Aufgabe anhand von Trainingsbeispielen zu erlernen. Einige Beispiele wären die Gesichtserkennung oder die Erkennung von menschlicher Sprache.\\
 
 %\newpage
 
-Künstliche neuronale Netze sind augenblicklich eine Disziplin der Computional Intelligence~(CI), welches wiederum einen Teilbereich der Künstlichenintelligenz (artificial intelligence)~(AI) darstellt. Diese fasst verschiedene von der Natur inspirierte Berechnungsmethoden zusammen. Weitere Methoden der CI sind Fuzzy-Systeme~(FS), Evolutionäre Algorithmen~(EA), Schwarmintelligenz~(SI) und Künstliche Immunsysteme~(AIS).\citef[11 ff]{Kroll16} Obwohl sich diese Arbeit wesentlich mit NN beschäftigen wird, wird an dieser Stelle auf weitere CI-Methoden hingewiesen, da in der Literatur hybride CI-Systeme bekannt sind und auch genutzt werden.
+Künstliche neuronale Netze sind augenblicklich eine Disziplin der Computerbasierten Intelligenz (engl.: computional intelligence)~(CI), welches wiederum einen Teilbereich der Künstlichenintelligenz (engl.: artificial intelligence)~(AI) darstellt. Die CI fasst verschiedene von der Natur inspirierte Berechnungsmethoden zusammen. Neben den NN sind weitere Methoden der CI Fuzzy-Systeme~(FS), Evolutionäre Algorithmen~(EA), Schwarmintelligenz~(SI) und Künstliche Immunsysteme~(AIS).\citef[11 ff]{Kroll16} Obwohl sich diese Arbeit wesentlich mit NN beschäftigen wird, wird an dieser Stelle auf weitere CI-Methoden hingewiesen, da in der Literatur hybride CI-Systeme bekannt sind und auch genutzt werden.
 
 \subsection{Charakterisierung und Anwendung künstlicher neuronaler Netze}
 
@@ -139,7 +143,7 @@ Nach der Art des verwendeten Neurons.\\
 Dazu gibt es in der Literatur vielfältige Beispiele. \citet{Fiesler96} zählen einige Beispiele im Kapitel B1 auf und weisen auf Unterschiede hin. Als Beispiel wird dort das bereits erwähnte Perceptron beschrieben. Dann gehen sie auf das Neuron des Hopfield-Netzwerkes ein, bei dem das Neuron ein Teilchen beschreibt welches sich in einem Magnetfeld ausrichtet. Ein eher exotischer Vertreter der dort nicht erwähnt wird ist das Fuzzy-Neuron von \citet{fuzzy-neuron}, welches nach der Aktivierung mehrere mögliche Zustände einnehmen kann und seine Anwendung in der Mustererkennug findet.
 
 \item%
-Nach der Topologie buw. der Verbindungsarchitektur.\\
+Nach der Topologie bzw. der Verbindungsarchitektur.\\
 Sie beschreibt wie Neuronen in einem Netzwerk verbunden sind.
 Es werden folgende Architekturen unterschieden:
 \begin{itemize}
@@ -152,10 +156,10 @@ Heteroassoziative: Unterschiedliche Neurone übernehmen die Rolle der Eingangs- 
 Zusätzlich wird unterschieden wie die Verbindungen unter den einzelnen Neuronen realisiert sind. Hier wird zwischen zwei Arten unterschieden:
 
 \item[$\circ$]%
-Feed-Forward: Diese Netzwerke bestehen meistens aus Schichten und eine Schicht ist nur mit der jeweils nächsten Schicht verbunden.
+Feed-Forward: Diese Netzwerke bestehen meistens aus Schichten und eine Schicht ist nur mit der jeweils nächsten Schicht verbunden, sodass die Informationen von Schicht zu Schicht weiter gegeben werden.
 
 \item[$\circ$]%
-Recurrent (Feed-Back): In der deutschsprachigen Literatur als rückgekoppelte oder rekurrente Netze bezeichnet beeinflussen sich diese Netzwerke selbst. Die Neuronen dieser Netzwerke besitzen eine Verbindung entweder zu sich selbst (direkte Rückkoppelung), zu den Neuronen der vorhergehenden Schicht (indirekte Rückkopplung), zu den Neuronen der gleichen Schicht (laterale Rückkopplung) oder vollständig verbundene Netze (Verbindungen zwischen allen Neuronen ausgenommen der direkten Rückkopplung). Durch die Rückkopplung besitzen diese Netzwerke ein ``Gedächtnis''~da der vorherige Zustand in die Auswertung der aktuellen Eingangsinformation mit einfließt.\citef[42 ff]{dkriesel07} Ein Beispiel für ein vollständig verbundenes Netzwerk ist das Hopfield-Netzwerk.
+Recurrent (Feed-Back): In der deutschsprachigen Literatur als rückgekoppelte oder rekurrente Netze bezeichnet beeinflussen sich diese Netzwerke selbst. Die Neuronen dieser Netzwerke besitzen eine Verbindung entweder zu sich selbst (direkte Rückkoppelung), zu den Neuronen der vorhergehenden Schicht (indirekte Rückkopplung), zu den Neuronen der gleichen Schicht (laterale Rückkopplung) oder vollständig verbundene Netze (Verbindungen zwischen allen Neuronen ausgenommen der direkten Rückkopplung). Durch die Rückkopplung besitzen diese Netzwerke ein \glqq Gedächtnis\grqq~da der vorherige Zustand in die Auswertung der aktuellen Eingangsinformation mit einfließt.\citef[42 ff]{dkriesel07} Ein Beispiel für ein vollständig verbundenes Netzwerk ist das Hopfield-Netzwerk.
 
 \end{itemize}
 
@@ -190,7 +194,7 @@ Es gibt vielfältige Anwendungsgebiete für NN. Angefangen bei Optimierungsprobl
 
 %\farbig{NN sind Black-Box und Analyse ist schwer aber es gibt in der Literatur mögliche Analyseverfahren.}
 
-
+\newpage
 \subsection{Überblick über gängige Modelle}
 Im vorherigen Kapitel wurde die Charakterisierung der NN beleuchtet und einige Netzwerkmodelle mit ihren Anwendungen genannt. In diesem Kapitel soll die Funktionsweise näher erläutert werden.
 
@@ -268,12 +272,11 @@ Im vorherigen Kapitel wurde die Charakterisierung der NN beleuchtet und einige N
             }
 \end{tikzpicture}
         %\includegraphics[width=.5\textwidth]{Bilder/MLP/slp.png}
-    \caption{SLP mit fünf Eingabeneuronen $i_n$ und einem Ausgabeneuron $\Omega$.}
+    \caption{SLP mit fünf Eingabeneuronen $i$ und zwei Ausgabeneuron $\Omega$ auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
     \label{fig:SLP}
 \end{figure}
-Bei den Einzelschichtperceptrons (single layer perceptrons)~(SLP) werden die zuvor beschriebenen Perceptrons zu einem Netzwerk zusammengeschlossen. In der Literatur gibt es keine Konvention in der Hinsicht ob die Eingabeneuronen (in \autoref{fig:BNN_ANN} b) als $\text{\textit{x}}$ bezeichnet), welche als Identität dienen und Informationen nur weitergeben, auch als Schicht zählen. Wenn die Eingabeneuronen nicht hinzugezählt werden so wird als Perceptron nur das datenverarbeitende Neuron bezeichnet. Werden die Eingabeneuronen auch als Schicht gezählt so wird das sich so ergebende neuronale Netz aus Eingabe- und Verarbeitungsschicht ebenfalls als Perceptron bezeichnet. So besteht das SLP aus einer Schicht Eingabeneuronen und mindestens einem Ausgabeneuron. Beide Schichten sind verbunden über \underline{eine} Ebene trainierbarer Gewichte $\text{\textit{w}}$. Das SLP ist unteranderem in der Lage logische Funktionen wie AND- und OR-Funktion zu erlernen. Es ist aber auf linear separierbare Daten beschränkt so dass die XOR-Funktion mit einem SLP nicht mehr realisiert werden kann.
-
-Um das SLP zu trainieren gibt es den Perceptron-Lernalgorithmus und die Delta-Regel. Letztere hat den Vorteil dass sie nicht nur auf die binäre Aktivirungsfunktion beschränkt ist.\citef[76\,--\,86]{dkriesel07}
+Bei den Einzelschichtperceptrons (single layer perceptrons)~(SLP) werden die zuvor in \autoref{sec:einf_neuro} beschriebenen Perceptrons zu einem Netzwerk zusammengeschlossen. \autoref{fig:SLP} zeigt ein SLP mit fünf Eingabeneuronen $i$ und zwei Ausgabeneuronen $\Omega$. In der Literatur gibt es keine Konvention in der Hinsicht ob die Eingabeneuronen $i$, welche als Identität dienen (in \autoref{fig:SLP} dargestellt als \inlineneuron[i]{0.7}) und Informationen nur weitergeben, auch als Schicht zählen. Wenn die Eingabeneuronen nicht hinzugezählt werden so wird als Perceptron nur das datenverarbeitende Neuron \inlineneuron[per]{0.7} bezeichnet. Werden die Eingabeneuronen auch als Schicht gezählt so wird das sich so ergebende neuronale Netz aus Eingabe- und Verarbeitungsschicht ebenfalls als Perceptron bezeichnet. In dieser Arbeit wird die Eingabeschicht mitgezählt. So besteht das SLP aus einer Schicht Eingabeneuronen und mindestens einem Ausgabeneuron. Beide Schichten sind verbunden über \underline{eine} Ebene trainierbarer Gewichte $\text{\textit{w}}$. Das SLP ist unteranderem in der Lage logische Funktionen wie AND- und OR-Funktion zu erlernen. Es ist aber auf linear separierbare Daten beschränkt so dass die XOR-Funktion (siehe Anhang \ref{sec:XOR}) mit einem SLP nicht mehr realisiert werden kann.
+Um das SLP zu trainieren gibt es den Perceptron-Lernalgorithmus und die Delta-Regel. Letztere Methode hat im Vergleich zur ersteren den Vorteil dass sie nicht nur auf die binäre Aktivirungsfunktion (Heavisidefunktion im Wertebereich [0,1]) beschränkt ist.\citef[76 ff]{dkriesel07}
 \\
 
 \begin{figure}[!htb]
@@ -371,13 +374,13 @@ Um das SLP zu trainieren gibt es den Perceptron-Lernalgorithmus und die Delta-Re
             }
                 \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.5)$) {$\dots\,w_{h,\Omega}\,\dots$};
 \end{tikzpicture}
-    \caption{MLP mit verdeckten Neuronen $h_n$ und einer verdeckten Schicht links bzw. zwei verdeckten Schichten rechts.}
+    \caption{Ein MLP mit einer verdeckten Schicht und verdeckten Neuronen $h$ auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
     \label{fig:MLP}
 \end{figure}
 
-Im Unterschied zu den SLPs besitzen die Mehrschichtperceptrons zwischen der Eingabe- und Ausgabeschicht noch mindestens eine verdeckte Verarbeitungsschicht. Somit weisen sie mindestens zwei Ebenen an trainierbaren Gewichten auf. In \autoref{fig:MLP} sind MLPs mit einer und zwei verdeckten Schichten dargestellt. Die zusätzliche Ebene ermöglicht eine beliebig genaue Approximation einer Funktion mit endlich vielen Unstetigkeitsstellen und ihrer ersten Ableitung. Theoretisch können beliebig viele verdeckte Schichten aufgebaut werden aber wie \hbox{\citet{dkriesel07}} erläutert reichen drei Ebenen von trainierbaren Gewichten aus, um jede beliebige Menge darstellen zu können.\citef[86\,--\,89]{dkriesel07}
+Im Unterschied zu den SLPs besitzen die Mehrschichtperceptrons zwischen der Eingabe- und Ausgabeschicht noch mindestens eine verdeckte Verarbeitungsschicht. Somit weisen sie mindestens zwei Ebenen an trainierbaren Gewichten auf. In \autoref{fig:MLP} ist ein MLP mit einer verdeckten Schichten dargestellt. Die zusätzliche Ebene von trainierbaren Gewichten ermöglicht eine beliebig genaue Approximation einer Funktion mit endlich vielen Unstetigkeitsstellen und ihrer ersten Ableitung. Theoretisch können beliebig viele verdeckte Schichten aufgebaut werden aber wie \hbox{\citet{dkriesel07}} erläutert reichen drei Ebenen von trainierbaren Gewichten aus, um jede beliebige Menge darstellen zu können.\citef[86 ff]{dkriesel07}
 
-Um das MLP zu trainieren gibt es das sogenannt Backpropagation Verfahren das zu den überwachten Lernalgorithmen gezählt wird. Hierbei wird das Netzwerk in der Trainingsphase mit Informationen versorgt und das errechnete Ergebnis wird mit dem gewünschten Ergebnis verglichen. Die Abweichung wird anschließend genutzt, um die Gewichte ausgehend von den Ausgabe- hin zu den Eingabeneuronen anzupassen. Ein bekanntes Problem dieses Verfahrens ist dass bei mehreren Verdeckten Schichten und einer konstanten Lernrate, Gewichte langsamer trainiert werden je weiter sie sich von der Ausgabeschicht befinden.\citef[89\,--\,96]{dkriesel07} Des Weiteren hat eine hohe Anzahl an Ausgabeneuronen ebenfalls einen negativen Einfluss auf die Lerngeschwindigkeit des Netzwerkes.\citef[124]{dkriesel07}
+Um das MLP zu trainieren gibt es das sogenannt Backpropagation Verfahren das zu den überwachten Lernalgorithmen gezählt wird. Hierbei wird das Netzwerk in der Trainingsphase mit Informationen versorgt und das errechnete Ergebnis wird mit dem gewünschten Ergebnis verglichen. Die Abweichung wird anschließend genutzt, um die Gewichte ausgehend von den Ausgabe- hin zu den Eingabeneuronen anzupassen. Ein bekanntes Problem dieses Verfahrens ist dass bei mehreren Verdeckten Schichten und einer konstanten Lernrate, Gewichte langsamer trainiert werden je weiter sie sich von der Ausgabeschicht befinden.\citef[89 ff]{dkriesel07} Des Weiteren hat eine hohe Anzahl an Ausgabeneuronen ebenfalls einen negativen Einfluss auf die Lerngeschwindigkeit des Netzwerkes.\citef[124]{dkriesel07}
 
 
 \subsubsection{Radiale Basisfunktionen (RBF)}
@@ -407,7 +410,7 @@ Um das MLP zu trainieren gibt es das sogenannt Backpropagation Verfahren das zu 
         \newcommand{\neurono}[3][]{%
         \ifthenelse{\equal{#3}{0}}{%
             \node[neuron,circle split,inner sep=1pt,fontscale=6] (#1) at (#2)
-                    { $\mathbf{||c,x||}$ \nodepart{lower} };
+                    {$\mathbf{||c\mathord{,}x||}$ \nodepart{lower}};
                     
             \node[fontscale=6] at ($(#2.lower)-(0,\siz/4)$){\textbf{Gauß}};
             }{
@@ -476,27 +479,440 @@ Um das MLP zu trainieren gibt es das sogenannt Backpropagation Verfahren das zu 
             }
                 \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.5)$) {$\dots\, w_{h,\Omega}\,\dots$};
         \end{tikzpicture}
-    \caption{MLP mit verdeckten Neuronen $h_n$ und einer verdeckten Schicht links bzw. zwei verdeckten Schichten rechts.}
+    \caption{RBF mit drei Eingabeneuronen $i$, vier verdeckten Neuronen $h$  und zwei Ausgabeneuronen $\Omega$ auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
     \label{fig:RBF}
 \end{figure}
 
-RBFs sind feed-forward Netze und ähnlich wie die Perceptrons schichtartig aufgebaut. Dabei besitzt jedes Neuron einer Schicht eine Verbindung zu jedem Neuron der nachfolgenden Schicht (diese Art der Verbindung zwischen den Schichten wird auch Vollverknüpfung genannt). RBFs besitzen aber genau drei Schichten und somit nur eine verdeckte Schicht. Die erste Schicht dient ebenfalls wie bei den Perceptrons nur der Verteilung der Eingabedaten an die nächste Schicht ohne jegliche Verarbeitung. Die zweite Schicht besteht aus verdeckten Neuronen die auch als RBF-Neuronen bezeichnet werden. Jedes Neuron beinhaltet eine radiale Basisfunktion. Dies sind stets positive und radialsymmetrische Funktionen. Sie besitzen ein Maximum in der Mitte und streben gegen Null je weiter sich die Funktion vom Mittelpunkt entfernt. Eine typische Basisfunktion ist hierbei die gaußsche Glockenkurve. Die Ausgabe eines RBF-Neurons gibt daher Auskunft über die nähe der Eingabedaten zum Mittelpunkt der Basisfunktion. Schließlich sind die verdeckten Neuronen über eine gewichtete Verbindung mit den Ausgabeneuronen verknüpft. Die Ausgabeneurone summieren die Ausgabe der RBF-Neuronen und geben die Summe ohne weitere Verarbeitung weiter.
+RBFs sind feed-forward Netze und ähnlich wie die Perceptrons schichtartig aufgebaut. Dabei besitzt jedes Neuron einer Schicht eine Verbindung zu jedem Neuron der nachfolgenden Schicht (diese Art der Verbindung zwischen den Schichten wird auch Vollverknüpfung genannt). RBFs besitzen aber genau drei Schichten und somit nur eine verdeckte Schicht. Die erste Schicht dient ebenfalls wie bei den Perceptrons nur der Verteilung der Eingabedaten an die nächste Schicht ohne jegliche Verarbeitung. Die zweite Schicht besteht aus verdeckten Neuronen die auch als RBF-Neuronen \inlineneuron[rbf-h]{0.8} bezeichnet werden. Jedes Neuron beinhaltet eine radiale Basisfunktion als Aktivierungsfunktion. Dies sind stets positive und radialsymmetrische Funktionen. Sie besitzen ein Maximum in der Mitte (das sogenannte Zentrum~$c$) und streben gegen Null je weiter sich die Funktion vom Mittelpunkt entfernt. Eine typische Basisfunktion ist hierbei die gaußsche Glockenkurve. Die Propagierungsfunktion bildet hier den Abstand zwischen der Eingabeinformation~$x$~und dem Zentrum~$c$~der Aktivierungsfunktion. Die Ausgabe eines RBF-Neurons gibt nun Auskunft über die nähe der Eingabedaten zum Mittelpunkt der Basisfunktion. Schließlich sind die verdeckten Neuronen über eine gewichtete Verbindung mit den Ausgabeneuronen \inlineneuron[rbf-o]{0.8} verknüpft. Die Ausgabeneurone summieren die Ausgabe der RBF-Neuronen und geben die Summe ohne weitere Verarbeitung weiter.
 
 Ursprünglich wurden die RBFs als Interpolationsverfahren entwickelt. Daher wurde jedem Trainingsbeispiel ein Basispunkt und somit ein RBF-Neuron zugewiesen. Bei großen Datensätzen ergibt sich eine große Anzahl an verdeckten Neuronen die einen hohen Speicherbedarf nach sich ziehen. Um mit einer geringeren Anzahl an verdeckten Neuronen auszukommen können auch die RBF-Netze trainiert werden. Das Training der RBF-Netze findet oftmals in mehreren Stufen statt. Im ersten Schritt werden die Zentren und Formparameter durch unüberwachte Lernmethoden bestimmt. Im nächsten Schritt werden die Gewichte beispielsweise mit der Delta-Regel angepasst.
 
-Die RBFs bieten den Vorteil dass durch das Stauchen/Strecken und Verschieben der Basisfunktionen und das anschließende Aufsummieren jede mögliche Funktion approximiert werden kann. Weiterhin wirkt sich die Anzahl an Ausgabeneuronen nicht wesentlich auf die Berechnungskomplexität aus. Im Gegenzug führt eine hohe Anzahl an Trainingsbeispielen aber auch zu einer gleich hohen Anzahl an verdeckten Neuronen und somit zu einem erhöhten Speicher- und Rechenaufwand. Eine Verringerung der Anzahl der RBF-Neuronen und anschließendes Training sind zwar möglich bestehen aber aus mehreren Stufen und erhöhen einerseits die Algorithmuskomplexität und bieten andererseits mehr Raum für Ungenauigkeiten.\footnote{Vgl. \citet[73\,--\,81]{comp_int_07}, \citet[109\,--\,125]{dkriesel07} und \citet[261\,--\,271]{Kroll16}.}
+Die RBFs bieten den Vorteil dass durch das Stauchen/Strecken und Verschieben der Basisfunktionen und das anschließende Aufsummieren jede mögliche Funktion approximiert werden kann. Weiterhin wirkt sich die Anzahl an Ausgabeneuronen nicht wesentlich auf die Berechnungskomplexität aus. Im Gegenzug führt eine hohe Anzahl an Trainingsbeispielen aber auch zu einer gleich hohen Anzahl an verdeckten Neuronen und somit zu einem erhöhten Speicher- und Rechenaufwand. Eine Verringerung der Anzahl der RBF-Neuronen und anschließendes Training sind zwar möglich bestehen aber aus mehreren Stufen und erhöhen einerseits die Algorithmuskomplexität und bieten andererseits mehr Raum für Ungenauigkeiten.\footnote{\,Vgl. \citet[73 ff]{comp_int_07}, \citet[109 ff]{dkriesel07} und \citet[261 ff]{Kroll16}.}
 
 
 
 \subsubsection{Self Organizing Feature Maps (SOM)}
+\begin{figure}[!htb]
+    \centering
+    %---------------------------------------------------------------
+        %% SOM
+        %-----------------------------------------
+        %% linkes Bild
+        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
+        \def\layersep{2}            % vertikal distance between the layers
+        \def\neuronsep{1.5}         % Horizontal distance between neurons
+        \def\dlsize{1.5}            % distance between node and layer lable
+        \def\inout{\layersep*.65}   % Size of in- and output-arrow
+        \def\siz{.8}                % neuronsize
+        \def\y{3}                   % Start of the most upper layer
+        \def\ni{5}                  % Amount of input neurons
+        \def\no{3}                  % Amount of output neurons
+        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
+        \tikzstyle{annot} = [text width=6em, text centered]
+        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
+        \tikzset{
+                ident/.pic={
+                \draw[semithick] (-\siz/#1,-\siz/#1) -- (\siz/#1,\siz/#1);
+            }}
+        \newcommand{\neurono}[3][]{%
+        \ifthenelse{\equal{#3}{0}}{%
+            \node[neuron,circle split,inner sep=1pt,fontscale=6] (#1) at (#2) { $\mathbf{||c,x||}$ \nodepart{lower}};
+            \node[fontscale=6] at ($(#2.lower)-(0,\siz/4)$){\textbf{Gauß}};
+            }{
+            \node[neuron,circle split,inner sep=1.3pt] (#1) at (#2)
+                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} };
+            \pic at ($(#1.lower)-(0,\siz/8)$) {ident=#3};
+            }}
+        % Draw the left input layer nodes
+            \foreach \xn in {1,...,\ni}{
+                \node[neuron,fontscale=15] (Il-\xn) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
+                \node[above of=Il-\xn, node distance=\inout cm] (Inl-\xn) {};
+                \draw [arrows={-Stealth[length=7pt]},densely dotted] (Inl-\xn) edge (Il-\xn);
+            }
+        % Draw the output layer node
+            \foreach \xn in {1,...,\no}{
+                \node[neuron] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\y-\layersep) [fontscale=15] {$\Omega_{\xn}$};
+        % Connect every node in the input layer with the output layer                
+            \foreach \source in {1,...,\ni}{
+                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Ol-\xn);}}
+        % Connect every node in the output layer
+            \pgfmathsetmacro{\nom}{\no - 1}
+            \ifthenelse{\equal{\no}{1}}{%
+            }{
+               \foreach \xn in {1,...,\nom}{
+                    \pgfmathtruncatemacro{\xnp}{\xn + 1}
+                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Ol-\xn) edge[bend right=45] (Ol-\xnp);
+            }}
+        % Annotate the layers
+                \node[annot,right of=Il-\ni, node distance=\dlsize cm] (il) {\textbf{Eingabe- schicht}};
+                \node[annot,below of=il] {\textbf{Ausgabe- schicht}};
+        %-----------------------------------------
+        %% rechtes Bild
+        % Draw the right input layer nodes
+                \coordinate (tIr) at ($(il)-(Il-\ni)$);
+                \coordinate (ttIr) at (tIr |- 0,0);
+                \coordinate (Ir) at ($(il)+(ttIr)$);
+            \foreach \name / \xn in {1,...,\ni}{
+        % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+                \node[neuron] (Ir-\xn) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
+                \node[above of=Ir-\xn, node distance=\inout cm] (Inr-\xn) {};
+                \pic at (Ir-\xn) {ident=4};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\xn) edge (Ir-\xn);}
+        % Draw the right output layer node
+            \foreach \xn in {1,...,\no}{
+                \neurono[Or-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-\layersep)$}{0}
+                \node[node distance=\inout cm, below of=Or-\xn] (Onr) {};
+                %\draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or-\xn) edge (Onr);
+        % Connect every node in the hidden layer with the output layer
+            \foreach \source in {1,...,\ni}
+                \draw [arrows={-Stealth[length=7pt]}] (Ir-\source) edge  (Or-\xn);
+            }
+                \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.55)$) {$\dots\, w_{i,\Omega}\,\dots$};
+        % Connect every node in the output layer
+            \ifthenelse{\equal{\no}{1}}{%
+            }{
+               \foreach \xn in {1,...,\nom}{
+                    \pgfmathtruncatemacro{\xnp}{\xn + 1}
+                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge[bend right=45] (Or-\xnp);
+            }}
+        \end{tikzpicture}
+    \caption{Eine SOM mit fünf Eingabeneuronen $i$ und drei Ausgabeneuronen $\Omega$ auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
+    \label{fig:SOM}
+\end{figure}
 
-Die SOMs wurden in den 1980ern von Teuvo Kohonen vorgestellt und werden daher in der Literatur auch als Kohonen Netzwerke bezeichnet. Die SOMs sind nah verwandt mit RBFs. Sie bestehen aber aus zwei anstatt drei Schichten. Die Eingabeschicht dient auch der Informationsweitergabe an die Ausgabeschicht und ist mit dieser vollverknüpft. Die größte Ähnlichkeit zwischen SOM- und RBF-Netzen besteht in der Aktivierungsfunktion die bei SOMs ebenfalls eine radiale Funktion darstellt. Im Unterschied zu den RBFs liegen die Gewichte aber zwischen Eingabe- und Ausgabeschicht. Bei den SOMs ist es nun von Interesse welches Ausgabeneuron aktiv ist und nicht wie bei Perceptrons oder RBFs was die Neuronen berechnen. Zusätzlich sind die Neuronen der Ausgabeschicht abhängig von der Anwendung untereinander verbunden. Durch die Art der Verbindung ergibt sich die Dimension der Ausgabe.\footnote{Vgl. \citet[102\,--\,104]{Kruse15} und \citet[153\,--\,156]{dkriesel07}.}\farbig{BILD}
+Die SOMs (dargestellt in \autoref{fig:SOM}) wurden in den 1980ern von Teuvo Kohonen vorgestellt und werden daher in der Literatur auch als Kohonen Netzwerke bezeichnet. Die SOMs sind nah verwandt mit den RBFs. Sie bestehen aber aus zwei anstatt drei Schichten. Die Eingabeschicht dient auch der Informationsweitergabe an die Ausgabeschicht und ist mit dieser vollverknüpft. Die größte Ähnlichkeit zwischen SOM- und RBF-Netzen besteht in dem Datenverarbeitenden Neuron welches ebenfalls ein RBF-Neuron darstellt. Im Unterschied zu den RBFs liegen die Gewichte aber zwischen Eingabe- und Ausgabeschicht und es wird nur das Ausgabeneuron aktiv dass der Eingabeinformation am nächsten liegt.
+Bei den SOMs ist es nun von Interesse welches Ausgabeneuron aktiv ist und nicht wie bei Perceptrons oder RBFs was die Neuronen berechnen. Zusätzlich sind die Neuronen der Ausgabeschicht abhängig von der Anwendung untereinander verbunden. Durch die Art der Verbindung ergibt sich die Dimension der Ausgabe.\footnote{\,Vgl. \citet[102 ff]{Kruse15} und \citet[153 ff]{dkriesel07}.} Einige Verbindungsmöglichkeiten sind in \autoref{fig:SOM_top} dargestellt.
+\begin{figure}[tb]
+    \centering
+        \includegraphics[width=1\textwidth]{Bilder/SOM/som_top.png}
+    \caption{Beispiele unterschiedlicher ein-, zwei- und dreidimensionaler Anordnungen der Ausgabeneuronen.\protect\footnotemark{}}
+    \label{fig:SOM_top}
+\end{figure}
+\addtocounter{footnote}{-1}     %  -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
+\addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
+\wrapfigfoot\footnotetext{\,\autoref{fig:SOM_top} wurde aus \citet[274]{Kroll16} übernommen.}
 
-Trainiert werden die SOMs unüberwacht wobei die Neuronen bei der Eingabe der Testdaten um die Aktivität konkurrieren. Nach dem Prinzip ``the winner takes all'' werden nur die Gewichte des Neurons trainiert dessen Zentrum am kürzesten von dem Eingabewert liegt.\citef[272\,--\,275]{Kroll16}
-
+Trainiert werden die SOMs unüberwacht wobei die Neuronen bei der Eingabe der Testdaten um die Aktivität konkurrieren. Nach dem Prinzip \glqq the winner takes all\grqq werden nur die Gewichte des Neurons trainiert dessen Zentrum am kürzesten von dem Eingabewert liegt.\citef[272 ff]{Kroll16}
 So können SOMs hochdimensionale Daten auf eine niedrigdimensionale Karte abbilden, wobei die Nachbarschaftsbeziehung der Daten erhalten bleibt.\citef[7]{Kramer09} Dies ermöglicht qualitativ die Nachbarschaftsbeziehungen zu visualisieren und Zusammenhänge von Daten durch Anhäufungen von Neuronen zu finden. Hieraus folgt dass SOMs bei der Vorselektion von Daten eingesetzt werden können sind aber für die Approximation von Funktionen weniger geeignet.
 
+\newpage
 \subsection{Gegenüberstellung der Netzwerke}
+In diesem Abschnitt erfolgt eine Bewertung der vorgestellten neuronalen Netzwerke vor dem Hintergrund der Anwendbarkeit auf die Vorhersage von Strommarktpreisen.
+
+\vspace{1cm}
+
+\begin{comment} %--------DAS IST EIN KOMMENTAR----ANFANG----------%
+
+%-------------------------------------------
+%% Inhalt für Gegenüberstellungstabelle
+\newcommand{\vergleich}[2][1]{%
+%------------------ SLP ------------------%
+        \ifthenelse{\equal{#1}{slp}}{%
+            \ifthenelse{\equal{#2}{v}}{% Vorteil
+                %\begin{itemize}%
+                    %\item%
+                    \tabitem{%
+                        Können Funktionen approximieren}
+                    %\item%
+                    \tabitem{%
+                        Einfacher Aufbau}
+                %\end{itemize}%
+            }{}%
+            \ifthenelse{\equal{#2}{n}}{% Nachteil
+                \begin{itemize}%
+                    \item%
+                        Kann nur linear separierbare Daten repräsentieren und somit kein XOR geschweige denn komplexere Funktionen
+                \end{itemize}%
+            }{}%
+        }{}%
+%------------------ MLP ------------------%
+        \ifthenelse{\equal{#1}{mlp}}{%
+            \ifthenelse{\equal{#2}{v}}{% Vorteil
+                \begin{itemize}%
+                    \item%
+                        Beliebig genaue Approximation von Funktionen
+                    \item%
+                        Höhere Anzahl an Eingabeneuronen hat geringen/keinen Einfluss auf Anzahl der versteckten Neuronen
+                \end{itemize}%
+            }{}%
+            \ifthenelse{\equal{#2}{n}}{% Nachteil
+                \begin{itemize}%
+                    \item%
+                        Eine höhere Anzahl an Ausgabeneuronen führt bei Backpropagation zu einer höheren Lerndauer
+                \end{itemize}%
+            }{}%
+            \ifthenelse{\equal{#2}{v-n}}{% Vor-/Nachteil
+                \begin{itemize}%
+                    \item%
+                        Extrapolationsfähig - Kann zwischen approximierter Funktion und möglichen Ausreißern extrapolieren. Es bleibt dem Anwender überlassen ob das Ergebnis vertrauenswürdig ist.
+                    \item%
+                        Ein Ausfall von Gewichten/Neuronen nach dem Lernvorgang führt zu einem globalen Berechnungsfehler
+                \end{itemize}%
+            }{}%
+        }{}%
+%------------------ RBF ------------------%
+        \ifthenelse{\equal{#1}{rbf}}{%
+            \ifthenelse{\equal{#2}{v}}{% Vorteil
+                \begin{itemize}
+                    \item
+                        Beliebig genaue Approximation von Funktionen
+                    \item
+                        Höhere Anzahl an Ausgabeneuronen hat geringen Einfluss auf Lerngeschwindigkeit
+                \end{itemize}
+            }{}%
+            \ifthenelse{\equal{#2}{n}}{% Nachteil
+                \begin{itemize}
+                    \item
+                        Exponentieller Anstieg der RBF-Neuronen bei steigender Anzahl an Eingabeneuronen bedingt einen höheren Speicher- und Rechenaufwand
+                    \item
+                        Positionierung der Zentren hat großen Einfluss auf die Lerngeschwindigkeit und Approximationsgenauigkeit
+                \end{itemize}
+            }{}%
+            \ifthenelse{\equal{#2}{v-n}}{% Vor-/Nachteil
+                \begin{itemize}%
+                    \item%
+                        Nicht Extrapolationsfähig - Eingabewerte weit weg von den Zentren führen zu dem Ergebniss 0. Das Netzwerk ist in der Lage zu sagen dass es auf die Eingabeinformation keine Antwort geben kann.
+                    \item%
+                        Ein Ausfall von Gewichten/Neuronen nach dem Lernvorgang beeinflusst weite Teile des Netzes nicht - Eine Stelle des Outputs ist aber sehr betroffen da hier direkt eine Funktion fehlt - Dies führt daher zu einem lokalen Fehler 
+                \end{itemize}%
+            }{}%
+        }{}%
+%------------------ SOM ------------------%
+        \ifthenelse{\equal{#1}{som}}{%
+            \ifthenelse{\equal{#2}{v}}{% Vorteil
+                \begin{itemize}
+                    \item
+                        Ermöglicht Nachbarschaftsbeziehungen in Daten zu finden
+                \end{itemize}
+            }{}%
+            \ifthenelse{\equal{#2}{n}}{% Nachteil
+                \begin{itemize}
+                    \item
+                        Kein Funktionsapproximator
+                    \item
+                        Die Wahl der Verknüpfung der Ausgabeneuronen hat großen Einfluss auf die Darstellungsfähigkeit des Netzwerks
+                \end{itemize}
+            }{}%
+        }{}%
+}
+
+\begin{center}
+\definecolor{tableHeader}{RGB}{255, 255, 255}
+\definecolor{tableLineOne}{RGB}{255, 255, 255}
+\definecolor{tableLineTwo}{RGB}{250, 250, 250}
+
+\newcommand{\tabitem}[1]{~~\llap{\textbullet}~~#1\newline}
+
+\newcommand{\tableHeaderStyle}{
+    %
+    \rowfont{\leavevmode\color{black}\bfseries}
+    %\rowfont{\color{black}\bfseries}
+    \rowcolor{tableHeader}
+}
+
+\taburowcolors[2] 2{tableLineOne .. tableLineTwo}
+\tabulinesep =^4mm_1mm
+\extrarowsep=1mm
+%\everyrow{\tabucline[.4mm  white]{}}
+
+%\begin{longtabu} to \textwidth { X[c, 1.5] X[4] X[4] X[4]}%
+%        \tableHeaderStyle%
+%        \toprule[1.5pt]
+%        Netzwerk                                & Vorteil            & Nachteil           & Neutral                 \\
+%        \midrule
+%        Sinle Layer Perceptron \textbf{(SLP)}   & \vergleich[slp]{v} & \vergleich[slp]{n} &                         \\
+%        Multi Layer Perceptron \textbf{(MLP)}   & \vergleich[mlp]{v} & \vergleich[mlp]{n} & \vergleich[mlp]{v-n}    \\
+%        Radiale Basisfunktionen \textbf{(RBF)}  & \vergleich[rbf]{v} & \vergleich[rbf]{n} & \vergleich[rbf]{v-n}    \\
+        %\hline\hline
+%        Self Organizing Maps \textbf{(SOM)}     & \vergleich[som]{v} & \vergleich[som]{n} &                         \\
+%\end{longtabu}    
+    
+\end{center}
+
+\end{comment}%--------DAS IST EIN KOMMENTAR----Ende----------%
+
+%-------------------------------------------
+%% Inhalt für Gegenüberstellungstabelle
+\newcommand{\vergleich}[3][1]{%
+%------------------ SLP ------------------%
+        \ifthenelse{\equal{#1}{slp}}{%
+            \ifthenelse{\equal{#2}{v}}{% Vorteil
+                %\begin{easylist}
+                    \tabitem{% 
+                        Können Funktionen approximieren}{#3}%
+                    \vspace{0.4cm}
+                    \tabitem{% 
+                        Einfacher Aufbau}{#3}%
+                %\end{easylist}%
+            }{}%
+            \ifthenelse{\equal{#2}{n}}{% Nachteil
+                %\begin{easylist}%
+                    %@%
+                    \tabitem{%
+                        Kann nur linear separierbare Daten repräsentieren und somit kein XOR geschweige denn komplexere Funktionen}{#3}%
+                %\end{easylist}%
+            }{}%
+        }{}%
+%------------------ MLP ------------------%
+        \ifthenelse{\equal{#1}{mlp}}{%
+            \ifthenelse{\equal{#2}{v}}{% Vorteil
+                %\begin{easylist}%
+                    %@%
+                    \tabitem{%
+                        Beliebig genaue Approximation von Funktionen}{#3}%
+                    \vspace{0.4cm}
+                    %@%
+                    \tabitem{%
+                        Höhere Anzahl an Eingabeneuronen hat geringen/keinen Einfluss auf Anzahl der versteckten Neuronen}{#3}%
+                %\end{easylist}%
+            }{}%
+            \ifthenelse{\equal{#2}{n}}{% Nachteil
+                %\begin{easylist}%
+                    %@%
+                    \tabitem{%
+                        Eine höhere Anzahl an Ausgabeneuronen führt bei Backpropagation zu einer höheren Lerndauer}{#3}%
+                %\end{easylist}%
+            }{}%
+            \ifthenelse{\equal{#2}{v-n}}{% Vor-/Nachteil
+                %\begin{easylist}%
+                    %@%
+                    \tabitem{%
+                        Extrapolationsfähig: Kann zwischen approximierter Funktion und möglichen Ausreißern extrapolieren. Es bleibt dem Anwender überlassen ob das Ergebnis vertrauenswürdig ist}{#3}%
+                    %\vspace{0.4cm}
+                    %@%
+                    %\tabitem{%
+                    %    Ein Ausfall von Gewichten/Neuronen nach dem Lernvorgang führt zu einem globalen Berechnungsfehler}{#3}%
+                %\end{easylist}%
+            }{}%
+        }{}%
+%------------------ RBF ------------------%
+        \ifthenelse{\equal{#1}{rbf}}{%
+            \ifthenelse{\equal{#2}{v}}{% Vorteil
+                %\begin{easylist}%
+                    %@%
+                    \tabitem{%
+                        Beliebig genaue Approximation von Funktionen}{#3}%
+                    \vspace{0.4cm}
+                    %@%
+                    \tabitem{%
+                        Höhere Anzahl an Ausgabeneuronen hat geringen Einfluss auf Lerngeschwindigkeit}{#3}%
+                %\end{easylist}%
+            }{}%
+            \ifthenelse{\equal{#2}{n}}{% Nachteil
+                %\begin{easylist}%
+                    %@%
+                    \tabitem{%
+                        Exponentieller Anstieg der RBF-Neuronen bei steigender Anzahl an Eingabeneuronen bedingt einen höheren Speicher- und Rechenaufwand}{#3}%
+                    \vspace{0.4cm}
+                    %@%
+                    \tabitem{%
+                        Positionierung der Zentren hat großen Einfluss auf die Lerngeschwindigkeit und Approximationsgenauigkeit}{#3}%
+                %\end{easylist}%
+            }{}%
+            \ifthenelse{\equal{#2}{v-n}}{% Vor-/Nachteil
+                %\begin{easylist}%
+                    %@%
+                    \tabitem{%
+                        Nicht Extrapolationsfähig: Eingabewerte weit weg von den Zentren führen zu dem Ergebniss 0. Das Netzwerk ist in der Lage zu sagen dass es auf die Eingabeinformation keine Antwort geben kann}{#3}%
+                    %\vspace{0.4cm}
+                    %@%
+                    %\tabitem{%
+                    %    Ein Ausfall von Gewichten/Neuronen nach dem Lernvorgang beeinflusst weite Teile des Netzes nicht~-- Eine Stelle des Outputs ist aber sehr betroffen da hier direkt eine Funktion fehlt~-- Dies führt daher zu einem lokalen Fehler}{#3}%
+                %\end{easylist}%
+            }{}%
+        }{}%
+%------------------ SOM ------------------%
+        \ifthenelse{\equal{#1}{som}}{%
+            \ifthenelse{\equal{#2}{v}}{% Vorteil
+                %\begin{easylist}%
+                    %@%
+                    \tabitem{%
+                        Ermöglicht Nachbarschaftsbeziehungen in Daten zu finden}{#3}%
+                %\end{easylist}%
+            }{}%
+            \ifthenelse{\equal{#2}{n}}{% Nachteil
+                %\begin{easylist}%
+                    %@%
+                    \tabitem{%
+                        Kein Funktionsapproximator}{#3}%
+                    \vspace{0.4cm}
+                    %@%
+                    \tabitem{%
+                        Die Wahl der Verknüpfung der Ausgabeneuronen hat großen Einfluss auf die Darstellungsfähigkeit des Netzwerks}{#3}%
+                %\end{easylist}%
+            }{}%
+        }{}%
+}
+
+\newcommand{\tabitem}[2]{\textbullet~~\begin{minipage}[t]{#2\textwidth}\raggedright #1\end{minipage}}
+
+\begin{tabularx}{\linewidth}{>{\setlength\hsize{.5\hsize}}X @{\kern4\tabcolsep}
+>{\setlength\hsize{.5\hsize}}X}
+
+
+\multicolumn{2}{l}{Single Layer Perceptron \textbf{(SLP)}} \\\toprule[0.5pt]
+
+ 
+\multicolumn{1}{c}{\textbf{Vorteil}} & \multicolumn{1}{c}{\textbf{Nachteil}} \\ \cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+
+\vergleich[slp]{v}{0.45} & \vergleich[slp]{n}{0.45} \\
+
+\vspace{1cm}
+%\bottomrule
+\end{tabularx}
+
+
+\begin{tabularx}{\linewidth}{>{\setlength\hsize{.5\hsize}}X @{\kern4\tabcolsep}
+>{\setlength\hsize{.5\hsize}}X}
+
+
+\multicolumn{2}{l}{Self Organizing Maps \textbf{(SOM)}} \\\toprule[0.5pt]
+
+ 
+\multicolumn{1}{c}{\textbf{Vorteil}} & \multicolumn{1}{c}{\textbf{Nachteil}} \\ \cmidrule(r{3\tabcolsep}){1-1}\cmidrule(l{-\tabcolsep}){2-2}
+
+\vergleich[som]{v}{0.45} & \vergleich[som]{n}{0.45} \\
+
+\vspace{1cm}
+%\bottomrule
+\end{tabularx}
+
+
+
+
+\begin{tabularx}{\linewidth}{
+>{\setlength\hsize{0.333\hsize}}X @{\kern\tabcolsep}
+>{\setlength\hsize{0.333\hsize}}X @{\kern\tabcolsep}
+>{\setlength\hsize{0.333\hsize}}X}
+
+
+\multicolumn{2}{l}{Multi Layer Perceptron \textbf{(MLP)}} \\\toprule[0.5pt]
+
+ 
+\multicolumn{1}{c}{\textbf{Vorteil}} & \multicolumn{1}{c}{\textbf{Nachteil}} & \multicolumn{1}{c}{\textbf{Neutral}} \\ \cmidrule(r){1-1}\cmidrule(l{-0.01\tabcolsep}r){2-2}\cmidrule(l{-0.01\tabcolsep}){3-3}
+
+\vergleich[mlp]{v}{0.29} & \vergleich[mlp]{n}{0.29} & \vergleich[mlp]{v-n}{0.31} \\
+
+\vspace{1cm}
+%\bottomrule
+\end{tabularx}
+
+\begin{tabularx}{\linewidth}{
+>{\setlength\hsize{0.333\hsize}}X @{\kern\tabcolsep}
+>{\setlength\hsize{0.333\hsize}}X @{\kern\tabcolsep}
+>{\setlength\hsize{0.333\hsize}}X}
+
+
+\multicolumn{2}{l}{Radiale Basisfunktionen \textbf{(RBF)}} \\\toprule[0.5pt]
+
+ 
+\multicolumn{1}{c}{\textbf{Vorteil}} & \multicolumn{1}{c}{\textbf{Nachteil}} & \multicolumn{1}{c}{\textbf{Neutral}} \\ \cmidrule(r){1-1}\cmidrule(l{-0.01\tabcolsep}r){2-2}\cmidrule(l{-0.01\tabcolsep}){3-3}
+
+\vergleich[rbf]{v}{0.29} & \vergleich[rbf]{n}{0.29} & \vergleich[rbf]{v-n}{0.31} \\
+
+\vspace{1cm}
+%\bottomrule
+\end{tabularx}
 
 
 %\subsubsection{Fuzzy-neuronales Netz}

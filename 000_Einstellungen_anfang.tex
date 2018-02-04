@@ -9,13 +9,15 @@
 \documentclass[a4paper, 12pt, titlepage]{scrartcl} % Schrift- und Papiergröße werden eingestellt  
 \usepackage[top=2.5cm, bottom=2cm, left=2.5cm, right=2.5cm]{geometry} % Korrekturrand wird eingestellt
 \usepackage[ngerman]{babel}             % Dokumentsprache wird auf deutsch gesetzt
-\usepackage{xcolor}                     % Ermöglicht die Änderung der Schriftfarbe
+\usepackage[table]{xcolor}                     % Ermöglicht die Änderung der Schriftfarbe
 \usepackage{graphicx}                   % Ermöglicht das Einbinden von Bildern
 \usepackage{fancyhdr}                   % Ermöglicht die freie Bearbeitung der Fuß und Kopfzeilen
 \usepackage{tocloft}                    % Ermöglicht das anpassen des Inhaltsverzeichnisses
-\usepackage{wrapfig}                    % Ermöglicht textumschlossene Abbildungen
+%\usepackage{wrapfig}                    % Ermöglicht textumschlossene Abbildungen
 \usepackage{array}                      % Ermöglicht das Anpassen von Tabellen
 \usepackage{amsmath}                    % Erweitert die Mathematikumgebung
+\usepackage{ifthen}                     % Ermöglicht wenn dann Abfragen
+\usepackage{verbatim}                   % Ermöglicht das Auskommentieren mehrerer Zeilen an Code
 %\usepackage{caption,subcaption}
 %\usepackage{subfig}                     % Ermöglicht mehrere Bilder in  einer Abbildung
 %\usepackage{fp}                         % Ermöglicht Kalkulationen innerhalb von LaTeX
@@ -37,19 +39,19 @@
 %%          https://tex.stackexchange.com/questions/12565/load-fonts-that-are-in-a-fonts-directory
 \usepackage{ifxetex}                    % Ermöglicht das Prüfen ob XeLaTeX benutz wird
     \ifxetex
-    \usepackage{fontspec}
-    \defaultfontfeatures{Ligatures=TeX} % To support LaTeX quoting style
-    \setmainfont[%                      % Times New Roman (aus Windows) wird als Standardschrift gesetzt
-        Path = Fonts/,%                 % Dateien Pfad wird auf Fonts/ gesetzt
-        BoldFont=timesbd.ttf,%
-        ItalicFont=timesi.ttf,%
-        BoldItalicFont=timesbi.ttf,%
-        ]{times.ttf}
-\else
-    \usepackage[T1]{fontenc}            % Liefert die meisten Text-Zeichen für westeuropäische Sprachen
-    \usepackage[utf8]{inputenc}         % Ermöglicht die direkte Eingabe der Umlaute
-    \usepackage{mathptmx}               % Times wird als Standardschrift gesetzt
-\fi
+        \usepackage{fontspec}
+        \defaultfontfeatures{Ligatures=TeX} % To support LaTeX quoting style
+        \setmainfont[%                      % Times New Roman (aus Windows) wird als Standardschrift gesetzt
+            Path = Fonts/,%                 % Dateien Pfad wird auf Fonts/ gesetzt
+            BoldFont=timesbd.ttf,%
+            ItalicFont=timesi.ttf,%
+            BoldItalicFont=timesbi.ttf,%
+            ]{times.ttf}
+    \else
+        \usepackage[T1]{fontenc}            % Liefert die meisten Text-Zeichen für westeuropäische Sprachen
+        \usepackage[utf8]{inputenc}         % Ermöglicht die direkte Eingabe der Umlaute
+        \usepackage{mathptmx}               % Times wird als Standardschrift gesetzt
+    \fi
 
 %-------------------------------------------
 %% Pakete für das Erstellen von Refferenzen
@@ -57,11 +59,21 @@
 \usepackage{hyperref} % Erweitert die Referenzmöglichkeiten
 \usepackage{cleveref}
 
+%-------------------------------------------
+%% Pakete für das Erstellen von Tabellen
+%\usepackage{tabu}
+%\usepackage{longtable}
+\usepackage{tabularx}
+\usepackage{booktabs}
+\newcolumntype{Z}{>{\raggedright\let\newline\\\arraybackslash}X}    % Ermöglicht linksbündige Spalten mit Zeilenumbruch in tabularx durch verwenden von Z 
+
+
 
 %-------------------------------------------
 %% Pakete für das Erstellen von Grafiken
 \usepackage{tikz-cd}                    % Ermöglicht das Erstellen von Grafiken
-\usepackage{relsize}                    % Ermöglicht die Fontgröße zu skalieren
+\usepackage{circuitikz}                 % Ermöglicht das Zeichnen elektrischer Schaltungen und logischer Blöcke 
+%\usepackage{relsize}                   % Ermöglicht die Fontgröße zu skalieren
 \usetikzlibrary{arrows,calc,intersections,shapes}
 
 %-------------------------------------------
@@ -84,7 +96,7 @@
   andothers = {et al.},
   and       = {and}
 }
-\addbibresource{10_literatur.bib}       % Fügt die Literaturverzeichnisdatei ein
+\addbibresource{11_literatur.bib}       % Fügt die Literaturverzeichnisdatei ein
 \setlength{\bibitemsep}{10pt}           % Stellt den Zeilenabstand zwischen den Literaturverzeichnis Einträgen ein
 %-------------
 %% Erstellt ein Makro welches prüft ob die eingegebene Variable leer ist
@@ -96,9 +108,9 @@
 %% Erstellt mit \citef ein Zitat in der Fußzeile in der Form "Vgl. Kramer (2009), S. 2."
 \newcommand{\citef}[2][]{%              
     \ifempty{#1}%
-        \footnote{Vgl.~\citeauthor{#2}~(\citeyear{#2}).}%
+        \footnote{\,Vgl.~\citeauthor{#2}~(\citeyear{#2}).}%
     \else%
-        \footnote{Vgl.~\citeauthor{#2}~(\citeyear{#2}),~S.~#1.}%
+        \footnote{\,Vgl.~\citeauthor{#2}~(\citeyear{#2}),~S.~#1.}%
     \fi%
 }
 %-------------
@@ -118,8 +130,54 @@
 }
 
 
+
 %-------------------------------------------
-%% Erstellt eine TODO-Box
+%% Erstellt inline Tikz Bilder
+\newcommand{\inlineneuron}[2][1]{
+    \tikz[baseline=-0.5ex,scale=#2, every node/.style={transform shape}]{
+        \def\siz{.8}                % Größe der Neuronen
+        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
+        \tikzset{
+            ident/.pic={
+            \draw[semithick] (-\siz/4,-\siz/4) -- (\siz/4,\siz/4);
+        }}%
+        \tikzset{
+            ident8/.pic={
+            \draw[semithick] (-\siz/8,-\siz/8) -- (\siz/8,\siz/8);
+        }}%
+%------------- Eingabeneuron -------------%
+            \ifthenelse{\equal{#1}{i}}{%
+                \node[neuron] (Ir) at (0,0) {};
+                \pic at (Ir) {ident};
+            }{}%
+%--------------- Perceptron --------------%
+            \ifthenelse{\equal{#1}{per}}{%
+                \node[neuron,circle split,inner sep=2pt] (Or) at (0,0)
+                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} \includegraphics[width=0.225cm]{Bilder/sigma.png}};
+            }{}%
+%-------------- RBF-verdeckt -------------%
+            \ifthenelse{\equal{#1}{rbf-h}}{%
+                \node[neuron,circle split,inner sep=1pt,font={\fontsize{6pt}{6pt}\selectfont}] (Or) at (0,0)
+                    { $\mathbf{||c\mathord{,}x||}$ \nodepart{lower} };
+                \node[font={\fontsize{6pt}{6pt}\selectfont}] at ($(Or.lower)-(0,\siz/6)$){\textbf{Gauß}};
+            }{}%
+%--------------- RBF-Ausgabe -------------%
+            \ifthenelse{\equal{#1}{rbf-o}}{%
+                \node[neuron,circle split,inner sep=1.3pt] (Or) at (0,0)
+                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} };
+                \pic at ($(Or.lower)-(0,\siz/6)$) {ident8};
+            }{}%
+    }
+}
+
+
+
+
+
+
+
+%-------------------------------------------
+%% Erstellt eine TODO-Box mit \todo{}
 
 \newcommand{\farbig}[2][red]{\textcolor{#1}{#2}}      % Ermöglicht text mit \farbig{text} rot einzufärben
 
