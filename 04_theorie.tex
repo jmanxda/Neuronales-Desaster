@@ -188,6 +188,8 @@ on-line learning: Hier werden die Gewichte nach jeder einzelnen Beobachtung der 
 
 \end{enumerate}
 
+\todo{Organigramm erstellen}
+
 Vollständigkeitshalber wird erwähnt, dass \citet{characterisation_4} vier Charakterisierungskriterien nennen. Wobei als viertes Kriterium der Informationsgewinnungsalgorithmus (recall algorithm) aufgeführt ist. In dieser Arbeit wird auf dieses Kriterium verzichtet, da weder \citet{characterisation_4} eine Einteilung/Auflistung aufführen noch in anderer Literatur dieses Kriterium eine Erwähnung findet.\\
 
 Es gibt vielfältige Anwendungsgebiete für NN. Angefangen bei Optimierungsproblemen, wo das Ziel es ist optimale Werte für ein gegebenes System zu finden. Über die Datenverarbeiteung, wo Bild- bzw. Sprachinformationen verarbeitet, generiert oder komprimiert werden. Bis zur Klassifikation/Erkennung von Mustern, wo es darum geht aus einer Dantemenge zusammenhängende Muster zu erkennen. Weitere Anwendungen sind die Kontrelle/Regelung von industriellen Anlagen und die wichtigste (bezogen auf diese Arbeit) ist die Funktionsapproximation bzw. Zeitreihenmodellierung, wo die Beziehung aus Eingangsinformationen und dem gewünschtem Ausgang zu finden gilt. Dies sind einige kurz umrissene Anwendungsbeispiele. In der Literatur werden deutlich mehr Bespiele aufgeführt.\footnote{Vgl. \citet[224]{Kroll16}, \citet[15]{comp_int_07} und \citet[F1 ff]{Fiesler96}.}\\
@@ -594,6 +596,244 @@ Bei den SOMs ist es nun von Interesse welches Ausgabeneuron aktiv ist und nicht 
 
 Trainiert werden die SOMs unüberwacht wobei die Neuronen bei der Eingabe der Testdaten um die Aktivität konkurrieren. Nach dem Prinzip \glqq the winner takes all\grqq werden nur die Gewichte des Neurons trainiert dessen Zentrum am kürzesten von dem Eingabewert liegt.\citef[272 ff]{Kroll16}
 So können SOMs hochdimensionale Daten auf eine niedrigdimensionale Karte abbilden, wobei die Nachbarschaftsbeziehung der Daten erhalten bleibt.\citef[7]{Kramer09} Dies ermöglicht qualitativ die Nachbarschaftsbeziehungen zu visualisieren und Zusammenhänge von Daten durch Anhäufungen von Neuronen zu finden. Hieraus folgt dass SOMs bei der Vorselektion von Daten eingesetzt werden können sind aber für die Approximation von Funktionen weniger geeignet.
+
+\subsubsection{General Regression Neural Network (GRNN)}
+\begin{figure}[!htb]
+    \centering
+    %---------------------------------------------------------------
+        %% GRNN
+        %-----------------------------------------
+        %% linkes Bild
+        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
+        \def\layersep{1.8}          % vertikal distance between the layers
+        \def\neuronsep{1.8}         % Horizontal distance between neurons
+        \def\dlsize{2}              % distance between node and layer lable
+        \def\inout{\layersep*.65}   % Size of in- and output-arrow
+        \def\siz{.8}                % neuronsize
+        \def\y{5}                   % Start of the most upper layer
+        \def\ni{3}                  % Amount of input neurons
+        \def\nh{4}                  % Amount of pattern neurons
+        \def\ns{2}                  % Amount of hidden neurons
+        \def\no{1}                  % Amount of output neurons
+        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
+        \tikzstyle{annot} = [text width=7em, text centered]
+        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
+        \tikzset{
+            ident/.pic={
+                \draw[semithick] (-\siz/#1,-\siz/#1) -- (\siz/#1,\siz/#1);
+            }
+        }
+        \newcommand{\neurono}[3][]{%
+            \ifthenelse{\equal{#3}{0}}{%
+                \node[neuron,circle split,inner sep=.8pt,fontscale=6] (#1) at (#2)
+                    { $\mathbf{||x\mathord{,}x'||}$ \nodepart{lower} };
+                    
+                \node[fontscale=6] at ($(#2.lower)-(0,\siz/4)$){\textbf{Exp.}};
+            }{
+                \ifthenelse{\equal{#3}{1}}{
+                \node[neuron] (#1) at (#2) {\includegraphics[width=0.3cm]{Bilder/Sigma.png}};
+                }{
+                \node[neuron,fontscale=15] (#1) at (#2){$\div$};
+                }
+            }
+        }
+        % Draw the left input layer nodes
+            \foreach \name / \xn in {1,...,\ni}{
+                \node[neuron,fontscale=15] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
+                \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
+            }
+        % Draw the pattern layer nodes
+            \foreach \name / \xn in {1,...,\nh}{
+                \node[neuron] (Hl-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},\y-\layersep) [fontscale=15] {$m_{\xn}$};
+                \node[node distance=\inout cm, below of=Hl-\xn] (Hnl) {};
+        % Connect every node in the input layer with the pattern layer
+            \foreach \source in {1,...,\ni}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Hl-\xn);}
+        % Draw the summation layer nodes
+            \foreach \name / \xn in {1,...,\ns}{
+                \node[neuron] (Sl-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\ns-1)+(\xn-1)*\neuronsep},\y-2*\layersep) [fontscale=15] {$s_{\xn}$};
+                \node[node distance=\inout cm, below of=Sl-\xn] (Snl) {};
+        % Connect every node in the pattern layer with the summation layer
+            \foreach \source in {1,...,\nh}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Hl-\source) edge (Sl-\xn);}
+        % Draw the output layer nodes
+            \foreach \name / \xn in {1,...,\no}{
+                \node[neuron] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\y-3*\layersep) [fontscale=15] {$\Omega_{\xn}$};
+                \node[node distance=\inout cm, below of=Ol-\xn] (Onl) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onl);
+        % Connect every node in the summation layer with the output layer
+            \foreach \source in {1,...,\ns}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Sl-\source) edge (Ol-\xn);}
+        % Annotate the layers
+            \def\lni{Eingabe- schicht}                      % Lable of input layer
+            \def\lnh{Musterschicht}                       % Lable of pattern layer
+            \def\lns{Summierungs- schicht}                  % Lable of summation layer
+            \def\lno{Ausgabe- schicht}                      % Lable of output layer
+            \ifthenelse{\ni>\nh \AND \ni>\ns}{
+                \node[annot,right of=Il-\ni, node distance=\dlsize cm] (il) {\textbf{\lni}};
+                \node[annot,below of=il] (hl) {\textbf{\lnh}};
+                \node[annot,below of=hl] (sl) {\textbf{\lns}};
+            }{
+                \ifthenelse{\nh>\ns}{
+                    \node[annot,right of=Hl-\nh, node distance=\dlsize cm] (hl) {\textbf{\lnh}};
+                    \node[annot,above of=hl] (il) {\textbf{\lni}};
+                    \node[annot,below of=hl] (sl) {\textbf{\lns}};
+                }{
+                    \node[annot,right of=Sl-\ns, node distance=\dlsize cm] (sl) {\textbf{\lns}};
+                    \node[annot,above of=sl] (hl) {\textbf{\lnh}};
+                    \node[annot,above of=hl] (il) {\textbf{\lni}};
+                }
+                
+            }
+                \node[annot,below of=sl] {\textbf{\lno}};
+        %-----------------------------------------
+        %% rechtes Bild
+        % Draw the right input layer nodes
+                \coordinate (tIr) at ($(il)-(Il-\ni)$);
+                \coordinate (ttIr) at (tIr |- 0,0);
+                \coordinate (Ir) at ($(il)+(ttIr)$);
+            \foreach \name / \xn in {1,...,\ni}{
+        % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
+                \node[neuron] (Ir-\name) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
+                \node[above of=Ir-\name, node distance=\inout cm] (Inr-\name) {};
+                \pic at (Ir-\name) {ident=4};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\name) edge (Ir-\name);}
+        % Draw the right pattern layer nodes
+            \foreach \name / \xn in {1,...,\nh}{
+                \neurono[Hr-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},-\layersep)$}{0}
+                \node[node distance=\inout cm, below of=Hr-\xn] (Hnr) {};
+        % Connect every node in the input layer with the pattern layer
+                \foreach \source in {1,...,\ni}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Ir-\source) edge  (Hr-\xn);}
+        % Draw the right summation layer nodes
+            \foreach \name / \xn in {1,...,\ns}{
+                \neurono[Sr-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\ns-1)+(\xn-1)*\neuronsep},-2*\layersep)$}{1}
+                \node[node distance=\inout cm, below of=Sr-\xn] (Snr) {};
+        % Connect every node in the pattern layer with the summation layer
+                \foreach \source in {1,...,\nh}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Hr-\source) edge  (Sr-\xn);}
+            \foreach \xn in {1}{
+                \foreach \source in {1,...,\nh}
+                    \node[fill=white,inner sep=1pt,fontscale=10] at ($(Hr-\source)!.3+.1!(Sr-\xn)$) {$y_{\source}$};} 
+        % Draw the right output layer nodes
+            \foreach \name / \xn in {1,...,\no}{
+                \neurono[Or-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-3*\layersep)$}{6}
+                \node[node distance=\inout cm, below of=Or-\xn] (Onr) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or-\xn) edge (Onr);
+        % Connect every node in the summation layer with the output layer
+            \foreach \source in {1,...,\ns}
+                \draw [->,arrows={-Stealth[length=7pt]}] (Sr-\source) edge  (Or-\xn);}
+        \end{tikzpicture}
+    \caption{GRNN mit drei Eingabeneuronen $i$, vier Musterneuronen $m$, zwei Summierungsneuronen $s$ und einem Ausgabeneuron $\Omega$  auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
+    \label{fig:GRNN}
+\end{figure}
+
+Vorgestellt wurde das GRNN (dargestellt in \autoref{fig:GRNN}) von \citet{Specht1991} und ist nah verwandt mit RBF Netzen. Es zählt ebenfalls zu den Feed-Forward Netzen und besteht aus vier Schichten. Die Eingabeschicht hat dabei die Aufgabe die Eingabeinformationen an die Neuronen der Musterschicht (engl.: Pattern Layer) zu verteilen. Die Nachfolgende Musterschicht besteht aus Neuronen mit einer radialen Basisfunktion als Aktivierungsfunktion. Die Ausgabe der Neuronen der Musterschicht besteht ähnlich wie die Ausgabe der RBF-Neuronen aus dem Abstand zwischen den Eingabedaten und den Zentren der Neuronen. Üblicherweise entspricht auch bei diesem neuronalen Netz die Anzahl der Neuronen in der Musterschicht der Anzahl an Trainingsbeispielen. Die Ausgabe der Musterchicht wird an die Summierungsschicht weitergegeben in der die Informationen gewichtet und ungewichtet aufsummiert werden. Das Ausgangsneuron bildet einen Quotienten bei dem die gewichtete im Zähler und die ungewichtete Summe im Nenner steht.\\
+Die Besonderheit dieses Netzwerkes besteht darin, dass es keinen iterativen Trainingsalgorithmus wie Backpropagation bedarf. Dies ist möglich indem die Trainingsbeispiele als "Muster" in der Musterschicht hinterlegt sind. Somit wird die den Eigabedaten zugrundeliegende Funktion durch die Trainingsbeispiele angenähert.\citef{Nesil2011} \todo{Gesamtgleichung hinterlegen}\\
+Der Vorteil dieses Netzwerkes liegt in der Lerngeschwindigkeit. Da die Lernbeispiele in einem Durchgang im Netzwerk gespeichert werden keine mehrmaligen Gewichtsanpassungen benötigt. Hierdurch kann das Netzwerk auch nicht in einem lokalen Minimum stecken bleiben. Wie \citet{Marqueza1993} berichten ist ein weiterer Vorteil von GRNN die geringere Beeinträchtigung bei der Regression durch verrauschte Daten im Vergleich zu Netzwerken mit Backpropagationalgorythmus.
+Ein Nachteil den RBF und GRNN teilen ist ein größerer Bedarf an Rechenleistung mit steigender Anzahl an Trainingsbeispielen.  
+
+
+\subsubsection{Neuronale Netze von Jordan und Elman}\\
+\todo{Grafik}
+Diese beiden Netzwerke ähneln sich sehr in ihrer Beschaffenheit und werden daher zusammen vorgestellt. Mehr noch stellte unter anderen die Arbeit von \citet{Jordan1986} die Grundlage für die Veröffentlichung von \citet{Elman1990}. Die Modelle die in diesen Arbeiten vorgestellt werden zählen zu den rückgekoppelten (engl.: recurrent) neuronalen Netzen. Die Grundform bildet hierbei ein Feed-Forward Netz wie beispielsweise das MLP. Zusätzlich gibt es sogenannte Kontext bzw. Zustandsneuronen (engl.: context/state neurons). Diese Bilden im übertragenden Sinne eine weitere verdeckte Schicht in dem Sinne das sie keine Kommunikation mit der "Außenwelt" besitzt. Diese Neuronen zeichnen sich dadurch aus, dass entweder die Outputneuronen (Jordan Netz) bzw. die Neuronen der Verdecktenschicht (Elamn Netz) eine Rückkopplung zu ihnen aufweisen. Zusätzlich weisen diese Neuronen eine Eigenrückkoplung auf (\farbig{sihe Abbildung ??}). 
+Durch die zusätzliche Rückkopplung bekommt das Netzwerk ein zeitliches Gedächtnis, indem der wert des vorherigen Durchlaufes zwischengespeichert und für die Berechnung des nächsten Wertes berücksichtigt wird. Durch die Eigenrückkopplung kann die zeitliche Ausdehnung des Gedächtises kontrolliert werden. Zum Trainieren der Neuronalen Netze kann ebenfalls der Backpropagationalgorithmus angewandt werden, wobei die Eigenrückkopplungsrate während der Trainingsphase der Gewichte konstant gehalten werden muss. Hierzu wurden in der Literatur\,\citef{Pham1999} Modifikationen am Netzwerk und am Lernalgorythmus vorgestellt, um das Backpropagationverfahren auch auf die Kontextneuronen anwenden zu können.
+
+
+\subsubsection{Hopfieldnetze}\\
+\begin{figure}[!htb]
+    \centering
+    %---------------------------------------------------------------
+        %% Hopfieldnetz
+        %-----------------------------------------
+        %% linkes Bild
+        \begin{tikzpicture}[ node distance=\layersep cm, shorten >=1pt]
+        \def\layersep{2}            % vertikal distance between the layers
+        \def\neuronsep{2}           % Horizontal distance between neurons
+        \def\dlsize{2}              % distance between node and layer lable
+        \def\inout{\layersep*.65}   % Size of in- and output-arrow
+        \def\siz{.8}                % neuronsize
+        \def\y{3}                   % Start of the most upper layer
+        \def\no{3}                  % Amount of output neurons
+        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
+        \tikzstyle{annot} = [text width=6em, text centered]
+        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
+        \tikzset{
+                ident/.pic={
+                    \ifthenelse{\equal{#1}{1} \OR \equal{#1}{3}}{
+                        \draw[semithick,arrows={-Latex[open]}] (0,-\siz/3) -- (0,\siz/3);
+                    }{
+                        \draw[semithick,arrows={Latex[open]-}] (0,-\siz/3) -- (0,\siz/3);
+                    }
+                    
+                }
+            }
+        % Draw the left output layer node
+            \foreach \xn in {1,...,\no}{
+                \node[neuron] (Ol-\xn) at (\xn*\neuronsep-\neuronsep,\y) [fontscale=15] {$\Omega_{\xn}$};
+                \node[above of=Ol-\xn, node distance=\inout cm] (Onla-\xn) {};
+                \node[below of=Ol-\xn, node distance=\inout cm] (Onlb-\xn) {};
+                \draw[arrows={-Stealth[length=7pt]},densely dotted] (Onla-\xn) edge (Ol-\xn);
+                \draw[arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onlb-\xn);
+            }
+        % Connect every node in the output layer
+            \pgfmathsetmacro{\nom}{\no - 1}
+               \foreach \xn in {1,...,\nom}{
+                    \pgfmathtruncatemacro{\xnp}{\xn + 1}
+                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Ol-\xn) edge[bend right=45] (Ol-\xnp);
+                        \node[fill=white,inner sep=.1pt,fontscale=10] at ($(Ol-\xnp)!.4+.1!(Ol-\xn)+(0,-0.65)$) {$w_{\xnp,\xn}$};
+                }
+            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Ol-1) edge[bend right=65] (Ol-\no);
+            \node[fill=white,inner sep=.1pt,fontscale=10] at ($(Ol-1)!.4+.1!(Ol-\no)+(0,-1.45)$) {$w_{1,\no}$};
+        % Annotate the layers
+               \node[annot,right of=Ol-\no, node distance=\dlsize cm] (ol) {\textbf{Eingabe-/Ausgabe- schicht}};
+        %-----------------------------------------
+        %% rechtes Bild
+        % Draw the right output layer nodes
+            \foreach \xn in {1,...,\no}{
+                \node[neuron,right of=ol] (Or-\xn) at ($(ol)+(\xn*\neuronsep-\neuronsep,0)$) {};
+                \pic at (Or-\xn) {ident=\xn};
+            }
+        % Draw the right upper and lower output layer nodes
+            \foreach \xn in {1,...,2}{
+                \node[neuron] (Orb-\xn) at ($(Or-2)+({\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-\layersep)$) {};
+                \node[neuron] (Ora-\xn) at ($(Or-2)+({\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\layersep)$) {};
+                \pic at (Orb-\xn) {ident=\xn};
+                \pic at (Ora-\xn) {ident=\xn};
+            }    
+        % Connect every node in the right output layer
+            \foreach \xn in {1,...,\nom}{
+                \pgfmathtruncatemacro{\xnp}{\xn + 1}
+                \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge (Or-\xnp);
+            }    
+            \foreach \xn in {1,...,\no}{
+                \foreach \xp in {1,2}{
+                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge (Ora-\xp);
+                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge (Orb-\xp);
+                }
+            }
+            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Orb-1) edge[bend right=30] (Ora-2);
+            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Orb-2) edge[bend left=30] (Ora-1);
+            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-3)  edge[bend right=35] (Or-1);
+            \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.5)$) {$\dots\, w_{i,j}\,\dots$};
+            \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},-\layersep*.5)$) {$\dots\, w_{i,j}\,\dots$};
+        \end{tikzpicture}
+    \caption{Hopfieldnetz mit drei Neuronen und den zugehörigen Gewichten $w$ in der Seitenansicht auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Zustand in der Draufsicht.\,\protect\footnotemark{}}
+    \label{fig:Hopfield}
+\end{figure}
+\addtocounter{footnote}{-1}     %  -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
+\addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
+\wrapfigfoot\footnotetext{\,Die rechte Darstellung des Hopfieldnetzes in \autoref{fig:Hopfield} wurde der Abbildung 8.1 aus \citet[136]{dkriesel07} nachempfunden.}
+Das Hopfield Netz benannt nach seinem Entwickler zählt zu den rückgekoppelten Netzen. \citet{HOPFIELD1986} stellte ein Netzwerk vor, dass dem Verhalten von Teilchen in einem Magnetfeld nachempfunden ist.\,\citef[135]{dkriesel07} Die Neuronen dieses Netzes sind untereinander vollverknüpft haben aber keine Verbindung zu sich selbst. Weiterhin dient die Heavisidefunktion (\autoref{fig:funktion} links) mit den möglichen Zuständen von $1$ und $-1$ als Aktivierungsfunktion und die Verbindung unter den Neuronen ist gewichtet. Die Gewichte können positiv (je höher der Wert desto mehr tendieren die Neuronen zu gleichem Zustand), negativ (je größer der Betrag des Gewichtes desto mehr streben die Neuronen zu unterschiedlichen Werten) oder null (Neuronen beeinflussen sich gegenseitig nicht) sein. Analogiekonform kann der Zustand der Neuronen auch als Spinn (Drehwinkel) der Teilchen betrachtet werden. Die Eingabe des Netzwerks geschieht durch die Festlegung der Neuronenzustände. Trainiert wird das Netz indem die Trainigsbeispiele eingegeben werden und die Gewichte nach der Beziehung zueinander verändert werden. Am Ende der Trainingsphase haben die Gewichte einen hohen positiven Wert bei denen die Neuronen oft den gleichen Zustand inne gehabt haben und für hohe negative Gewichte gilt der umgekehrte Fall. Das Netzwerk sucht nach der Eingabe von Informationen selbstständig den energetisch geringsten Zustand zum betreffenden Eingabemuster. Dies geschieht unter Berücksichtigung der Gewichte und Veränderung der Spins. Hierbei wird der Zustand der Neuronen einzeln verändert, wobei das zu verändernde Neuron zufällig ausgewählt wird. Wenn die Spins sich nicht mehr ändern ist der energetisch geringste Zustand erreicht. Die resultierende Spinnverteilung der Neuronen ergibt dann die Ausgabe des Netzwerks. Hauptsächlich wir dieses Netzwerk zur Mustererkennung eingesetzt. Das zu erkennende Muster dient als Trainingsbeispiel und das Netzwerk ist dann in der Lage das gleiche Muster in verrauschter Form wiederzuerkennen.
+
+
+\subsubsection{Adaptive Resonance Theory (ART)}\\
+
+Den Grundstein für die Theorie des ART Netzes legte \citet{Grossberg1973}. Das ART1, welches in diesem Kapitel näher erleutert wird, wurde von \citet{Carpenter1987} vorgestellt. 
+
+
+
 
 \newpage
 \subsection{Gegenüberstellung der Netzwerke}

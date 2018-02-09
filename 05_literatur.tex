@@ -3,9 +3,10 @@
 %---------------------------------------------------------------------------------
 %% Literaturrecherche
 
-\section{Literaturübersicht über die aktuelle Preismodellierung auf Strommärkten}
+\section{Aktuelle Preismodellierung auf Strommärkten}
 
 
+\subsection{Der Strommarkt und seine Vorhersagemodelle}
 
 Elektrizität ist eine besonderes Gut, dessen Erzeugung und Verbrauch gleichzeitig erfolgt. Die Erzeugung dieses Gutes kann kontrolliert werden. Wobei das Speichern von Elektrizität in einem industriellen Maßstab sich als schwierig gestaltet. Daher beeinflusst die Nachfrage maßgeblich die zu generierende Menge. Aus diesem Grund verläuft der Handel, im Gegensatz zu anderen Finanz- oder Gütermärkten, oft auf dem sogenannten „Day-ahead“-Markt. Der Strom wird dabei für die Stunde des nächsten Tages ge- und verkauft. Diese Handelsweise ist für die Marktakteure notwendig, um die Produktions- und Abnahmekapazitäten einander anzupassen. Auf den meisten Märkten müssen die Marktakteure bis zu einer Frist ihre 24 Gebote abgeben. Nach Ablauf der Frist erstellt der Marktbetereiber, unter Berücksichtigung aller Gebote, den Gleichgewichtspreis (engl.: market clearing price) für jede der 24 Stunden. Produzenten deren Gebot niedriger bzw. Konsumenten deren Gebot höher oder gleich dem Gleichgewichtspreis ist, bekommen den Zuschlag.\citef[7]{Weron2014} Um den Gleichgewichtspreis des nächsten Tages vorherzusagen und ein Gebot möglichst nah am Gleichgewichtspreis abzugeben gibt es vielfältige Ansätze.
 
@@ -15,7 +16,7 @@ Einen guten Überblick über vorgeschlagene Modelle zur Strompreisvorhersage geb
 Multi-Agenten bzw. Spieltheorie Modelle, bei denen versucht wird das Verhalten der unterschiedlichen Agenten/Akteure auf dem Markt zu simulieren.
 
 \item[\textbf{$\bullet$}]%
-Fundamentale Modelle, bei denen physikalische Faktoren einen Einfluss auf die Preisdynamik ausüben.
+Fundamentale Modelle, bei denen physikalische Faktoren in Zusammenhang mit der Preisdynamik gesetzt werden.
 
 \item[\textbf{$\bullet$}]%
 Reduzierte Modelle, welche die statistischen Eigenschaften des zeitlichen Preisverlaufes mit Hilfe der Auswertung von Risiken und Derivaten erklären.
@@ -41,20 +42,30 @@ Künstliche Neuronale Netze
 Data-Mining Modelle
 \end{itemize}
 
-Da nicht ein Modell alle Faktoren die zum schließlichen Preis führen erfassen kann werden in der Literatur hybride aus einigen der genannten Modelle untersucht, um die Preisvorhersage zu prezisieren.
+\todo{Der Unterschied zwischen künstlichen neuronalen Netzen und Data-Mining + Modelle nennen }
+
+Da nicht ein Modell alle Faktoren die zum schließlichen Preis führen erfasst werden in der Literatur hybride Modelle eingesetzt die aus einigen der genannten Kategorien zusammen gesetzt sind, um die Vorhersageabweichungen zu verringern.
 
 
-Diese Arbeit konzentriert sich auf die letzte Kategorie in der die NN einzuordnen sind. \citet{Panapakidis2016} haben eine Übersicht über die bis dato genutzten NN basierten Modelle zu vorhersage des "day-ahead"\--Elektrizitätspreises vorgestellt. In Anlehnung hieran erfolgt eine Literaturüberblick der letzten zwei Jahre.
 
+\subsection{Literaturüberblick zur Anwendung von neuronalen Netzen}
 
+\citet{Aggarwal2009} und \citet{Panapakidis2016} haben eine Übersicht über die bis dato genutzten NN basierten Modelle zu vorhersage des Elektrizitätspreises vorgestellt. In Anlehnung der beiden Veröffentlichungen erfolgt ein Literaturüberblick der letzten zwei Jahre. 
+Modelle basierend auf NN die in dieser Zeit veröffentlicht und dem Autor dieser Arbeit zur Verfügung standen sind in \autoref{tab:ann_lit} dargestellt. Neben den Verweisen sind die eingesetzten Netzwerke, die untersuchten Märkte und das zur Evaluation eingesetzte Performancemaß aufgeführt.
+
+\todo{Übersicht über die Märkte und Performancemaße im Anhang erstellen und im Text auf sie Verweisen}
+
+Die in der Literatur vorgeschlagenen NN zur Vorhersage sind Feed-Forward NN (FFNNs), Multi-Layer Perceptrons (MLPs), Radial Basis Function Netze (RBFs), Recurrent NN (RNNs)...
 
 
 %Hierzu wird ein Überblick über die Anwendung der NN zur vorhersage des Strompreises aus der Literatur  gegeben.
-\todo{Übersichtstabelle der Paper erstellen}
 
 
 
-\citet{Keles2016} verwenden zur Vorhersage des "day-ahead"\--Preises am European Power Exchange (EPEX) ein MLP. Sie bezeichnen es als ein drei schichtiges Feed-Forward Netzwerk mit einem Ausgangsneuron und stellen verschiedene Konfigurationen des Netzwerkes gegenüber. Sie Vergleichen den Tangenshyperbolicus mit der logistischen Funktion (eine vereinfachte Version der Fermifunktion sihe \autoref{fig:funktion}) als Aktivierungsfunktion und erzielen mit der logistischen Funktion die besseren Ergebnisse. Als Gütekriterium benutzen sie das RMSE und MAD Maß.\todo{verweiß auf Gütemaße}
+
+\citet{Keles2016} verwenden zur Vorhersage des "day-ahead"\--Preises am European Power Exchange (EPEX) ein MLP. Sie bezeichnen es als ein drei schichtiges Feed-Forward Netzwerk mit einem Ausgangsneuron und stellen verschiedene Konfigurationen des Netzwerkes gegenüber. Sie Vergleichen den Tangenshyperbolicus mit der logistischen Funktion (eine vereinfachte Version der Fermifunktion sihe \autoref{fig:funktion}) als Aktivierungsfunktion und erzielen mit der logistischen Funktion die besseren Ergebnisse. Als Gütekriterium benutzen sie das RMSE und MAD Maß.
+
+%\todo{verweiß auf Gütemaße}
 
 \citet{Jiang2016} nutzen ein hybrides System aus mehreren CI Methoden, um relevante Eingabedaten für das Training eines RBF Netzwerkes zu bekommen. Sie wenden ihre Methode auf den US amerikanischen PJM-Markt an, um den Elektrizitätspreis des nächsten Tages vorherzusagen. Zur Auswertung ihrer Ergebnisse benutzen sie das MAPE, RMSE und MAE Maß.
 
@@ -88,4 +99,5 @@ Verweis                 &  Modell   & Markt                     & Performancema�
 
 \bottomrule
 \end{tabularx}
+\farbig{Abkürzungen ausschreiben}
 \end{table}
