@@ -104,6 +104,7 @@
 \def\temp{#1}%
 \ifx\temp\empty%
 }
+
 %-------------
 %% Erstellt mit \citef ein Zitat in der Fußzeile in der Form "Vgl. Kramer (2009), S. 2."
 \newcommand{\citef}[2][]{%              
@@ -130,6 +131,41 @@
 }
 
 
+
+%-------------------------------------------
+%% Erstellt eine TODO-Box mit \todo{}
+
+\newcommand{\farbig}[2][red]{\textcolor{#1}{#2}}      % Ermöglicht text mit \farbig{text} rot einzufärben
+
+\newcommand{\todo}[1]{
+\begin{figure}[!htb]
+    \centering
+    \tikz \node[draw,text width=.8\textwidth,align=left]{\textbf{TODO:}\\\farbig{#1}.};
+    %\fbox{\parbox{.8\textwidth}{\textbf{TODO:}\\\farbig{#1}}}
+\end{figure}
+}
+
+
+%-------------------------------------------
+\usepackage{lipsum}                     % Erstellt blindtext
+
+%-------------------------------------------
+%% Deckblatt
+\usepackage{pdfpages}                   % Ermöglicht das Einbinden von PDF Dokumenten (wird verwendet für die Einbindung der Aufgabenstellung)
+\usepackage[showboxes,absolute]{textpos}   % Ermöglicht das Setzen von Inhalt an einem beliebigen Ort
+\usepackage{tikz}
+
+\newcommand\Mygrid{%                        % Erzeugt ein Grid für textpos mit \Mygrid        
+\tikz[
+  remember picture,
+  overlay,
+  yscale=-1,
+  xstep=\TPHorizModule,ystep=\TPVertModule,
+  yshift=0pt,xshift=0pt]
+  \draw (current page.north west) grid (current page.south east);}
+
+%  yshift=13pt,xshift=4pt]
+%-------------------------------------------
 
 %-------------------------------------------
 %% Erstellt inline Tikz Bilder
@@ -170,46 +206,6 @@
     }
 }
 
-
-
-
-
-
-
-%-------------------------------------------
-%% Erstellt eine TODO-Box mit \todo{}
-
-\newcommand{\farbig}[2][red]{\textcolor{#1}{#2}}      % Ermöglicht text mit \farbig{text} rot einzufärben
-
-\newcommand{\todo}[1]{
-\begin{figure}[!htb]
-    \centering
-    \tikz \node[draw,text width=.8\textwidth,align=left]{\textbf{TODO:}\\\farbig{#1}.};
-    %\fbox{\parbox{.8\textwidth}{\textbf{TODO:}\\\farbig{#1}}}
-\end{figure}
-}
-
-
-%-------------------------------------------
-\usepackage{lipsum}                     % Erstellt blindtext
-
-%-------------------------------------------
-%% Deckblatt
-\usepackage{pdfpages}                   % Ermöglicht das Einbinden von PDF Dokumenten (wird verwendet für die Einbindung der Aufgabenstellung)
-\usepackage[showboxes,absolute]{textpos}   % Ermöglicht das Setzen von Inhalt an einem beliebigen Ort
-\usepackage{tikz}
-
-\newcommand\Mygrid{%                        % Erzeugt ein Grid für textpos mit \Mygrid        
-\tikz[
-  remember picture,
-  overlay,
-  yscale=-1,
-  xstep=\TPHorizModule,ystep=\TPVertModule,
-  yshift=0pt,xshift=0pt]
-  \draw (current page.north west) grid (current page.south east);}
-
-%  yshift=13pt,xshift=4pt]
-%-------------------------------------------
 
 %\usepackage{adjustbox}
 

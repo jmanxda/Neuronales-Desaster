@@ -159,7 +159,7 @@ Zusätzlich wird unterschieden wie die Verbindungen unter den einzelnen Neuronen
 Feed-Forward: Diese Netzwerke bestehen meistens aus Schichten und eine Schicht ist nur mit der jeweils nächsten Schicht verbunden, sodass die Informationen von Schicht zu Schicht weiter gegeben werden.
 
 \item[$\circ$]%
-Recurrent (Feed-Back): In der deutschsprachigen Literatur als rückgekoppelte oder rekurrente Netze bezeichnet beeinflussen sich diese Netzwerke selbst. Die Neuronen dieser Netzwerke besitzen eine Verbindung entweder zu sich selbst (direkte Rückkoppelung), zu den Neuronen der vorhergehenden Schicht (indirekte Rückkopplung), zu den Neuronen der gleichen Schicht (laterale Rückkopplung) oder vollständig verbundene Netze (Verbindungen zwischen allen Neuronen ausgenommen der direkten Rückkopplung). Durch die Rückkopplung besitzen diese Netzwerke ein \glqq Gedächtnis\grqq~da der vorherige Zustand in die Auswertung der aktuellen Eingangsinformation mit einfließt.\citef[42 ff]{dkriesel07} Ein Beispiel für ein vollständig verbundenes Netzwerk ist das Hopfield-Netzwerk.
+Recurrent (Feed-Back): In der deutschsprachigen Literatur als rückgekoppelte oder rekurrente Netze bezeichnet beeinflussen sich die Schichten dieser Netzwerke gegenseitig. Die Neuronen dieser Netzwerke besitzen eine Verbindung entweder zu sich selbst (direkte Rückkoppelung), zu den Neuronen der vorhergehenden Schicht (indirekte Rückkopplung), zu den Neuronen der gleichen Schicht (laterale Rückkopplung) oder vollverknüpfte Netze (Verbindungen zwischen allen Neuronen ausgenommen der direkten Rückkopplung). Durch die Rückkopplung besitzen diese Netzwerke ein \glqq Gedächtnis\grqq~da der vorherige Zustand in die Auswertung der aktuellen Eingangsinformation mit einfließt.\citef[42 ff]{dkriesel07} Ein Beispiel für ein vollständig verbundenes Netzwerk ist das Hopfield-Netzwerk.
 
 \end{itemize}
 
@@ -192,11 +192,49 @@ on-line learning: Hier werden die Gewichte nach jeder einzelnen Beobachtung der 
 
 Vollständigkeitshalber wird erwähnt, dass \citet{characterisation_4} vier Charakterisierungskriterien nennen. Wobei als viertes Kriterium der Informationsgewinnungsalgorithmus (recall algorithm) aufgeführt ist. In dieser Arbeit wird auf dieses Kriterium verzichtet, da weder \citet{characterisation_4} eine Einteilung/Auflistung aufführen noch in anderer Literatur dieses Kriterium eine Erwähnung findet.\\
 
-Es gibt vielfältige Anwendungsgebiete für NN. Angefangen bei Optimierungsproblemen, wo das Ziel es ist optimale Werte für ein gegebenes System zu finden. Über die Datenverarbeiteung, wo Bild- bzw. Sprachinformationen verarbeitet, generiert oder komprimiert werden. Bis zur Klassifikation/Erkennung von Mustern, wo es darum geht aus einer Dantemenge zusammenhängende Muster zu erkennen. Weitere Anwendungen sind die Kontrelle/Regelung von industriellen Anlagen und die wichtigste (bezogen auf diese Arbeit) ist die Funktionsapproximation bzw. Zeitreihenmodellierung, wo die Beziehung aus Eingangsinformationen und dem gewünschtem Ausgang zu finden gilt. Dies sind einige kurz umrissene Anwendungsbeispiele. In der Literatur werden deutlich mehr Bespiele aufgeführt.\footnote{Vgl. \citet[224]{Kroll16}, \citet[15]{comp_int_07} und \citet[F1 ff]{Fiesler96}.}\\
+%Es gibt vielfältige Anwendungsgebiete für NN. Angefangen bei Optimierungsproblemen, wo das Ziel es ist optimale Werte für ein gegebenes System zu finden. Über die Datenverarbeiteung, wo Bild- bzw. Sprachinformationen verarbeitet, generiert oder komprimiert werden. Bis zur Klassifikation/Erkennung von Mustern, wo es darum geht aus einer Dantemenge zusammenhängende Muster zu erkennen. Weitere Anwendungen sind die Kontrelle/Regelung von industriellen Anlagen und die wichtigste (bezogen auf diese Arbeit) ist die Funktionsapproximation bzw. Zeitreihenmodellierung, wo die Beziehung aus Eingangsinformationen und dem gewünschtem Ausgang zu finden gilt. Dies sind einige kurz umrissene Anwendungsbeispiele. In der Literatur werden deutlich mehr Bespiele aufgeführt.\footnote{Vgl. \citet[224]{Kroll16}, \citet[15]{comp_int_07} und \citet[F1 ff]{Fiesler96}.}\\
+
+
+Unter Berücksichtigung von \citet{Fiesler96} können die Anwendungsgebiete von neuronalen Netzen in folgende Kategorien eingeteilt werden.
+\begin{itemize}
+\item \textbf{Klassifizierung}\\%
+Klassifizierung beschreibt das Zusammenfassen von Einheiten in vordefinierte Gruppen anhand ihrer Eigenschaften.
+\citet{Fiesler96} unterscheiden unter den Klassifizierern zwei Paradigmen:
+    \begin{itemize}
+    \item[$\circ$] \textit{Nächster Nachbar}:\\%
+    In dem Ansatz des nächsten Nachbarn (engl.: nearest neighbor) erfolgt die Klassifizierung eines unbekannten Musters anhand der Bewertung seiner Ähnlichkeit mit einigen Referenzmustern (den sogenannten Prototypen) jeder Klasse. Das unbekannte Muster wird der Klasse zugewiesen die einem Prototypen am nächsten liegt/ähnelt.
+    
+    \item[$\circ$] \textit{Regression}:\\%
+    Bei der Klassifizierung durch Regression wird versucht, eine Klasse anhand eines Musters vorherzusagen, indem der Fehlerterm zwischen den Eingabe- und Zielmustern minimiert wird.
+    \end{itemize}
+
+
+\item \textbf{Kombinatorische Optimierung}\\%
+Die kombinatorische Optimierung beinhaltet die Suche nach einer "optimalen" Lösung für ein Problem, unter einer großen Menge an möglichen Lösungen. 
+ 
+
+\item \textbf{Assoziatives Gedächtnis}\\%
+Allgemein betrachtet ist das assoziative Gedächtnis (engl.: associative memorie) ein Speichersystem welches erlaubt ein Datenelement einem anderen zuzuordnen. Somit ermöglicht der Zugriff auf eines der Elemente den Zugriff auf das andere.
+Die Assoziazion kann dabei wie in dem genannten beispiel eins-zu-eins, eins-zu-viele oder viele-zu-viele erfolgen.
+In Hinblick auf künstliche neuronale Netze wird das assoziative Gedächtnis unterschieden in:
+    \begin{itemize}
+    \item[$\circ$] \textit{Autoassoziativ}:\\%
+    Beim autoassoziativem Gedächtnis ist die Ausgabe ähnlich oder gleich der Eingabe. Wird beispielsweise das Bild eines Hauses im Gedächtnis "hinterlegt", ruft die Eingabe eines Fensters das Bild des gesamten Hauses ab.
+    
+    \item[$\circ$] \textit{Heteroassoziativ}:\\%
+    Hier unterscheidet sich die Ausgabe von der Eingabe. Wird das Bild eines Fensters eingegeben kann als Ausgabe das Wort "Fenster" erfolgen.\,\citef[F1.2 ff]{Fiesler96}
+    
+    \end{itemize}
+
+\end{itemize}
+
+Wobei die genannten Kategorien nicht als starr und klar umgrenzt angesehen werden sollten. Besonders die Beschreibung des assoziativen Gedächtnisses können ebenfalls als Klassifizierungen angesehen werden. \citet{Gurney1997} weist auf die schmale bis fließende Abgrenzung der Begrifflichkeiten hin. Hier kann das Verhältnis der Anzahl von Eingabe zu Ausgabeneuronen darüber entscheiden, ob ein Netzwerk als Klassifizierer oder assoziatives Gedächtnis angesehen wird. Ist die Anzahl an Eingabeneuronen groß im Vergleich zu der Anzahl an Ausgabeneuronen so wird das Netzwerk oft als Klassifizierer bezeichnet. Unterscheidet sich die Anzahl zwischen Eingabe- und Ausgabeneuronen nur geringfügig oder gar nicht so tendiert man das Netzwerk als assoziatives Gedächtnis zu beschreiben.\,\citef[117 f]{Gurney1997} In der Literatur werden gar explizit Verfahren beschrieben wie ein klassifizierungsfähiges Netzwerk als assoziatives Gedächtnis eingesetzt werden kann.\,\citef[F1.4:3 ff]{Fiesler96}
+
 
 %\farbig{NN sind Black-Box und Analyse ist schwer aber es gibt in der Literatur mögliche Analyseverfahren.}
 
-\newpage
+%\newpage
+
 \subsection{Überblick über gängige Modelle}
 Im vorherigen Kapitel wurde die Charakterisierung der NN beleuchtet und einige Netzwerkmodelle mit ihren Anwendungen genannt. In diesem Kapitel soll die Funktionsweise näher erläutert werden.
 
@@ -737,7 +775,7 @@ Ein Nachteil den RBF und GRNN teilen ist ein größerer Bedarf an Rechenleistung
 
 \subsubsection{Neuronale Netze von Jordan und Elman}\\
 \todo{Grafik}
-Diese beiden Netzwerke ähneln sich sehr in ihrer Beschaffenheit und werden daher zusammen vorgestellt. Mehr noch stellte unter anderen die Arbeit von \citet{Jordan1986} die Grundlage für die Veröffentlichung von \citet{Elman1990}. Die Modelle die in diesen Arbeiten vorgestellt werden zählen zu den rückgekoppelten (engl.: recurrent) neuronalen Netzen. Die Grundform bildet hierbei ein Feed-Forward Netz wie beispielsweise das MLP. Zusätzlich gibt es sogenannte Kontext bzw. Zustandsneuronen (engl.: context/state neurons). Diese Bilden im übertragenden Sinne eine weitere verdeckte Schicht in dem Sinne das sie keine Kommunikation mit der "Außenwelt" besitzt. Diese Neuronen zeichnen sich dadurch aus, dass entweder die Outputneuronen (Jordan Netz) bzw. die Neuronen der Verdecktenschicht (Elamn Netz) eine Rückkopplung zu ihnen aufweisen. Zusätzlich weisen diese Neuronen eine Eigenrückkoplung auf (\farbig{sihe Abbildung ??}). 
+Diese beiden Netzwerke ähneln sich sehr in ihrer Beschaffenheit und werden daher zusammen vorgestellt. Mehr noch stellte unter anderen die Arbeit von \citet{Jordan1986} die Grundlage für die Veröffentlichung von \citet{Elman1990}. Die Modelle die in diesen Arbeiten vorgestellt werden zählen zu den rückgekoppelten (engl.: recurrent) neuronalen Netzen. Die Grundform bildet hierbei ein Feed-Forward Netz wie beispielsweise das MLP. Zusätzlich gibt es sogenannte Kontext bzw. Zustandsneuronen (engl.: context/state neurons). Diese Bilden im übertragenden Sinne eine weitere verdeckte Schicht in dem Sinne das sie keine Kommunikation mit der "Außenwelt" besitzt. Diese Neuronen zeichnen sich dadurch aus, dass entweder die Outputneuronen (Jordan Netz) bzw. die Neuronen der Verdecktenschicht (Elamn Netz) eine Rückkopplung zu ihnen aufweisen. Zusätzlich weisen diese Neuronen eine Eigenrückkoplung auf (\farbig{sihe Abbildung ??}). \todo{tiefer ins detail gehen}
 Durch die zusätzliche Rückkopplung bekommt das Netzwerk ein zeitliches Gedächtnis, indem der wert des vorherigen Durchlaufes zwischengespeichert und für die Berechnung des nächsten Wertes berücksichtigt wird. Durch die Eigenrückkopplung kann die zeitliche Ausdehnung des Gedächtises kontrolliert werden. Zum Trainieren der Neuronalen Netze kann ebenfalls der Backpropagationalgorithmus angewandt werden, wobei die Eigenrückkopplungsrate während der Trainingsphase der Gewichte konstant gehalten werden muss. Hierzu wurden in der Literatur\,\citef{Pham1999} Modifikationen am Netzwerk und am Lernalgorythmus vorgestellt, um das Backpropagationverfahren auch auf die Kontextneuronen anwenden zu können.
 
 
@@ -829,19 +867,70 @@ Das Hopfield Netz benannt nach seinem Entwickler zählt zu den rückgekoppelten 
 
 
 \subsubsection{Adaptive Resonance Theory (ART)}\\
+\todo{Grafik}
 
-Den Grundstein für die Theorie des ART Netzes legte \citet{Grossberg1973}. Das ART1, welches in diesem Kapitel näher erleutert wird, wurde von \citet{Carpenter1987} vorgestellt. 
+Den Grundstein für die Theorie des ART Netzes legte \citet{Grossberg1973} und es zählt zu den rückgekoppelten Netzen, welche unbeaufsichtigt lernen. Das ART1, dass in diesem Kapitel näher erläutert wird, wurde von \citet{Carpenter1987} vorgestellt. Dieses Netzwerk wurde mit dem Hintergedanken entwickelt, dass die bis dato vorgestellten Netzwerktypen Schwierigkeiten gehabt haben neue Informationen zu bestehenden hinzuzufügen ohne die bisherigen Informationen zu "vergessen". Daher ist das ART Netzwerk in der Lage binäre Muster in Klassen einzuteilen wobei es zusätzlich neue Klassen finden kann. Aufgebaut ist das Netzwerk aus zwei Schichten. Nämlich der Eingabeschicht und der Erkennungsschicht, wobei die Erkennungsschicht auch für die augabe der Informationen zuständig ist. Beide Schichten sind untereinander vollverknüpft. Hierbei wird der Informationsfluss von den Eingabeneuronen zu den Erkennungsneuronen hin als Bottom-Up Verbindung bezeichnet und der rückwärtige Informationsfluss als Top-Down Verbindung. Anfänglich wird das Netzwerk mit unbestimmten Gewichten initialisiert. Darauffolgend werden binäre Eingaben von der gleichnamigen Schicht an die Erkennungsschicht weitergegeben wo nach dem Winnter-Takes-All Schema das Neuron mit der größten Aktivierung ausgewählt wird. Nun werden die Gewichte der Bottom-Up Verbindung die zum "Gewinnerneuron" führen erhöht. Hiermit wird die Klassenzugehörigkeit des Eingabemusters verstärkt. Die Aktivität der Erkennungsschicht wird anschließend über die Top-Down Verbindung an die Eingabeschicht zurückgegeben. Hier werden ebenfalls nur die Gewichte trainiert die vom "Gewinnerneuron" zur Eingabeschicht führen. Die "Aktiviät" wird so von einer Schicht an die andere und wieder zurück geleitet wodurch der Begriff der Resonanz geprägt wird.\\
+Es kommt vor, dass mehrere Neuronen der Erkennungsschicht eine gleiche Aktivität aufweisen. In diesem Fall erzeugt ein Steuerungsneuron ein zusätzliches Ausgabeneuron und ordnet diesem das aktuelle Muster zu. Bei der Eingabe ähnlicher Muster stellt sich die Frage wann ein Neuron aktiv werden darf und wann gelernt wird. Hierfür existieren im ART-Netz Kontrollneurone welche diese Spezialfälle durch verschiedene mathematische Regeln behandeln.\\
+Der Vorteil dieses Netzes ist nicht nur, dass es die Eingabe in Klassen einordnen kann sondern durch die Aktivierung des des Ausgabeneurons auch verraten kann wie ein typischer Vertreter dieser Klasse aussieht. Als größter Kritikpunkt gilt hier die Notwendigkeit von Spezialfallunterscheidungen die durch diverse "IF-Abfragen" abgefangen werden müssen.\,\citef[173 ff]{dkriesel07}\\
+Wie zu Beginn dieses Unterkapitels durch ART1 angedeutet gibt es nicht das ART-Netz sondern eine Vielzahl von Weiterentwicklungen und Verbesserungen. Einige erlauben neben binären auch kontinuierliche Eingaben, andere bieten eine höhere Lerngeschwindigkeit.\,\footnote{\,Vgl. \citet[C2.2:1 ff]{Fiesler96} und \citet[89 ff]{Gurney1997}.} 
+
+%Eine genauere Beschreibung und Übersicht der ART-Familie geben \citet[C2.2:1 ff]{Fiesler96} und \citet[89 ff]{Gurney1997}.
+
+
+\subsubsection{Cascade-Correlation Netze (CCNN/RCC)}\\
+\todo{Grafik}
+
+Das Cascade-Correlation Modell wurde als überwacht lernendes Feed-Foreward Netzwerk von \citet{Fahlman1990} vorgestellt. Die Idee hinter CCNN ist, dass es zunächst mit einem SLP initialisiert und angelernt wird und solange nach bedarf selbstständig neue Neuronen hinzufügen kann bis der Gewünschte Fehlerterm erreicht ist.\\
+Genauer gesagt wird nach der initialisierung des SLP das Netzwerk trainiert und der Fehlerterm zwischen der Ausgabe und der Lösung des Trainingsbeispiels beobachtet. Falls nicht der gewünschte Wert erreicht wird fügt der Algorythmus ein verdecktes Neuron (das sogenannte Kandidatneuron) hinzu und trainiert dieses. Hier liegt auch der Unterschied zwischen den anderen Mehrschichtnetzen. Wird ein Kandidatneuron hinzugefügt so werden zunächst gewichtete Verbindungen zu den bisherigen Neuronen (hierzu zählen die Eingabe- wie auch die verdeckten Neuronen) gebildet mit Ausnahme der Ausgabeneuronen. Die Gewichte des neu erzeugten Neurons werden nun mit einem Gradientenabstiegsverfahren trainiert, wobei die Gewichte der anderen Neuronen eingefroren werden. Nach einem im Vorfeld festgelegten Fehlerreduktionsterm wird das Training des Kandidatneurons beendet. Als nächstes wird das Kandidatneuron mit einer Gewichteten Verbindung ebenfalls mit den Ausgabeneurone verbunden. Nun werden alle Gewichte mit Ausnahme der Gewichte Der Ausgabeneuronen eingefrohren und mit Hilfe eines Lernalgorithmus für Einschichtige Netze (beispielsweise mit der Deltaregel) trainiert.\\
+\citet{Fahlman1990} beschreiben auch die Möglichkeit mehrere Kadidatneurone gleichzeitig zu trainieren und das erfolgversprechendste in das Netzwerk einzubinden. Hierdurch wird die Moglichkeit reduziert in einem lokalen Minimum stecken zu bleiben. Zusätzlich können die Kandidatneuronen unterschiedliche Aktivierungsfunktionen beinhalten und das so entstehende inhomogene Netzwerk kann zu eleganteren Lösungen führen im vergleich zu homogenen Netzwerken.\\
+Der Vorteil dieses Netzwerkes besteht neben des sehr schnellen Lernvorgangs darin, dass das Netzwerk je nach Problemstellung die eigene Größe und Topologie selbst bestimmen kann. \citet{Balazs2009} gibt an, dass die CCNN aber auch leicht Überangepasst (engl.: overfit) werden können.\\
+\todo{Grafik}
+\citet{Fahlman1991} stellte das rückgekoppeles Cascade-Correlation Netz (RCC) vor. Dieses Netzwerk (dargestellt in \farbig{Abbildung ??}) ist inspiriert durch das Elamn Netz. Aber anstatt Verbindungen zu Neuronen vorherigen Schichten zu bilden, welches das CCNN Konzept verletzen würde, besitzen die verdeckten Neuronen und die Kandidatneurone eine gewichtete Eigenrückkopplung. Mit dieser Änderung ist das Netz in der Lage, neben den Eigenschaften des CCNN, Muster in Zeitdiskreten Daten zu erkennen. Wie aber \citet{Kirschninga1995} feststellen hat die Grundform des RCC probleme große Gruppen von Mustern mit unterschiedlichen Eigenschaften zu erkennen. Bei einer großen Datenlage scheint das Netzwerk sogar zuvor gelernte Muster zu vergessen.  
 
 
 
 
-\newpage
+%\newpage
 \subsection{Gegenüberstellung der Netzwerke}
+%In diesem Abschnitt erfolgt eine Zusammenfassung der Eigenschaften der vorgestellten Modelle.
+
+Vor dem Hintergrund der zuvor vorgestellten Charakterisierung und Anwendungsgebiete der NN erfolgt in \autoref{tab:ann_modell} eine Gegenüberstellung der vorgestellten Modelle. Es wird an dieser Stelle nochmal darauf hingewiesen, dass die Kategorisierung der Anwendungen nicht klar umgrenzt sind und die Zuordnung der Anwendungsgebiete als Tendenz angesehen werden sollte.
+
+\begin{table}[h]
+%\centering
+\caption{Gegenüberstellung vorgestellter Modelle}
+\label{tab:ann_modell}
+\begin{tabularx}{\textwidth}{llZZ}
+\toprule
+Modell          &  Neuronaleverbindung   & Lernverfahren          & Anwendung           \\
+\midrule
+MLP             & FF        & überwacht         & K-r, AM-h, AM-a                       \\
+RBF             & FF        & überwacht         & K-nn\,\protect\footnotemark{}, AM-h   \\
+SOM             & R-l       & unüberwacht       & K-nn, KO, AM-h                        \\
+GRNN            & FF        & unüberwacht       & K-r                                   \\
+Jordan/Elman    & R-i       & überwacht         & K-r, AM-h                             \\
+Hopfield        & R-v       & unüberwacht       & AM-a, KO                              \\
+ART             & R-v       & unüberwacht       & K-nn, AM-h                            \\
+CCNN            & FF        & überwacht         & K-r, AM-h                             \\
+RCC             & R-d       & überwacht         & K-r, AM-h                             \\
+
+
+\bottomrule
+\end{tabularx}
+\farbig{\fontsize{10pt}{10.5pt}\selectfont Abkürzungen ausschreiben Bsp.: K-r:Klassifikation durch Regression, K-nn:Klassifikation durch nächster-Nachbar}
+\end{table}
+\addtocounter{footnote}{-1}     %  -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
+\addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
+\wrapfigfoot\footnotetext{\,Vgl. \citet[F1.2:4]{Fiesler96}.}
+
+
+\begin{comment} %--------DAS IST EIN KOMMENTAR----ANFANG----------%
+
+
 In diesem Abschnitt erfolgt eine Bewertung der vorgestellten neuronalen Netzwerke vor dem Hintergrund der Anwendbarkeit auf die Vorhersage von Strommarktpreisen.
 
 \vspace{1cm}
 
-\begin{comment} %--------DAS IST EIN KOMMENTAR----ANFANG----------%
 
 %-------------------------------------------
 %% Inhalt für Gegenüberstellungstabelle
@@ -968,8 +1057,8 @@ In diesem Abschnitt erfolgt eine Bewertung der vorgestellten neuronalen Netzwerk
 %\end{longtabu}    
     
 \end{center}
+%--------------------------------------------------------------------------------------------------------------------------------------------------%
 
-\end{comment}%--------DAS IST EIN KOMMENTAR----Ende----------%
 
 %-------------------------------------------
 %% Inhalt für Gegenüberstellungstabelle
@@ -1153,17 +1242,4 @@ In diesem Abschnitt erfolgt eine Bewertung der vorgestellten neuronalen Netzwerk
 \vspace{1cm}
 %\bottomrule
 \end{tabularx}
-
-
-%\subsubsection{Fuzzy-neuronales Netz}
-
-%\newpage
-%\lipsum
-
-%\subsubsection{Hopfield Netzwerk}
-
-%\subsection{Multilayerperceptrons (MLP)}
-
-%\subsection{Radiale Basisfunktionen (RBF)}
-
-%\subsection{Gegenüberstellung von MLP- und RBF-Netzen}
+\end{comment}%--------DAS IST EIN KOMMENTAR----Ende----------%
