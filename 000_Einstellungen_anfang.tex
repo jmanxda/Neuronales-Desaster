@@ -61,11 +61,21 @@
 
 %-------------------------------------------
 %% Pakete für das Erstellen von Tabellen
+%% Quellen: https://ctan.org/pkg/filecontents
+%%          https://www.overleaf.com/latex/examples/a-longtable-plus-tabularx-example/rcrxtjbrvyft
+%%          http://texwelt.de/wissen/fragen/1805/ist-es-moglich-x-spalten-in-tabellen-linksbundig-auszurichten
+
 %\usepackage{tabu}
+\usepackage{filecontents}                   % Ermöglicht das erstellen von Dateien direkt im Quelltext
+%\usepackage{tabularx}
+\usepackage{ltxtable}                       % Ermöglicht das erstellen von seitenübergreifenden Tabellen mit der tabularx Umgebung
+\usepackage{ragged2e}                       % \raggedright verhindert die Silbentrennung mit diesem Paket und \RaggedRight ist dies wieder möglich
 %\usepackage{longtable}
-\usepackage{tabularx}
 \usepackage{booktabs}
-\newcolumntype{Z}{>{\raggedright\let\newline\\\arraybackslash}X}    % Ermöglicht linksbündige Spalten mit Zeilenumbruch in tabularx durch verwenden von Z 
+%\newcolumntype{Z}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}    % Ermöglicht linksbündige Spalten mit Zeilenumbruch in tabularx durch verwenden von Z
+
+\newcolumntype{Z}{>{\RaggedRight\let\newline\\\hspace{0pt}}X}   % Ermöglicht linksbündige Spalten mit Zeilenumbruch in tabularx durch verwenden von Z
+
 \definecolor{tableShade}{gray}{0.95}     % Einfärben der Zeilen in Grau
 
 

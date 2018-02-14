@@ -78,17 +78,42 @@ In der betrachteten Zeitperiode werden in der Literatur zur Vorhersage von Strom
 
 %\citet{Monteiro2016} benutzen zur Berechnung verschiedener Vorhersageintervalle auf dem Iberischen Elektrizitätsmarkt MIBEL ein MLP Netzwerk. Sie untersuchen verschiedene Eingabevariablen und die Anzahl an Neuronen der verdeckten Schicht bestimmen sie mit $2n+1$, wobei $n$ für die Anzahl der Eingabevariablen steht. Zur bewertung der Ergebnisse kommt das MAPE Maß zum Einsatz.
 
-\begin{table}[H]
-%\centering
+
+\begin{filecontents*}{literaturvergleich.tex}
+        %\begin{table}[H]
+        %\centering
+
+%\rowcolors{3}{tableShade}{white}
+        %\noindent\begin{tabularx}{\textwidth}{lZZZZ}
+\begin{longtable}{lZZZZ}
 \caption{\farbig{Literaturauflistung}}
 \label{tab:ann_lit}
-\rowcolors{3}{tableShade}{white}
-\noindent\begin{tabularx}{\textwidth}{lZZZZ}
-\toprule
-\hiderowcolors 
-Verweis                 & Modell    & Lernalgorythmus          & Markt                     & Performancemaß            \\
-\midrule
-\showrowcolors 
+
+\hline %\toprule
+%\hiderowcolors
+\multicolumn{1}{l}{\textbf{Verweis}} & \multicolumn{1}{Z}{\textbf{Modell}} & \multicolumn{1}{Z}{\textbf{Lernalgorythmus}} & \multicolumn{1}{Z}{\textbf{Markt}} & \multicolumn{1}{Z}{\textbf{Performancemaß}} \\
+%        Verweis                 & Modell    & Lernalgorythmus          & Markt                     & Performancemaß            \\
+\hline %\midrule
+\endfirsthead
+%\showrowcolors
+
+\multicolumn{5}{c}%
+{\tablename\ \thetable{} -- Fortsetzung der vorherigen Seite} \\
+\hline %\toprule
+\multicolumn{1}{l}{\textbf{Verweis}} & \multicolumn{1}{Z}{\textbf{Modell}} & \multicolumn{1}{Z}{\textbf{Lernalgorythmus}} & \multicolumn{1}{Z}{\textbf{Markt}} & \multicolumn{1}{Z}{\textbf{Performancemaß}} \\
+ %       Verweis                 & Modell    & Lernalgorythmus          & Markt                     & Performancemaß            \\
+\hline%\midrule
+\endhead
+
+\hline %\midrule
+\multicolumn{5}{r}{{Fortzetzung auf der nächsten Seite}} \\
+\hline %\bottomrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+
 \citet{Peter2016}       & MLP       & BP                       & Indien                    & MAPE, NMSE, EV            \\
 \citet{Keles2016}       & MLP       & BP                       & EPEX                    & RMSE, MAD                 \\
 \citet{Bobinaite2016}   & MLP       & BP                       & Nord Pool                 & MAPE                      \\
@@ -104,15 +129,20 @@ Verweis                 & Modell    & Lernalgorythmus          & Markt          
 
 \citet{Marcos2017}      & MLP       & --                        & Iberian                   & MAPE, MSE                 \\
 \citet{Domanski2017}    & MLP       & LM                       & Australien; Polen         & MSE, APE                  \\
-\citet{Gao2017}         & MLP       & BP$^{*}$                   & EPEX (UK)                  & RMSE                      \\
+\citet{Gao2017}         & MLP       & BP$^{*}$                 & EPEX (UK)                  & RMSE                      \\
 \citet{Mirakyan2017}    & MLP       & BP                       & EPEX (DE,AT)              & MAPE, RMSE                 \\
-\citet{Talari2017}      & RBF       & --                        & Spanien                   & EV                        \\
+\citet{Talari2017}      & RBF       & --                       & Spanien                   & EV                        \\
 
-\citet{Mandal2017}      & MLP, RNN   & BP/BP                    & PJM                       & MAPE, FMSE, MAE           \\
-\citet{Lago2018}        & DNN(MLP)  & SGD                      & Belgien/ Frankreich        & sMAPE                     \\
+\citet{Mandal2017}      & MLP, RNN  & BP/BP                    & PJM                       & MAPE, FMSE, MAE           \\
+\citet{Lago2018}        & MLP       & SGD                      & Belgien/ Frankreich        & sMAPE                     \\
 
+        %\bottomrule
+        %\end{tabularx}
+\end{longtable}
+%\farbig{\fontsize{10pt}{10.5pt}\selectfont Abkürzungen ausschreiben}
+        %\end{table}
+\end{filecontents*}
 
-\bottomrule
-\end{tabularx}
-\farbig{\fontsize{10pt}{10.5pt}\selectfont Abkürzungen ausschreiben}
-\end{table}
+\LTXtable{\textwidth}{literaturvergleich}
+
+dass ist einfach nur text der später weg kann
