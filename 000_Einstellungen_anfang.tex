@@ -9,7 +9,7 @@
 \documentclass[a4paper, 12pt, titlepage]{scrartcl} % Schrift- und Papiergröße werden eingestellt  
 \usepackage[top=2.5cm, bottom=2cm, left=2.5cm, right=2.5cm]{geometry} % Korrekturrand wird eingestellt
 \usepackage[ngerman]{babel}             % Dokumentsprache wird auf deutsch gesetzt
-\usepackage[table]{xcolor}                     % Ermöglicht die Änderung der Schriftfarbe
+\usepackage[table]{xcolor}              % Ermöglicht die Änderung der Schriftfarbe
 \usepackage{graphicx}                   % Ermöglicht das Einbinden von Bildern
 \usepackage{fancyhdr}                   % Ermöglicht die freie Bearbeitung der Fuß und Kopfzeilen
 \usepackage{tocloft}                    % Ermöglicht das anpassen des Inhaltsverzeichnisses
@@ -66,6 +66,7 @@
 \usepackage{tabularx}
 \usepackage{booktabs}
 \newcolumntype{Z}{>{\raggedright\let\newline\\\arraybackslash}X}    % Ermöglicht linksbündige Spalten mit Zeilenumbruch in tabularx durch verwenden von Z 
+\definecolor{tableShade}{gray}{0.95}     % Einfärben der Zeilen in Grau
 
 
 
@@ -140,8 +141,8 @@
 \newcommand{\todo}[1]{
 \begin{figure}[!htb]
     \centering
-    \tikz \node[draw,text width=.8\textwidth,align=left]{\textbf{TODO:}\\\farbig{#1}.};
-    %\fbox{\parbox{.8\textwidth}{\textbf{TODO:}\\\farbig{#1}}}
+    \tikz \node[draw,text width=.8\textwidth,align=left]{\textbf{TODO:}\\\farbig{#1.}};
+    %\fbox{\parbox{.8\textwidth}{\textbf{TODO:}\\\farbig{#1.}}}
 \end{figure}
 }
 

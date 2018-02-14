@@ -10,7 +10,7 @@
 
 Elektrizität ist eine besonderes Gut, dessen Erzeugung und Verbrauch gleichzeitig erfolgt. Die Erzeugung dieses Gutes kann kontrolliert werden. Wobei das Speichern von Elektrizität in einem industriellen Maßstab sich als schwierig gestaltet. Daher beeinflusst die Nachfrage maßgeblich die zu generierende Menge. Aus diesem Grund verläuft der Handel, im Gegensatz zu anderen Finanz- oder Gütermärkten, oft auf dem sogenannten „Day-ahead“-Markt. Der Strom wird dabei für die Stunde des nächsten Tages ge- und verkauft. Diese Handelsweise ist für die Marktakteure notwendig, um die Produktions- und Abnahmekapazitäten einander anzupassen. Auf den meisten Märkten müssen die Marktakteure bis zu einer Frist ihre 24 Gebote abgeben. Nach Ablauf der Frist erstellt der Marktbetereiber, unter Berücksichtigung aller Gebote, den Gleichgewichtspreis (engl.: market clearing price) für jede der 24 Stunden. Produzenten deren Gebot niedriger bzw. Konsumenten deren Gebot höher oder gleich dem Gleichgewichtspreis ist, bekommen den Zuschlag.\citef[7]{Weron2014} Um den Gleichgewichtspreis des nächsten Tages vorherzusagen und ein Gebot möglichst nah am Gleichgewichtspreis abzugeben gibt es vielfältige Ansätze.
 
-Einen guten Überblick über vorgeschlagene Modelle zur Strompreisvorhersage geben \citet{Aggarwal2009}, \citet{Cerjan2013} und \citet{Weron2014} in ihren Reviews. Zunächst können die Modelle in einen lang-/mittelfristigen und kurzfristigen Vorhersagehorizont eingeteilt werden. Zu dem lang- und mittelfristigen Vorhersagehorizont werden folgende Modelle angewandt:
+Einen guten Überblick über vorgeschlagene Modelle zur Strompreisvorhersage geben \citet{Daneshi2008}, \citet{Aggarwal2009}, \citet{Cerjan2013}  und \citet{Weron2014} in ihren Reviews. Zunächst können die Modelle in einen lang-/mittelfristigen und kurzfristigen Vorhersagehorizont eingeteilt werden. Zu dem lang- und mittelfristigen Vorhersagehorizont kommen folgende Modelle zur Anwendung:
 \begin{itemize}
 \item[\textbf{$\bullet$}]%
 Multi-Agenten bzw. Spieltheorie Modelle, bei denen versucht wird das Verhalten der unterschiedlichen Agenten/Akteure auf dem Markt zu simulieren.
@@ -44,18 +44,25 @@ Data-Mining Modelle
 
 \todo{Der Unterschied zwischen künstlichen neuronalen Netzen und Data-Mining + Modelle nennen }
 
-Da nicht ein Modell alle Faktoren die zum schließlichen Preis führen erfasst werden in der Literatur hybride Modelle eingesetzt die aus einigen der genannten Kategorien zusammen gesetzt sind, um die Vorhersageabweichungen zu verringern.
+Die passende Methode zur Strompreisvorhersage hängt von einer Vielzahl von Überlegungen ab. Der Frage welche Methode die Beste ist, um Vorhersagen zu treffen stellt \citet{Chatfield1988} in seiner Arbeit. Vor diesem Hintergrund stellt er sechs Empfehlungen aus. Unter anderem ist die Komplexität eines Modells kein Garant für bessere Vorhersagen im vergleich zu weniger komplexen Modellen. Weiterhin kann die Anzahl an vergangenen Beobachtungen und der gewünschte Vorhersagehorizont kann eine Orientierung bei der Wahl des passenden Modells geben.
+Bei ihren Untersuchungen stellen \citet{Nogales2002} fest, dass in den meisten kompetitiven Strommärkten die Zeitreihen der Strompreise eine hohen Schwankung aufweisen (gleichzusetzen mit hoher Volatilität), mehrere Sesionalitäten besitzen (das heißt, dass die Zeitreihen tages- und wochenabhängigen Peridiozitäten unterielgen ), einen Kallender-Effekt besitzen (Abhängigkeiten von Wochenenden und Feiertagen) und einen hohen prozentualen Anteil an ungewöhnlichen Preisverläufen besitzen. \citet{Vijayalakshmi2015} kommen bei ihrem Review von NN-Implementierungen für die Strompreisprognose zu dem Schluss, dass Strompreise, die durch Volatilität, Saisonalität, Preis-Spitzen, Sprünge und Nichtlinearitäten gekennzeichnet sind sich oft nur schwer mit ökonometrischen Modellen vorhersagen lassen. NN-basierte Modelle aber eine mögliche Antwort auf die kurzfristige Strompreisprognose sein können. \citet{Weron2014} kommt zu dem Schluss, dass die Stärke der komputerbasierten Intelligenz Modelle in der Fähihgkeit liegt mit Komplexität und Nichtlinearität umgehen zu können. \citet{Gareta2006} sind jedoch der Meinung, dass Ergebnisse der NN-Modelle abhängig von der Menge der Eingabedaten sind und dass das Modell einer Überprüfung bedarf.
+
+Die Anzahl und Einteilung der Modelle in unterschiedliche Vorhersagehorizonte weist darauf hin, dass nicht ein Modell allein alle Faktoren die zum schließlichen Preis führen erfasst. Aus diesem Grund werden in der Literatur hybride Modelle eingesetzt die aus einigen der genannten Kategorien zusammen gesetzt sind, um die Vorhersageabweichungen zu verringern.
 
 
+\subsection{Literaturüberblick zur Anwendung von neuronalen Netzen zur Strompreisvorhersage}
 
-\subsection{Literaturüberblick zur Anwendung von neuronalen Netzen}
-
-\citet{Aggarwal2009} und \citet{Panapakidis2016} haben eine Übersicht über die bis dato genutzten NN basierten Modelle zu vorhersage des Elektrizitätspreises vorgestellt. In Anlehnung der beiden Veröffentlichungen erfolgt ein Literaturüberblick der letzten zwei Jahre. 
-Modelle basierend auf NN die in dieser Zeit veröffentlicht und dem Autor dieser Arbeit zur Verfügung standen sind in \autoref{tab:ann_lit} dargestellt. Neben den Verweisen sind die eingesetzten Netzwerke, die untersuchten Märkte und das zur Evaluation eingesetzte Performancemaß aufgeführt.
+\citet{Aggarwal2009} und \citet{Panapakidis2016} haben eine tabelarische Übersicht über die bis dato genutzten NN basierten Modelle zu vorhersage des Elektrizitätspreises vorgestellt. In Anlehnung der beiden Veröffentlichungen erfolgt ein Literaturüberblick der letzten zwei Jahre. 
+Modelle basierend auf NN die in dieser Zeit veröffentlicht und dem Autor dieser Arbeit zur Verfügung standen sind in \autoref{tab:ann_lit} dargestellt. Neben den Verweisen sind die eingesetzten Netzwerke, die untersuchten Märkte und das zur Evaluation eingesetzte Performancemaß aufgeführt. In der genannten Literatur kommen zum Teil hybride Modelle vor. Da der Fokus dieser Arbeit es ist einen Überblick über die Anwendung neuronaler Nerze zur Strompreisvorhersage zu geben wurde in der Tabelle nur das zur Anwendung kommende neuronale Netz aufgeführt. 
 
 \todo{Übersicht über die Märkte und Performancemaße im Anhang erstellen und im Text auf sie Verweisen}
 
-Die in der Literatur vorgeschlagenen NN zur Vorhersage sind Feed-Forward NN (FFNNs), Multi-Layer Perceptrons (MLPs), Radial Basis Function Netze (RBFs), Recurrent NN (RNNs)...
+
+
+
+
+In der betrachteten Zeitperiode werden in der Literatur zur Vorhersage von Strompreisen die verwendeten Netzwerk Modelle als Artificial neural Network (ANN) bei \citet{Mirakyan2017}, \citet{Gao2017} und \citet{Sandhu2016} aufgeführt. Wobei \citet{Davo2016} und \citet{Domanski2017} den allgemeinen Begriff neural Network (NN) nutzen. Weitere Begriffe sind Backpropagation neural Network (BPNN) bei \citet{Wang2017}, Feed-Forward neural Networks bei \citet{Keles2016} oder die Kombination aus beiden Feed-Forward Backpropagation neural Network (FFBPNN) bei \citet{Peter2016}. Zuletzt sind noch Function-Fitting neural Network (FFNN) bei \citet{Marcos2017} und Deep neural Network (DNN) bei \citet{Lago2018} zu nennen. Diese Bezeichnungen werden synonym für das MLP genutzt. Dies ist verwirrend und erschwert einem fachfremden Leser den einstieg in die Materie, da die redundanten Begrifflichkeiten unterschiedliche Modelle suggerieren. Erst nach gründlichem durcharbeiten der Veröffentlichungen und durch Kenntnis der Eigenheiten verschiedener künstlicher neuronaler Netze ist es möglich die Arbeiten miteinander zu vergleichen. Dadurch reduzieren sich die zur Anwendung kommenden Netze auf Multi-Layer Perceptrons (MLPs), Radial Basis Function Netze (RBFs) und Recursive NN (RNNs). Wobei bei näherer Betrachtung des Recursive Netzes mehrere MLPs hintereinander geschaltet sind. Somit kommt das MLP im Vergleich zu den RBF Netzen am häufigsten zur Anwendung. Als Lernalgorythmus wird das Standard Backpropagation-Verfahren am meißten benutzt. Veröffentlichungen bei denen der Lernalgorithmus mit BP$^{*}$ markiert ist nennen den verwendeten Algorithmus nicht explizit aber die Erklärung lässt auf das Backpropagation schließen. Desweiteren werden bei den mit -- markierten Felder die Lernalgorithmen entweder gar nicht genannt oder es kommen Verfahren zum Einsatz die zu den CI-Methoden zählen und daher nicht in die Betrachtung einfließen. Das am meisten verwendete Performancemaß ist das MAPE gefolgt von RMSE und MAE. Schließlich dient der betrachtete Markt der Vergleichbarkeit der Ergebnisse dieser Arbeit mit den Ergebnissen von \citet{Panapakidis2016}.
+
 
 
 %Hierzu wird ein Überblick über die Anwendung der NN zur vorhersage des Strompreises aus der Literatur  gegeben.
@@ -63,38 +70,46 @@ Die in der Literatur vorgeschlagenen NN zur Vorhersage sind Feed-Forward NN (FFN
 
 
 
-\citet{Keles2016} verwenden zur Vorhersage des "day-ahead"\--Preises am European Power Exchange (EPEX) ein MLP. Sie bezeichnen es als ein drei schichtiges Feed-Forward Netzwerk mit einem Ausgangsneuron und stellen verschiedene Konfigurationen des Netzwerkes gegenüber. Sie Vergleichen den Tangenshyperbolicus mit der logistischen Funktion (eine vereinfachte Version der Fermifunktion sihe \autoref{fig:funktion}) als Aktivierungsfunktion und erzielen mit der logistischen Funktion die besseren Ergebnisse. Als Gütekriterium benutzen sie das RMSE und MAD Maß.
+%\citet{Keles2016} verwenden zur Vorhersage des "day-ahead"\--Preises am European Power Exchange (EPEX) ein MLP. Sie bezeichnen es als ein drei schichtiges Feed-Forward Netzwerk mit einem Ausgangsneuron und stellen verschiedene Konfigurationen des Netzwerkes gegenüber. Sie Vergleichen den Tangenshyperbolicus mit der logistischen Funktion (eine vereinfachte Version der Fermifunktion sihe \autoref{fig:funktion}) als Aktivierungsfunktion und erzielen mit der logistischen Funktion die besseren Ergebnisse. Als Gütekriterium benutzen sie das RMSE und MAD Maß.
 
 %\todo{verweiß auf Gütemaße}
 
-\citet{Jiang2016} nutzen ein hybrides System aus mehreren CI Methoden, um relevante Eingabedaten für das Training eines RBF Netzwerkes zu bekommen. Sie wenden ihre Methode auf den US amerikanischen PJM-Markt an, um den Elektrizitätspreis des nächsten Tages vorherzusagen. Zur Auswertung ihrer Ergebnisse benutzen sie das MAPE, RMSE und MAE Maß.
+%\citet{Jiang2016} nutzen ein hybrides System aus mehreren CI Methoden, um relevante Eingabedaten für das Training eines RBF Netzwerkes zu bekommen. Sie wenden ihre Methode auf den US amerikanischen PJM-Markt an, um den Elektrizitätspreis des nächsten Tages vorherzusagen. Zur Auswertung ihrer Ergebnisse benutzen sie das MAPE, RMSE und MAE Maß.
 
-\citet{Monteiro2016} benutzen zur Berechnung verschiedener Vorhersageintervalle auf dem Iberischen Elektrizitätsmarkt MIBEL ein MLP Netzwerk. Sie untersuchen verschiedene Eingabevariablen und die Anzahl an Neuronen der verdeckten Schicht bestimmen sie mit $2n+1$, wobei $n$ für die Anzahl der Eingabevariablen steht. Zur bewertung der Ergebnisse kommt das MAPE Maß zum Einsatz.
+%\citet{Monteiro2016} benutzen zur Berechnung verschiedener Vorhersageintervalle auf dem Iberischen Elektrizitätsmarkt MIBEL ein MLP Netzwerk. Sie untersuchen verschiedene Eingabevariablen und die Anzahl an Neuronen der verdeckten Schicht bestimmen sie mit $2n+1$, wobei $n$ für die Anzahl der Eingabevariablen steht. Zur bewertung der Ergebnisse kommt das MAPE Maß zum Einsatz.
 
-\begin{table}[h]
+\begin{table}[H]
 %\centering
 \caption{\farbig{Literaturauflistung}}
 \label{tab:ann_lit}
-\begin{tabularx}{\textwidth}{llZZ}
+\rowcolors{3}{tableShade}{white}
+\noindent\begin{tabularx}{\textwidth}{lZZZZ}
 \toprule
-Verweis                 &  Modell   & Markt                     & Performancemaß            \\
+\hiderowcolors 
+Verweis                 & Modell    & Lernalgorythmus          & Markt                     & Performancemaß            \\
 \midrule
-\citet{Keles2016}       & MLP       & EPEX                      & RMSE, MAD                 \\
-\citet{Bobinaite2016}   & MLP       & Nord Pool                 & MAPE                      \\
-\citet{Jiang2016}       & RBF       & PJM                       & MAPE, RMSE, MAE           \\
-\citet{Feijoo2016}      & SVM       & PJM                       & MAPE, RMSE, MAE           \\
-\citet{Monteiro2016}    & MLP       & MIBEL                     & MAPE                      \\
-\citet{Osorio2016}      & ANFIS     & Spain; PJM                & MAPE                      \\
-\citet{Sandhu2016}      & MLP       & Ontario                   & MAPE, RMSE, MAE           \\
-\citet{Yang2017}        & KELM      & PJM; Spain; Australia     & MAPE, RMSE, MAE, U1, U2   \\
-\citet{Wang2017}        & MLP       & EPEX(France); Australia   & MAPE, RMSE, MAE, TIC      \\
-\citet{Singh2017}       & !GNM!       & !!!   & !!!      \\
+\showrowcolors 
+\citet{Peter2016}       & MLP       & BP                       & Indien                    & MAPE, NMSE, EV            \\
+\citet{Keles2016}       & MLP       & BP                       & EPEX                    & RMSE, MAD                 \\
+\citet{Bobinaite2016}   & MLP       & BP                       & Nord Pool                 & MAPE                      \\
+\citet{Jiang2016}       & RBF       & --                       & PJM                       & MAPE, RMSE, MAE           \\
+%\citet{Feijoo2016}      & SVM       &                       & PJM                       & MAPE, RMSE, MAE           \\
+\citet{Monteiro2016}    & MLP       & BP$^{*}$                   & MIBEL                     & MAPE                      \\
+\citet{Davo2016}        & MLP       & BP                       & Italien                   & RMSE, MAE, bias, cor      \\
+%\citet{Osorio2016}      & ANFIS     &                       & Spain; PJM                & MAPE                      \\
+\citet{Sandhu2016}      & MLP       & LM                       & Ontario                   & MAPE, RMSE, MAE           \\
+\citet{Yang2017}        & MLP       & ELM                      & PJM; Spain; Australia     & MAPE, RMSE, MAE, U1, U2   \\
+\citet{Wang2017}        & MLP       & BP                       & EPEX (France); Australia  & MAPE, RMSE, MAE, TIC      \\
+%\citet{Singh2017}       & !GNM!      &                       & !!!   & !!!      \\
 
-\citet{Marcos2017}      & MLP       & Iberian                   & MAPE, MSE                 \\
-\citet{Domanski2017}    & MLP       & Australien; Polen         & MSE, APE                  \\
-\citet{Gao2017}         & MLP       & EPEX(UK)                  & RMSE                      \\
-\citet{Mandal2017}      & MLP,RNN   & PJM                       & MAPE, FMSE, MAE           \\
-\citet{Lago2018}        & DNN(MLP)  & Belgien/Frankreich        & sMAPE                     \\
+\citet{Marcos2017}      & MLP       & --                        & Iberian                   & MAPE, MSE                 \\
+\citet{Domanski2017}    & MLP       & LM                       & Australien; Polen         & MSE, APE                  \\
+\citet{Gao2017}         & MLP       & BP$^{*}$                   & EPEX (UK)                  & RMSE                      \\
+\citet{Mirakyan2017}    & MLP       & BP                       & EPEX (DE,AT)              & MAPE, RMSE                 \\
+\citet{Talari2017}      & RBF       & --                        & Spanien                   & EV                        \\
+
+\citet{Mandal2017}      & MLP, RNN   & BP/BP                    & PJM                       & MAPE, FMSE, MAE           \\
+\citet{Lago2018}        & DNN(MLP)  & SGD                      & Belgien/ Frankreich        & sMAPE                     \\
 
 
 \bottomrule
