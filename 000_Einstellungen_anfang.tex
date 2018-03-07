@@ -1,4 +1,4 @@
-% !TEX root = 00_arbeit.tex
+%!TEX root = 00_arbeit.tex
 
 %---------------------------------------------------------------------------------
 %% Einstellungen die am Anfang des Dokumentes erfolgen
@@ -11,11 +11,12 @@
 \usepackage[ngerman]{babel}             % Dokumentsprache wird auf deutsch gesetzt
 \usepackage[table]{xcolor}              % Ermöglicht die Änderung der Schriftfarbe
 \usepackage{graphicx}                   % Ermöglicht das Einbinden von Bildern
+\usepackage{adjustbox}
 \usepackage{fancyhdr}                   % Ermöglicht die freie Bearbeitung der Fuß und Kopfzeilen
 \usepackage{tocloft}                    % Ermöglicht das anpassen des Inhaltsverzeichnisses
 %\usepackage{wrapfig}                    % Ermöglicht textumschlossene Abbildungen
 \usepackage{array}                      % Ermöglicht das Anpassen von Tabellen
-\usepackage{amsmath}                    % Erweitert die Mathematikumgebung
+\usepackage{esdiff}                     % Vereinfacht die Benutzung von Differentiation in der Mathematikumgebung
 \usepackage{ifthen}                     % Ermöglicht wenn dann Abfragen
 \usepackage{verbatim}                   % Ermöglicht das Auskommentieren mehrerer Zeilen an Code
 %\usepackage{caption,subcaption}
@@ -28,7 +29,7 @@
 %\usepackage[onehalfspacing]{setspace}   % Zeilenabstand wird auf 1,5 gesetzt
 \usepackage{setspace}
 %\FPeval\zeilenabstand{175/122}            % Berechnet den Wert innerhalb der Klammern und speichert ihn in der Variable \zeilenabstand
-\setstretch{1.428}
+\setstretch{1.428}                      % Zeilenabstand wird auf 1,5 gesetzt
 
 
 
@@ -54,6 +55,13 @@
     \fi
 
 %-------------------------------------------
+%% Pakete zur Erweiterung der Mathematikumgebung
+\usepackage{amsmath}                    % Erweitert die Mathematikumgebung
+\usepackage{physics}                    % Erweitert die Mathematikumgebung um \abs{} und \norm{}
+\newcommand*\mean[1]{\bar{#1}}
+
+
+%-------------------------------------------
 %% Pakete für das Erstellen von Refferenzen
 \usepackage{varioref}
 \usepackage{hyperref} % Erweitert die Referenzmöglichkeiten
@@ -65,18 +73,15 @@
 %%          https://www.overleaf.com/latex/examples/a-longtable-plus-tabularx-example/rcrxtjbrvyft
 %%          http://texwelt.de/wissen/fragen/1805/ist-es-moglich-x-spalten-in-tabellen-linksbundig-auszurichten
 
-%\usepackage{tabu}
 \usepackage{filecontents}                   % Ermöglicht das erstellen von Dateien direkt im Quelltext
-%\usepackage{tabularx}
-\usepackage{ltxtable}                       % Ermöglicht das erstellen von seitenübergreifenden Tabellen mit der tabularx Umgebung
 \usepackage{ragged2e}                       % \raggedright verhindert die Silbentrennung mit diesem Paket und \RaggedRight ist dies wieder möglich
-%\usepackage{longtable}
-\usepackage{booktabs}
-%\newcolumntype{Z}{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}X}    % Ermöglicht linksbündige Spalten mit Zeilenumbruch in tabularx durch verwenden von Z
-
+\usepackage{booktabs}                       % ermöglicht die Benutzung von \toprule, \midrule und \bottomrule
+\usepackage{ltxtable}                       % Ermöglicht seitenübergreifende Tabellen mit dem X-Spaltentyp (vergleichbar mit tabularx)
+\renewcommand{\tabularxcolumn}[1]{m{#1}}    % Der X-Spaltentyp basiert auf dem p-Spaltentyp dieser zentriert die Zellen nicht vertikal. Dieser Befehl ändert X(p) in X(m) da der m-Spaltentyp eine vertikale Zentrierung durchführt 
+   
 \newcolumntype{Z}{>{\RaggedRight\let\newline\\\hspace{0pt}}X}   % Ermöglicht linksbündige Spalten mit Zeilenumbruch in tabularx durch verwenden von Z
 
-\definecolor{tableShade}{gray}{0.95}     % Einfärben der Zeilen in Grau
+\definecolor{tableShade}{gray}{0.95}        % Einfärben der Zeilen in Grau
 
 
 
@@ -97,6 +102,12 @@
 %\deffootnote{0.6cm}{1em}{\makebox[0.6cm][l]{\thefootnotemark}}
 \setkomafont{footnote}{\fontsize{10pt}{10.5pt}\selectfont}  % Stellt die Fußnotengröße auf 10 ein
 \setlength{\footnotesep}{13.5pt}                              % Sellt den Fußnotenzeilenabstand auf einfachen Zeilenabstand ein
+
+%% Quelle: https://tex.stackexchange.com/questions/35043/reference-different-places-to-the-same-footnote#35044
+\makeatletter
+\newcommand\footnoteref[1]{\protected@xdef\@thefnmark{\ref{#1}}\@footnotemark} % Ermöglicht das Verweisen auf andere Fußnoten mit \footnoteref{note1}
+\makeatother
+
 
 %-------------------------------------------
 %% Pakete für das Erstellen des Literaturverzeichnisses

@@ -1,4 +1,4 @@
-% !TEX root = 00_arbeit.tex
+%!TEX root = 00_arbeit.tex
 
 %---------------------------------------------------------------------------------
 %% Theorie
@@ -197,7 +197,7 @@ Vollständigkeitshalber wird erwähnt, dass \citet{characterisation_4} vier Char
 
 Unter Berücksichtigung von \citet{Fiesler96} können die Anwendungsgebiete von neuronalen Netzen in folgende Kategorien eingeteilt werden.
 \begin{itemize}
-\item \textbf{Klassifizierung}\\%
+\item[\textbf{$\bullet$}] \textbf{Klassifizierung}\\%
 Klassifizierung beschreibt das Zusammenfassen von Einheiten in vordefinierte Gruppen anhand ihrer Eigenschaften.
 \citet{Fiesler96} unterscheiden unter den Klassifizierern zwei Paradigmen:
     \begin{itemize}
@@ -209,11 +209,11 @@ Klassifizierung beschreibt das Zusammenfassen von Einheiten in vordefinierte Gru
     \end{itemize}
 
 
-\item \textbf{Kombinatorische Optimierung}\\%
+\item[\textbf{$\bullet$}] \textbf{Kombinatorische Optimierung}\\%
 Die kombinatorische Optimierung beinhaltet die Suche nach einer "optimalen" Lösung für ein Problem, unter einer großen Menge an möglichen Lösungen. 
  
 
-\item \textbf{Assoziatives Gedächtnis}\\%
+\item[\textbf{$\bullet$}] \textbf{Assoziatives Gedächtnis}\\%
 Allgemein betrachtet ist das assoziative Gedächtnis (engl.: associative memorie) ein Speichersystem welches erlaubt ein Datenelement einem anderen zuzuordnen. Somit ermöglicht der Zugriff auf eines der Elemente den Zugriff auf das andere.
 Die Assoziazion kann dabei wie in dem genannten beispiel eins-zu-eins, eins-zu-viele oder viele-zu-viele erfolgen.
 In Hinblick auf künstliche neuronale Netze wird das assoziative Gedächtnis unterschieden in:
@@ -235,7 +235,7 @@ Wobei die genannten Kategorien nicht als starr und klar umgrenzt angesehen werde
 
 %\newpage
 
-\subsection{Überblick über gängige Modelle}
+\subsection{Überblick über gängige Modelle}\label{sec:ANN-Modelle}
 Im vorherigen Kapitel wurde die Charakterisierung der NN beleuchtet und einige Netzwerkmodelle mit ihren Anwendungen genannt. In diesem Kapitel soll die Funktionsweise näher erläutert werden.
 
 \subsubsection{Perceptrons (SLP)/(MLP)}
@@ -315,8 +315,8 @@ Im vorherigen Kapitel wurde die Charakterisierung der NN beleuchtet und einige N
     \caption{SLP mit fünf Eingabeneuronen $i$ und zwei Ausgabeneuron $\Omega$ auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
     \label{fig:SLP}
 \end{figure}
-Bei den Einzelschichtperceptrons (single layer perceptrons)~(SLP) werden die zuvor in \autoref{sec:einf_neuro} beschriebenen Perceptrons zu einem Netzwerk zusammengeschlossen. \autoref{fig:SLP} zeigt ein SLP mit fünf Eingabeneuronen $i$ und zwei Ausgabeneuronen $\Omega$. In der Literatur gibt es keine Konvention in der Hinsicht ob die Eingabeneuronen $i$, welche als Identität dienen (in \autoref{fig:SLP} dargestellt als \inlineneuron[i]{0.7}) und Informationen nur weitergeben, auch als Schicht zählen. Wenn die Eingabeneuronen nicht hinzugezählt werden so wird als Perceptron nur das datenverarbeitende Neuron \inlineneuron[per]{0.7} bezeichnet. Werden die Eingabeneuronen auch als Schicht gezählt so wird das sich so ergebende neuronale Netz aus Eingabe- und Verarbeitungsschicht ebenfalls als Perceptron bezeichnet. In dieser Arbeit wird die Eingabeschicht mitgezählt. So besteht das SLP aus einer Schicht Eingabeneuronen und mindestens einem Ausgabeneuron. Beide Schichten sind verbunden über \underline{eine} Ebene trainierbarer Gewichte $\text{\textit{w}}$. Das SLP ist unteranderem in der Lage logische Funktionen wie AND- und OR-Funktion zu erlernen. Es ist aber auf linear separierbare Daten beschränkt so dass die XOR-Funktion (siehe Anhang \ref{sec:XOR}) mit einem SLP nicht mehr realisiert werden kann.
-Um das SLP zu trainieren gibt es den Perceptron-Lernalgorithmus und die Delta-Regel. Letztere Methode hat im Vergleich zur ersteren den Vorteil dass sie nicht nur auf die binäre Aktivirungsfunktion (Heavisidefunktion im Wertebereich [0,1]) beschränkt ist.\citef[76 ff]{dkriesel07}
+Beide Perceptronnetze zählen zu den Feed-Forward Netzen die überwacht Trainiert werden. Bei den Einzelschichtperceptrons (single layer perceptrons)~(SLP) werden die zuvor in \autoref{sec:einf_neuro} beschriebenen Perceptrons zu einem Netzwerk zusammengeschlossen. \autoref{fig:SLP} zeigt ein SLP mit fünf Eingabeneuronen $i$ und zwei Ausgabeneuronen $\Omega$. In der Literatur gibt es keine Konvention in der Hinsicht ob die Eingabeneuronen $i$, welche als Identität dienen (in \autoref{fig:SLP} dargestellt als \inlineneuron[i]{0.7}) und Informationen nur weitergeben, auch als Schicht zählen. Wenn die Eingabeneuronen nicht hinzugezählt werden so wird als Perceptron nur das datenverarbeitende Neuron \inlineneuron[per]{0.7} bezeichnet. Werden die Eingabeneuronen auch als Schicht gezählt so wird das sich so ergebende neuronale Netz aus Eingabe- und Verarbeitungsschicht ebenfalls als Perceptron bezeichnet. In dieser Arbeit wird die Eingabeschicht mitgezählt. So besteht das SLP aus einer Schicht Eingabeneuronen und mindestens einem Ausgabeneuron. Beide Schichten sind verbunden über \underline{eine} Ebene trainierbarer Gewichte $\text{\textit{w}}$. Das SLP ist unteranderem in der Lage logische Funktionen wie AND- und OR-Funktion zu erlernen. Es ist aber auf linear separierbare Daten beschränkt so dass die XOR-Funktion (siehe Anhang \ref{sec:XOR}) mit einem SLP nicht mehr realisiert werden kann.
+Um das SLP zu trainieren gibt es den Perceptron-Lernalgorithmus\citef[78]{dkriesel07} und die Delta-Regel. Letztere Methode hat im Vergleich zur ersteren den Vorteil dass sie nicht nur auf die binäre Aktivirungsfunktion (Heavisidefunktion im Wertebereich [0,1]) beschränkt ist.\citef[76 ff]{dkriesel07}
 \\
 
 \begin{figure}[!htb]
@@ -420,7 +420,7 @@ Um das SLP zu trainieren gibt es den Perceptron-Lernalgorithmus und die Delta-Re
 
 Im Unterschied zu den SLPs besitzen die Mehrschichtperceptrons zwischen der Eingabe- und Ausgabeschicht noch mindestens eine verdeckte Verarbeitungsschicht. Somit weisen sie mindestens zwei Ebenen an trainierbaren Gewichten auf. In \autoref{fig:MLP} ist ein MLP mit einer verdeckten Schichten dargestellt. Die zusätzliche Ebene von trainierbaren Gewichten ermöglicht eine beliebig genaue Approximation einer Funktion mit endlich vielen Unstetigkeitsstellen und ihrer ersten Ableitung. Theoretisch können beliebig viele verdeckte Schichten aufgebaut werden aber wie \hbox{\citet{dkriesel07}} erläutert reichen drei Ebenen von trainierbaren Gewichten aus, um jede beliebige Menge darstellen zu können.\citef[86 ff]{dkriesel07}
 
-Um das MLP zu trainieren gibt es das sogenannt Backpropagation Verfahren das zu den überwachten Lernalgorithmen gezählt wird. Hierbei wird das Netzwerk in der Trainingsphase mit Informationen versorgt und das errechnete Ergebnis wird mit dem gewünschten Ergebnis verglichen. Die Abweichung wird anschließend genutzt, um die Gewichte ausgehend von den Ausgabe- hin zu den Eingabeneuronen anzupassen. Ein bekanntes Problem dieses Verfahrens ist dass bei mehreren Verdeckten Schichten und einer konstanten Lernrate, Gewichte langsamer trainiert werden je weiter sie sich von der Ausgabeschicht befinden.\citef[89 ff]{dkriesel07} Des Weiteren hat eine hohe Anzahl an Ausgabeneuronen ebenfalls einen negativen Einfluss auf die Lerngeschwindigkeit des Netzwerkes.\citef[124]{dkriesel07}
+Um das MLP zu trainieren gibt es das sogenannt Backpropagation Verfahren das zu den überwachten Lernalgorithmen gezählt wird. Hierbei wird das Netzwerk in der Trainingsphase mit Informationen versorgt und das errechnete Ergebnis wird mit dem gewünschten Ergebnis verglichen. Die Abweichung wird anschließend genutzt, um die Gewichte ausgehend von den Ausgabe- hin zu den Eingabeneuronen anzupassen. Ein bekanntes Problem dieses Verfahrens ist, dass bei mehreren verdeckten Schichten und einer konstanten Lernrate, Gewichte langsamer trainiert werden je weiter sie sich von der Ausgabeschicht befinden.\citef[89 ff]{dkriesel07} Des Weiteren hat eine hohe Anzahl an Ausgabeneuronen ebenfalls einen negativen Einfluss auf die Lerngeschwindigkeit des Netzwerkes.\citef[124]{dkriesel07}
 
 
 \subsubsection{Radiale Basisfunktionen (RBF)}
@@ -523,7 +523,7 @@ Um das MLP zu trainieren gibt es das sogenannt Backpropagation Verfahren das zu 
     \label{fig:RBF}
 \end{figure}
 
-RBFs sind feed-forward Netze und ähnlich wie die Perceptrons schichtartig aufgebaut. Dabei besitzt jedes Neuron einer Schicht eine Verbindung zu jedem Neuron der nachfolgenden Schicht (diese Art der Verbindung zwischen den Schichten wird auch Vollverknüpfung genannt). RBFs besitzen aber genau drei Schichten und somit nur eine verdeckte Schicht. Die erste Schicht dient ebenfalls wie bei den Perceptrons nur der Verteilung der Eingabedaten an die nächste Schicht ohne jegliche Verarbeitung. Die zweite Schicht besteht aus verdeckten Neuronen die auch als RBF-Neuronen \inlineneuron[rbf-h]{0.8} bezeichnet werden. Jedes Neuron beinhaltet eine radiale Basisfunktion als Aktivierungsfunktion. Dies sind stets positive und radialsymmetrische Funktionen. Sie besitzen ein Maximum in der Mitte (das sogenannte Zentrum~$c$) und streben gegen Null je weiter sich die Funktion vom Mittelpunkt entfernt. Eine typische Basisfunktion ist hierbei die gaußsche Glockenkurve. Die Propagierungsfunktion bildet hier den Abstand zwischen der Eingabeinformation~$x$~und dem Zentrum~$c$~der Aktivierungsfunktion. Die Ausgabe eines RBF-Neurons gibt nun Auskunft über die nähe der Eingabedaten zum Mittelpunkt der Basisfunktion. Schließlich sind die verdeckten Neuronen über eine gewichtete Verbindung mit den Ausgabeneuronen \inlineneuron[rbf-o]{0.8} verknüpft. Die Ausgabeneurone summieren die Ausgabe der RBF-Neuronen und geben die Summe ohne weitere Verarbeitung weiter.
+RBFs sind feed-forward Netze und ähnlich wie die Perceptrons schichtartig aufgebaut. Dabei besitzt jedes Neuron einer Schicht eine Verbindung zu jedem Neuron der nachfolgenden Schicht (diese Art der Verbindung zwischen den Schichten wird auch Vollverknüpfung genannt). RBFs besitzen aber genau drei Schichten und somit nur eine verdeckte Schicht. Die erste Schicht dient ebenfalls wie bei den Perceptrons nur der Verteilung der Eingabedaten an die nächste Schicht ohne jegliche Verarbeitung. Die zweite Schicht besteht aus verdeckten Neuronen die auch als RBF-Neuronen \inlineneuron[rbf-h]{0.8} bezeichnet werden. Jedes Neuron beinhaltet eine radiale Basisfunktion als Aktivierungsfunktion. Dies sind stets positive und radialsymmetrische Funktionen. Sie besitzen ein Maximum in der Mitte (das sogenannte Zentrum~$c$) und streben gegen Null je weiter sich die Funktion vom Mittelpunkt entfernt. Eine typische Basisfunktion ist hierbei die gaußsche Glockenkurve. Die Propagierungsfunktion bildet hier den Abstand zwischen der Eingabeinformation~$x$~und dem Zentrum~$c$~der Aktivierungsfunktion. Die Ausgabe eines RBF-Neurons gibt nun Auskunft über die nähe der Eingabedaten zum Mittelpunkt der Basisfunktion. Schließlich sind die verdeckten Neuronen über eine gewichtete Verbindung mit den Ausgabeneuronen \inlineneuron[rbf-o]{0.8} verknüpft. Die Ausgabeneurone summieren die Ausgabe der RBF-Neuronen und geben die Summe ohne weitere Verarbeitung weiter. Das Training von RBFs erfolgt in zwei Schritten zunächst werden die Zentren der Basisfunktionen bestimmt. Dies kann zunächst zufällig erfolgen. Im nächsten Schritt werden die Gewichte zwischen der Verdeckten- und der Ausgabeschicht angepasst. Da nur eine Gewichtsschicht trainiert werden muss kann hierfür die Delta-Regel genutzt werden.
 
 Ursprünglich wurden die RBFs als Interpolationsverfahren entwickelt. Daher wurde jedem Trainingsbeispiel ein Basispunkt und somit ein RBF-Neuron zugewiesen. Bei großen Datensätzen ergibt sich eine große Anzahl an verdeckten Neuronen die einen hohen Speicherbedarf nach sich ziehen. Um mit einer geringeren Anzahl an verdeckten Neuronen auszukommen können auch die RBF-Netze trainiert werden. Das Training der RBF-Netze findet oftmals in mehreren Stufen statt. Im ersten Schritt werden die Zentren und Formparameter durch unüberwachte Lernmethoden bestimmt. Im nächsten Schritt werden die Gewichte beispielsweise mit der Delta-Regel angepasst.
 
@@ -774,6 +774,74 @@ Ein Nachteil den RBF und GRNN teilen ist ein größerer Bedarf an Rechenleistung
 
 
 \subsubsection{Neuronale Netze von Jordan und Elman}%\\
+\begin{figure}[!htb]
+    \centering
+    %---------------------------------------------------------------
+        %% Jordannetz
+        %-----------------------------------------
+        \adjustbox{trim=0pt 1.9cm 0pt 0pt,clip}{
+        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
+        \def\layersep{1.8}            % vertikal distance between the layers
+        \def\neuronsep{1.8}         % Horizontal distance between neurons
+        \def\dlsize{2}            % distance between node and layer lable
+        \def\inout{\layersep*.65}   % Size of in- and output-arrow
+        \def\siz{.8}                % neuronsize
+        \def\y{5}                   % Start of the most upper layer
+        \def\ni{3}                  % Amount of input neurons
+        \def\nh{3}                  % Amount of hidden neurons
+        \def\no{2}                  % Amount of output neurons
+        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
+        \tikzstyle{annot} = [text width=6em, text centered]
+        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
+        \newcommand{\neurono}[2][]{
+            \node[neuron,circle split,inner sep=2pt] (#1) at (#2)
+                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} \includegraphics[width=0.225cm]{Bilder/sigma.png}};
+        }
+        % Draw the input layer nodes
+            \foreach \name / \xn in {1,...,\ni}{
+                \node[neuron,fontscale=15] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
+                \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
+            }
+        % Draw the state layer nodes
+            \foreach \name / \xn in {2/1,1/2}{
+                \node[neuron,fontscale=15] (Sl-\name) at (\xn*\neuronsep-\neuronsep+6,\y) {$s_{\name}$};
+            }
+        % Draw the hidden layer nodes
+            \foreach \name / \xn in {1,...,\nh}{
+                \node[neuron] (Hl-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep+2.25},\y-\layersep) [fontscale=15] {$h_{\xn}$};
+                \node[node distance=\inout cm, below of=Hl-\xn] (Hnl) {};
+        % Connect every node in the input/state layer with the hidden layer
+                \foreach \source in {1,...,\ni}
+                    \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Hl-\xn);
+             
+                \foreach \source in {1,...,2}
+                    \draw [->,arrows={-Stealth[length=7pt]}] (Sl-\source) edge (Hl-\xn);    
+            }
+        % Draw the output layer node
+            \foreach \name / \xn in {1,...,\no}{
+                \node[neuron] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep+2.25},\y-2*\layersep) [fontscale=15] {$\Omega_{\xn}$};
+                ,\y+2*\layersep,
+                \node[node distance=\inout cm, below of=Ol-\xn] (Onl) {};
+                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onl);
+        % Connect every node in the hidden/state layer with the output layer
+                \foreach \source in {1,...,\nh}
+                    \draw [->,arrows={-Stealth[length=7pt]}] (Hl-\source) edge (Ol-\xn);
+            }
+            \draw[arrows={-Stealth[length=7pt]}, shorten >=1pt, shorten <=1pt] (Ol-2) .. controls (7,1) and  (8,3) .. (Sl-2); 
+            \draw[arrows={-Stealth[length=7pt]}, shorten >=1pt, shorten <=1pt] (Ol-1) .. controls (7,-2) and  (10,2) .. (Sl-1);
+            \draw[arrows={-Stealth[length=7pt]}, shorten <=1pt] (Sl-1) edge[loop above] ();
+            \draw[arrows={-Stealth[length=7pt]}, shorten <=1pt] (Sl-2) edge[loop above] ();
+        % Annotate the layers
+                \node[annot] (il) at (11,5) {\textbf{Eingabe-/Zustands- schicht}};
+                \node[annot,below of=il] (hl) {\textbf{Verdeckte- schicht}};
+                \node[annot,below of=hl] {\textbf{Ausgabe- schicht}};
+    \end{tikzpicture}
+    }
+    \caption{Jordannetz mit drei Eingabeneuronen $i$, zwei Zustandsneuronen $s$, drei verdeckten Neuronen $h$ und zwei Ausgabeneuronen $\Omega$.}
+    \label{fig:Hopfield}
+\end{figure}
+
 \todo{Grafik}
 Diese beiden Netzwerke ähneln sich sehr in ihrer Beschaffenheit und werden daher zusammen vorgestellt. Mehr noch stellte unter anderen die Arbeit von \citet{Jordan1986} die Grundlage für die Veröffentlichung von \citet{Elman1990}. Die Modelle die in diesen Arbeiten vorgestellt werden zählen zu den rückgekoppelten (engl.: recurrent) neuronalen Netzen. Die Grundform bildet hierbei ein Feed-Forward Netz wie beispielsweise das MLP. Zusätzlich gibt es sogenannte Kontext bzw. Zustandsneuronen (engl.: context/state neurons). Diese Bilden im übertragenden Sinne eine weitere verdeckte Schicht in dem Sinne das sie keine Kommunikation mit der "Außenwelt" besitzt. Diese Neuronen zeichnen sich dadurch aus, dass entweder die Outputneuronen (Jordan Netz) bzw. die Neuronen der Verdecktenschicht (Elamn Netz) eine Rückkopplung zu ihnen aufweisen. Zusätzlich weisen diese Neuronen eine Eigenrückkoplung auf (\farbig{sihe Abbildung ??}). \todo{tiefer ins detail gehen}
 Durch die zusätzliche Rückkopplung bekommt das Netzwerk ein zeitliches Gedächtnis, indem der wert des vorherigen Durchlaufes zwischengespeichert und für die Berechnung des nächsten Wertes berücksichtigt wird. Durch die Eigenrückkopplung kann die zeitliche Ausdehnung des Gedächtises kontrolliert werden. Zum Trainieren der Neuronalen Netze kann ebenfalls der Backpropagationalgorithmus angewandt werden, wobei die Eigenrückkopplungsrate während der Trainingsphase der Gewichte konstant gehalten werden muss. Hierzu wurden in der Literatur\,\citef{Pham1999} Modifikationen am Netzwerk und am Lernalgorythmus vorgestellt, um das Backpropagationverfahren auch auf die Kontextneuronen anwenden zu können.

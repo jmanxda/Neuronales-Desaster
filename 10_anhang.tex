@@ -43,8 +43,593 @@ Das exklusive Oder bzw. XOR-Gatter ist ein Begriff aus dem Bereich der Logik. Mi
 $$Y=\left ( \overline{A}  \land B \right)\lor \left ( A \land \overline{B} \right ).$$
 Der Ausgang dieses Gatters ist dann~\glqq 1\grqq~wenn eine ungerade Anzahl an Eingängen auf~\glqq 1\grqq~liegt und die restlichen auf~\glqq 0\grqq. Das Blockschaltbild und die Wahrheitstabelle sind in \autoref{fig_a:XOR} dargestellt.
 
+\todo{AND/OR funktion hinzufügen}
+
+\subsection{Lernalgorithmen}
+An dieser Stelle werden die Deltaregel und das Backpropagation-Verfahren hergeleitet.\,\footnote{\,Vgl. \citet[79 ff]{dkriesel07} und \citet[322 ff]{Rumelhart1986}.}
+
+
+\subsubsection{Deltaregel}\label{sec:deltaregel}
+%\todo{Perceptron-Lernalgorithmus}
+    %http://www.theprojectspot.com/tutorial-post/introduction-to-artificial-neural-networks-part-2-learning/8
+
+\todo{Grafik: SLP mit Linearer Aktivierungsfunktion und Abkürzungsübersicht}
+
+Dargestellt ist ein Einschichtigesperceptron mit lierarer Aktikvierungsfunktion.
+Zunächst wird die Verarbeitung von Informationen in dem in \farbig{Abbildung ??} dargestellten Netzwerk betrachtet. Die Information jedes Eingabeneurons $x_i$ wird mit einem Gewicht $w_{ij}$ versehen und an das Ausgabeneuron weitergeleitet. Die Propagierungsfunktion (die in diesem Fall die Summe darstellt) verarbeitet die Eingabe zu Netzeingabe $net_j$
+\begin{equation}
+net_j= \sum^{i=1}_n w_{ij} x_i
+\end{equation}
+und reicht diese an die Aktivierungsfunktion $f_{akt}$ weiter. Das Ergebniss der Aktivierungsfunktion ist dann die Ausgabe $o_j$ des Ausgabeneurons $j$
+\begin{equation}
+o_j= f_{akt}(net_j).
+\end{equation}
+Eine lineare Aktivierungsfunktion ergibt als Ausgabe eine Identität und somit ist
+\begin{equation}
+o_j= net_j= \sum_{i=1}^n w_{ij} x_i.
+\label{gl:ausgang}
+\end{equation}
+
+Nun Soll das Netzwerk mit einer Menge an Trainingsbeispielen $P$ trainiert werden. Wobei die Menge $P$ sich aus einem Trainingsbeispiel $p$ und der zugehörigen Lösung $t$ also $(p,t)$ zusammensetzt.
+Das Ziel des Trainings ist nun, dass die Ausgabe $o$ bei allen Trainingsbeispielen sich der zugehörigen Lösung $t$ möglichst angleicht bzw. die Differenz $\delta$ (auch als Fehler bezeichnet) 
+\begin{equation}
+\delta=t-o
+\label{gl:delta}
+\end{equation}
+
+aus Lösung und Ausgabe möglichst klein  wird, also soll formal gelten
+\begin{equation*}
+\forall p:o \approx t \quad \text{bzw.} \quad \forall p:\delta \approx 0.
+\end{equation*}
+
+Bei einem Netzwerk mit zwei Eingabeneuronen und einem Ausgabeneuron (ergo zwei Gewichten) für ein Trainingsbeispiel eine Fehlerfläche $Err_p(W)$ (dargestellt in \farbig{Abbildung ??}), wobei $W$ die Menge aller Gewichte darstellt.
+
+\todo{Grafik: Fehlerfläche \citet[80]{dkriesel07}}
+
+Durch anwendung des Gradientenabstigverfahrens\,\citef[63 f]{dkriesel07} kann nun vom Ausgangspunkt gesehen das nächste Minimum gefunden werden. Mit
+\begin{equation}
+\Delta w = - \alpha \nabla Err(W)
+\end{equation}
+erhält man nun die Information wie die Gewichte verändert werden können, um das Fehlerminimum zu finden.
+Wobei $\alpha$ eine Proportionalitätskonstante darstellt, welche für die Schrittweite beim Gradientenabstieg verantwortlich ist.
+Um zu erfahren wie jedes Gewicht verändert werden soll muss die Fehlerfunktion $Err(W)$ nach dem entsprechenden Gewicht $w_{ij}$ abgeleitet werden
+\begin{equation}
+\Delta w_{ij} = - \alpha \frac{\partial Err(W)}{\partial w_{ij}} .
+\label{gl:gewaend}
+\end{equation}
+
+Die Fehlerfunktion $Err_p(W)$ für ein Trainingsbeispiel $p$ lässt sich auf unterschiedliche Weise bestimmen\,\footnote{\,\citet[60 f]{dkriesel07} gibt hierfür einige Beispiele an.}, an dieser Stelle wird der quadratische Abstand genutzt. Damit kann die Fehlerfunktion über alle Ausgabeneuronen berechnet werden mit:
+\begin{equation}
+Err_p(W)= \frac{1}{2} \sum^k_{j=1} (t_{pj}-o_{pj})^2 .
+\end{equation}
+Somit reduziert sich die Fehlerfunktion bei der Betrachtung eines Ausgabeneurons $j$ für ein Trainingsbeispiel $p$ zu
+\begin{equation}
+Err_p(W)= \frac{1}{2} (t_{pj}-o_{pj})^2 .
+\label{gl:errp}
+\end{equation}
+
+
+Dabei entspricht bei dem Onlinelernen der Gesamtfehler $Err(W)$ dem Einzelfehler $Err_p(W)$
+\begin{equation}
+Err(W)=Err_p(W) 
+\end{equation}
+und bei dem Offlinelernen müssen die Einzelfehler aufsummiert werden
+\begin{equation}
+Err(W)= \sum^P_{p=1} Err_p(W). 
+\end{equation}
+
+Da in der \autoref{gl:errp} $t_{pj}$ konstant ist hängt $Err_p(W)$ nur von $o_{pj}$ ab. So kann die Ableitung $\frac{\partial Err_p(W)}{\partial w_{ij}}$ mit der Kettenregel zerlegt werden in
+\begin{equation}
+\frac{\partial Err_p(W)}{\partial w_{ij}}= \frac{\partial Err_p(W)}{\partial o_{pj}} \cdot \frac{\partial o_{pj}}{\partial w_{ij}}.
+\label{gl:zerlket}
+\end{equation}
+
+Durch das Ableiten(\farbig{evtl. Differentitation}) der \autoref{gl:errp} nach $o_{pj}$ und einsetzen von \autoref{gl:delta} erhält man
+\begin{equation}
+\frac{\partial Err_p(W)}{\partial o_{pj}} = -(t_{pj}-o_{pj}) = - \delta_{pj} .
+\label{gl:minusdelta}
+\end{equation}
+
+Unter Betrachtung der \autoref{gl:ausgang} kann der Ausdruck $ \frac{\partial o_{pj}}{\partial w_{ij}}$ nun auch geschrieben werden als 
+\begin{equation}
+\frac{\partial o_{pj}}{\partial w_{ij}} = \frac{\partial \sum\limits_{i=1}^n w_{ij} x_{pi}}{\partial w_{ij}} .
+\label{gl:vor_xi}
+\end{equation}
+Wobei die abzuleitende Funktion zwar aus vielen Summanden zusammengesetzt ist aber nur der Summand $w_{ij} x_{pi}$ enthält die Variable $w_{ij}$ nach der abgeleitet wird. Es gilt also
+\begin{equation}
+\frac{\partial o_{pj}}{\partial w_{ij}} = x_{pi}.
+\label{gl:xi}
+\end{equation}
+Durch das Einsetzen der \autoref{gl:xi} und \autoref{gl:minusdelta} in \autoref{gl:zerlket} erhält man:
+\begin{equation}
+\frac{\partial Err_p(W)}{\partial w_{ij}}= - \delta_{pj} \cdot x_{pi}.
+\label{gl:ze}
+\end{equation}
+Somit kann mit der \autoref{gl:gewaend} die Deltaregel für das Onlinelernverfahren bestimmt werden:
+\begin{equation}
+\Delta w_{ij} = \alpha \cdot \delta_{pj} \cdot x_{pi} .
+\label{gl:fertig_delta}
+\end{equation}
+Für das Offlinelernverfahren muss noch die Summe über alle Trainingsbeispiele gebildet werden
+\begin{equation}
+\Delta w_{ij} = \alpha \cdot \sum^P_{p=1} \delta_{pj} \cdot x_{pi} .
+\end{equation}
+
+
+
+\subsubsection{Backpropagation}\label{sec:Backpropagation}
+\todo{MLP \citet[90]{dkriesel07}}
+Das Backpropagation ist die Kurzform des englischen Begriffes \textit{Backpropagation of error} und zählt zu den Gradientenabstiegsverfahren bei denen die Fehlerverteilung als "hügelige" Landschaft angesehen wird (siehe \farbig{Abbildung ??}). Beim Beginn des Trainings wird die Richtung gesucht in die der Gradient abfällt und ein Schritt in diese Richtung unternommen. Anschließend wiederholt man die Prozedur mehrmals bis es entweder keine Trainingsbeispiele mehr gibt oder der Fehler sich nicht mehr groß verändert. Das Backpropagation ist eine Erweiterung der Deltaregel und wird analog Hergeleitet. In diesem Abschnitt werden die spezifischen Schritte dargestellt die für das Backpropagation benötigt werden, zur detaillierten Herleitung der Deltaregel wir an dieser Stelle auf den \autoref{sec:deltaregel} verwiesen.
+Für das Backpropagation gehen wir von einem drei schichtigen Netzwerk aus Perceptoren (ergo eine verdeckte Schicht) aus. Zusätzlich sind die Aktivierungsfunktionen alle gleich und Differenzierbar.
+Betrachtet wird nun ein Neuron $h$ der in der Mitte des Netzwerkes. Dieses Neuron besitzt eine Menge $K$ Verbindungen die zu ihm aber auch eine Menge $L$ die von ihm weg führen. Somit übertragen die vorgelagerten Neuronen die gewichtete Information an das Neuron $h$. Formal ergib sich die Netzeingabe $net_{h}$ des Neurons $h$:
+\begin{equation}
+net_{h} = \sum_{k \in K} w_{kh} \cdot o_{k} .
+\label{gl:neth}
+\end{equation}
+
+Nach der Verarbeitung der Eingabeinformationen durch die Aktivierungsfunktion kann die Ausgabe des Neurons $h$ beschrieben werden als:
+\begin{equation}
+o_{k}= f_{akt}(net_{h}) .
+\label{gl:aktiv}
+\end{equation}
+
+Wie nun in der Deltaregel zu beobachten war ist die Änderung eines Gewichtes $w_{kh}$ proportional zur negativen Ableitung der Fehlerfunktion nach dem betrachtetem Gewicht. Formal betrachtet ergibt sich
+\begin{equation*}
+\Delta w_{kh} \propto -  \frac{\partial Err(W_{kh})}{\partial w_{kh}}.
+\end{equation*}
+
+Die Änderung der Fehlerfunktion nach dem Gewicht kann auch als Produkt aus der Änderung des Fehlers als Funktion der Änderung der Netzeingabe und der Auswirkung eines Veränderten Gewichtes auf die Netzeingabe betrachtet werden. Dies kann auch geschrieben werden als:
+\begin{equation}
+\frac{\partial Err(W_{kh})}{\partial w_{kh}} = \frac{\partial Err(W_{kh})}{\partial net_{h}} \cdot \frac{\partial net_{h}}{\partial w_{kh}}.
+\label{gl:zerlket2}
+\end{equation}
+
+Auch \autoref{gl:vor_xi}, \autoref{gl:xi} und \autoref{gl:neth} kann der zweite Faktor auch geschrieben werden als:
+\begin{equation}
+\frac{\partial net_{h}}{\partial w_{kh}} = \frac{\partial }{\partial w_{kh}} \sum\limits_{k \in K} w_{kh} o_{k} = o_{k} .
+\label{gl:ok_bak}
+\end{equation}
+
+Aus der Analogie zwischen der \autoref{gl:zerlket} und \autoref{gl:zerlket2} kann $\delta_{hl}$ definiert werden als:
+\begin{equation}
+\delta_{h}= -\frac{\partial Err(W_{kh})}{\partial net_{h}}  .
+\label{gl:deltah_bak}
+\end{equation}
+
+Für den Fall das unser betrachtetes Neuron $h$ ein Ausgabeneuron wäre könnte aus der Betrachtung der \autoref{gl:errp} die Fehlerfunktion $Err(W_{kh})$ auch geschrieben werden als
+\begin{equation}
+Err(W_{kh})= \frac{1}{2} (t_{h}-o_{h})^2 ,
+\label{gl:fehler_bak}
+\end{equation}
+dies wird an dieser Stelle angenommen, um zu verdeutlichen das $Err(W_{kh})$ nur von $o_{h}$ abhängig ist. Es wird nun unterstellt dass $t_h$ unabhängig von $o_h$ ist, was für den Fall eines Ausgabeneurons auch stimmen würde (die Betrachtung des inneren Neurons erfolgt im Anschluss). Unter Berücksichtigung der \autoref{gl:aktiv} kann jetzt $\frac{\partial Err(W_{kh})}{\partial net_{h}}$ mit der Kettenregel umgeformt werden in:
+\begin{equation}
+\frac{\partial Err(W_{kh})}{\partial net_{h}} = \frac{\partial Err(W_{kh})}{\partial o_{h}} \cdot \frac{\partial o_{h}}{\partial net_{h}}.
+\label{gl:ohket_bak}
+\end{equation}
+Ebenfalls mit Hilfe der \autoref{gl:aktiv} ergibt sich der rechte Faktor zu:
+\begin{equation}
+\frac{\partial o_{h}}{\partial net_{h}} = f_{akt}'(net_h),
+\label{gl:aktiv_neth_bak}
+\end{equation}
+welches die Ableitung der Aktivierungsfunktion beinhaltet.
+
+Falls $h$ ein Ausgabeneuron wäre, würde aus der Definition für $Err(W_{kh})$ aus \autoref{gl:fehler_bak} folgen:
+\begin{equation}
+\frac{\partial Err(W_{kh})}{\partial o_{h}} = -(t_h - o_h).
+\end{equation}
+
+Befindet sich das zu Betrachtende Neuron aber im inneren des Netzwerkes (wie zu Beginn angenommen) ist $t_h$ abhängig von den nachfolgenden Neuronen. Hieraus Folgt dass $t_h$ eine Funktion von $net_l$ ist und der Fehler $Err(W_{kh})$ ebenfalls von $net_l$ abhängig ist. Somit ergibt sich folgender Formalismus:
+\begin{equation*}
+Err(W_{kh}) \propto \sum\limits_{l \in L} net_l,
+\end{equation*}
+wobei $net_l$ gegeben ist durch
+\begin{equation}
+net_{l} = \sum_{h \in H} w_{hl} \cdot o_{h} .
+\label{gl:netl}
+\end{equation}
+
+Damit kann $\frac{\partial Err(W_{kh})}{\partial o_{h}}$ mit Hilfer der Kettenregel umgeformt werden in
+\begin{equation}
+\frac{\partial Err(W_{kh})}{\partial o_{h}} =\sum\limits_{l \in L} \left (  \frac{\partial Err(W_{kh})}{\partial net_{l}} \cdot \frac{\partial net_{l}}{\partial o_{h}} \right ).
+\label{gl:sumket_bak}
+\end{equation}
+
+Unter Berücksichtigung der \autoref{gl:ok_bak}, \autoref{gl:deltah_bak} und \autoref{gl:netl} folgt, dass die summierten Faktoren der \autoref{gl:sumket_bak} auch geschrieben werden können als:
+\begin{equation}
+\frac{\partial net_{h}}{\partial o_{h}} = \frac{\partial }{\partial o_{h}} \sum\limits_{h \in H} w_{hl} \cdot o_{h} = w_{hl} .
+\label{gl:whl_bak}
+\end{equation}
+\begin{equation}
+\frac{\partial Err(W_{kh})}{\partial net_{l}} = -\delta_l .
+\label{gl:deltal_bak}
+\end{equation}
+
+Durch das Einsetzen der \autoref{gl:whl_bak} und \autoref{gl:deltal_bak} in \autoref{gl:sumket_bak} ergibt sich:
+\begin{equation}
+\frac{\partial Err(W_{kh})}{\partial o_{h}} =\sum\limits_{l \in L}  -\delta_l \cdot w_{hl} .
+\label{gl:sumketlos_bak}
+\end{equation}
+
+Gefolgt vom Einsetzen der \autoref{gl:sumketlos_bak} und \autoref{gl:aktiv_neth_bak} in \autoref{gl:ohket_bak} und \autoref{gl:deltah_bak} folgt:
+\begin{equation}
+\delta_{h}= -\frac{\partial Err(W_{kh})}{\partial net_{h}} = f_{akt}'(net_h) \cdot \sum\limits_{l \in L}  \delta_l \cdot w_{hl}.
+\label{gl:deltahinnen_bak}
+\end{equation}
+
+Aus \autoref{gl:deltahinnen_bak}, \autoref{gl:ok_bak} und \autoref{gl:fertig_delta} kann schließlich die Änderung des Gewichtes $w_{kh}$ eines innerhalb des Netzwerkes liegenden Neurons $h$ bestimmt werden durch
+\begin{equation}
+\Delta w_{kh} = \alpha \cdot o_{k} \cdot f_{akt}'(net_h) \cdot \sum\limits_{l \in L}  \delta_l \cdot w_{hl}  .
+\label{gl:fertiginnen_bak}
+\end{equation}
+
+Allgemein betrachtet kann, unter Berücksichtigung der Deltaregel für das Onlinelernverfahren (\autoref{gl:fertig_delta}), das Backpropagation-Verfahren zusammengefasst werden in
+\begin{align}
+\nonumber & \Delta w_{kh}  = \alpha \cdot o_{k} \cdot \delta_h, \quad \text{mit}\\
+&\delta_h = \left \{
+\begin{aligned}
+&f_{akt}'(net_h) \cdot (t_h - o_h) &[\text{ wenn }  h \text{ ein au\ss enliegendes Neuron ist }]\\ 
+&f_{akt}'(net_h) \cdot \sum\limits_{l \in L}  \delta_l \cdot w_{hl} &[\text{ wenn }  h \text{ ein innenliegendes Neuron ist }]\\
+\end{aligned}
+.
+\right 
+\label{gl:fertigbeide_bak}
+\end{align}
+
+
+
+
+
+\subsubsection{Levenberg-Marquardt}
+Der Levenberg-Marquardt-Algorithmus baut auf dem klassischen Gradientenabstiegsverfahren auf, welches auch als Backpropagation bezeichnet und in \autoref{sec:Backpropagation} hergeleitet wird. Es wird an dieser Stelle nun auch von der Fehlerfunktion $Err_{po}(W)$ über alle Trainingsbeispiele $P$ in der folgenden Form Ausgegangen:
+
+\begin{equation}
+Err_{po}(W)= \frac{1}{2} \sum\limits_{p \in P} \sum\limits_{o \in O} e_{po}^2,
+\label{gl:LM_fehler}
+\end{equation}
+mit
+\begin{equation}
+e_{po}=(t_{po}-y_{po}).
+\end{equation}
+
+Das Gradientenabstiegsverfahren beruht auf der ersten Ableitung der Fehlerfunktion und kann wie folgt als Gradientenvektor dargestellt werden:
+\begin{equation}
+\nabla Err_{po}(W)= \frac{\partial Err_{po}(W)}{\partial w_{on}}= \left [ \frac{Err_{1p}(W)}{\partial w_{11}} , \frac{Err_{1p}(W)}{\partial w_{12}}, \dots,  \frac{\partial Err_{po}(W)}{\partial w_{on}}  \right ]^T,
+\label{gl:LM_bp}
+\end{equation}
+mit $n \in N$ und $N$ als Menge aller Gewichte eines Netzwerks.
+
+Der Trainingsprozess des Algorythmuses konvergiert asymptotisch und nah an einem Minimum werden die Komponenten des Gradientenvektors sehr klein und somit die Gewichtsänderung sehr gering. Der Übersichtshalber wird die Ableitung der Fehlerfunktion umbenannt in einen Gradienten $g$ mit:
+\begin{equation}
+g= \nabla Err_{po}(W).
+\label{gl:LM_gradient}
+\end{equation}
+
+Mit der \autoref{gl:LM_gradient} kann die Gewichtsänderung des Gradientenabstiegverfahrens ausgedrückt werden als:
+\begin{equation}
+\Delta w= - \alpha g,
+\label{gl:LM_bp_delta-w}
+\end{equation}
+wobei $\alpha$ die Schrittweite bzw. die Lernrate repräsentiert.
+
+Bei der Newtonmethode wird nun angenommen, dass die Gradienten $g_{po}$ aller Trainingsbeispiele $P$ des Ausgabeneurons $o$ in einer nichtlinearen Beziehung $F_{po}$ zwischen den Gewichten $w_{oh}$ und den jeweiligen Komponenten der Gradienten stehen. Formel kann dies ausgedrückt werden in
+\begin{align}
+\left \{
+\begin{aligned}
+&g_{p1}= F_{p1}(w_{11},w_{12},\dots, w_{1n})\\ 
+&g_{p2}= F_{p2}(w_{21},w_{22},\dots, w_{2n})\\
+&\dots\\
+&g_{po}= F_{po}(w_{o1},w_{o2},\dots, w_{on})\\
+\end{aligned}
+.
+\right 
+\label{gl:LM_g1}
+\end{align}
+
+Mit der Taylor-Näherung erster Ordnung kann die nichtlineare Beziehung $F$ und somit auch der Gradient $g$ ausgedrückt werden als:
+\begin{equation}
+g_{po} \approx g_{po}(w_{o0}) + \sum\limits_{n \in N} \frac{\partial g_{po}}{\partial w_{on}} \Delta w_{on}.
+\label{gl:LM_g2}
+\end{equation}
+
+Durch das Einsetzen der \autoref{gl:LM_bp} und \autoref{gl:LM_gradient} kann geschlussfolgert werden, dass
+\begin{equation}
+\frac{\partial g_{po}}{\partial w_{on}} = \frac{\partial \left ( \frac{\partial Err_{po}(W)}{\partial w_{on}} \right )}{\partial w_{on}} = \frac{\partial^2  Err_{po}(W)}{\partial w_{o} \partial w_{n}}.
+\label{gl:LM_g3}
+\end{equation}
+
+Nun wird \autoref{gl:LM_g3} in \autoref{gl:LM_g2} eingesetzt und der Gradientenvektor $g_{po}$ kann geschrieben werden als:
+\begin{equation}
+g_{po} \approx g_{po}(w_{o0}) + \sum\limits_{n \in N} \frac{\partial^2 Err_{po}(W)}{\partial w_{o} \partial w_{n}} \Delta w_{on} .
+\label{gl:LM_g4}
+\end{equation}
+
+Um nun ein Minimum der Fehlerfunktion zu finden müssen die Gradienten Nullgesetzt werden. Somit wird aus \autoref{gl:LM_g4}
+\begin{equation}
+0 \approx g_{po}(w_{o0}) + \sum\limits_{n \in N} \frac{\partial^2 Err_{po}(W)}{\partial w_{o} \partial w_{n}} \Delta w_{on} .
+\label{gl:LM_g5}
+\end{equation}
+
+Durch das Einsetzen der \autoref{gl:LM_bp} und \autoref{gl:LM_gradient} in \autoref{gl:LM_g5} ergibt sich
+\begin{equation}
+-\frac{\partial Err_{po}(W)}{\partial w_{o}}  = -g_{po}(w_{o0}) \approx \sum\limits_{n \in N} \frac{\partial^2 Err_{po}(W)}{\partial w_{o} \partial w_{n}} \Delta w_{on} .
+\label{gl:LM_g6}
+\end{equation}
+
+Hieraus ergeben sich $P \text{mal} O$ Gleichungen. Durch das Lösen dieser Gleichungen kann $\Delta w_{on}$ bestimmt werden. Die \autoref{gl:LM_g6} kann auch in Matrizen-Form geschrieben werden
+
+\begin{equation}
+ \begin{bmatrix}
+  -g_{p1}   \\
+  -g_{p2}   \\
+  \vdots    \\
+  -g_{po}   \\ 
+ \end{bmatrix}
+ =
+  \begin{bmatrix}
+  -\frac{\partial Err_{p1}(W)}{\partial w_{1}}   \\
+  -\frac{\partial Err_{p2}(W)}{\partial w_{2}}   \\
+  \vdots    \\
+  -\frac{\partial Err_{po}(W)}{\partial w_{o}}   \\ 
+ \end{bmatrix}
+ =
+ \begin{bmatrix}
+    \frac{\partial^2 Err_{p1}}{\partial w_{1} \partial w_{1}} & \frac{\partial^2 Err_{p1}}{\partial w_{1} \partial w_{2}}  & \dots  & \frac{\partial^2 Err_{p1}(W)}{\partial w_{1} \partial w_{n}} \\
+    \frac{\partial^2 Err_{p2}}{\partial w_{2} \partial w_{1}} & \frac{\partial^2 Err_{p2}}{\partial w_{2} \partial w_{2}}  & \dots  & \frac{\partial^2 Err_{p2}(W)}{\partial w_{2} \partial w_{n}} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \frac{\partial^2 Err_{po}}{\partial w_{o} \partial w_{1}} & \frac{\partial^2 Err_{po}}{\partial w_{o} \partial w_{2}}  & \dots  & \frac{\partial^2 Err_{po}(W)}{\partial w_{o} \partial w_{n}} \\
+ \end{bmatrix}
+\times
+ \begin{bmatrix}
+  \Delta w_{1n}  \\
+  \Delta w_{2n}  \\
+  \vdots    \\
+  \Delta w_{on}   \\ 
+ \end{bmatrix}
+\label{gl:LM_matrix-schreibweise}
+\end{equation}
+
+Die Ableitungen zweiter Ordnung enthaltene Matrix wird auch als Hesse-Matrix $H$ bezeichnet
+\begin{equation}
+H
+ =
+ \begin{bmatrix}
+    \frac{\partial^2 Err_{p1}}{\partial w_{1} \partial w_{1}} & \frac{\partial^2 Err_{p1}}{\partial w_{1} \partial w_{2}}  & \dots  & \frac{\partial^2 Err_{p1}(W)}{\partial w_{1} \partial w_{n}} \\
+    \frac{\partial^2 Err_{p2}}{\partial w_{2} \partial w_{1}} & \frac{\partial^2 Err_{p2}}{\partial w_{2} \partial w_{2}}  & \dots  & \frac{\partial^2 Err_{p2}(W)}{\partial w_{2} \partial w_{n}} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \frac{\partial^2 Err_{po}}{\partial w_{o} \partial w_{1}} & \frac{\partial^2 Err_{po}}{\partial w_{o} \partial w_{2}}  & \dots  & \frac{\partial^2 Err_{po}(W)}{\partial w_{o} \partial w_{n}} \\
+ \label{gl:LM_hesse-mat}
+ \end{bmatrix}
+ .
+\end{equation}
+
+Die \autoref{gl:LM_matrix-schreibweise} kann in Kurzform dargestellt werden als:
+\begin{equation}
+-g=H \cdot \Delta w
+\end{equation}
+
+und die Umstellung nach $\Delta w$ ergibt
+\begin{equation}
+\Delta w =-H^{-1} \cdot g.
+\label{gl:LM_hesse}
+\end{equation}
+
+Beim Vergleich der \autoref{gl:LM_bp_delta-w} und \autoref{gl:LM_hesse} wird ersichtlich, dass die Hesse-Matrix beim Gradientenabstieg die passenden Schrittweiten liefert.
+
+Wenn man die Newtonmethode zur Gewichtsanpassung verwenden möchte, so müssen die Ableitungen zweiter Ordnung berechnet werden, um die Hesse-Matrix zu erhalten. dies erweist sich in einigen fällen als nicht trivial. Um diesen Prozess zu vereinfachen wird beim Gauss-Newton-Algorithmus die Jacobi-Matrix $J$ eingeführt
+\begin{equation}
+J
+=
+ \begin{bmatrix}
+    \frac{\partial e_{11}}{\partial w_{1}} & \frac{\partial e_{11}}{\partial w_{2}}  & \dots  & \frac{\partial e_{11}}{\partial w_{n}} \\
+    \frac{\partial e_{12}}{\partial w_{1}} & \frac{\partial e_{12}}{\partial w_{2}}  & \dots  & \frac{\partial e_{12}}{\partial w_{n}} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \frac{\partial e_{1o}}{\partial w_{1}} & \frac{\partial e_{1o}}{\partial w_{2}}  & \dots  & \frac{\partial e_{1o}}{\partial w_{n}} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \frac{\partial e_{p1}}{\partial w_{1}} & \frac{\partial e_{p1}}{\partial w_{2}}  & \dots  & \frac{\partial e_{p1}}{\partial w_{n}} \\
+    \frac{\partial e_{p2}}{\partial w_{1}} & \frac{\partial e_{p2}}{\partial w_{2}}  & \dots  & \frac{\partial e_{p2}}{\partial w_{n}} \\
+    \vdots & \vdots & \ddots & \vdots \\
+    \frac{\partial e_{po}}{\partial w_{1}} & \frac{\partial e_{po}}{\partial w_{2}}  & \dots  & \frac{\partial e_{po}}{\partial w_{n}} \\
+ \end{bmatrix}
+ .
+\end{equation}
+
+Nach dem Einsetzen der \autoref{gl:LM_fehler} in \autoref{gl:LM_bp} können die einzelnen Elemente des Gradientenvektors berechnet werden als:
+\begin{equation}
+g_{po} = \frac{\partial Err_{po}(W)}{\partial w_{n}} = \frac{\partial \left (\frac{1}{2} \sum_{p \in P} \sum_{o \in O} e_{po}^2 \right )}{\partial w_{n}} 
+=
+\sum_{p \in P} \sum_{o \in O} \left ( \frac{\partial e_{po}}{\partial w_{n}} e_{po} \right )
+\label{gl:LM_g-J}
+\end{equation}
+
+Verkürzt kann der Zusammenhang zwischen der Jacobi-Matrix und dem Gradientenvektor geschrieben werden als:
+\begin{equation}
+g = Je,
+\label{gl:LM_Je}
+\end{equation}
+wobei der Fehlervektor folgende Form aufweist
+\begin{equation}
+e= \left [ e_{11}, e_{12}, \dots, e_{1o}, \dots, e_{p1}, e_{p2}, \dots, e_{po} \right ]^T.
+\label{gl:LM_bp}
+\end{equation}
+
+Nach dem Einsetzen der \autoref{gl:LM_fehler} in \autoref{gl:LM_hesse-mat} können die Elemente der Hesse-Matrix berechnet werden durch
+\begin{equation}
+h_{po} = \frac{\partial^2 Err_{po}(W)}{\partial w_{o} \partial w_{n}} = \frac{\partial \left (\frac{1}{2} \sum_{p \in P} \sum_{o \in O} e_{po}^2 \right )}{\partial w_{o} \partial w_{n}} 
+=
+\sum_{p \in P} \sum_{o \in O} \frac{\partial e_{po}}{\partial w_{o}} \frac{\partial e_{po}}{\partial w_{n}} + S_{on}.
+\label{gl:LM-h}
+\end{equation}
+
+Dabei setzt sich $S_{on}$ zusammen aus:
+\begin{equation}
+S_{on} = \sum_{p \in P} \sum_{o \in O} \frac{\partial^2 e_{po}}{\partial w_{o} \partial w_{n}} e_{po}.
+\label{gl:LM_S}
+\end{equation}
+
+Bei der Newtonmethode wird nun angenommen, dass $S_{on}$ annähernd Null ist\,\citef[990]{Hagan1994} und somit kann die Hesse-Matrix ausgedrückt werden als:
+\begin{equation}
+H = J^T J.
+\label{gl:LM_JJ}
+\end{equation}
+
+Durch die Kombination der \autoref{gl:LM_hesse}, \autoref{gl:LM_Je} und \autoref{gl:LM_JJ} kann die Gewichtsänderung des Gauss-Newton-Algorithmus beschrieben werden als:
+\begin{equation}
+\Delta w =-(J^T J)^{-1} J e.
+\label{gl:LM_GNA}
+\end{equation}
+
+Der Vorteil des Gauss-Newton-Algorithmuses gegenüber dem Newtonmethode besteht darin, dass anstatt der zweifachen Ableitung der Fehlerfunktion durch die Jacobi-Matix nur noch die einfache Ableitung benötigt wird. Einen Nachteil den aber beide Ansätze gemeinsam haben ist, dass die Hesse-Matrix bzw. die $J^T J$-Matrix in einigen Fällen nicht invertierbar sind. Um sicher zu gehen dass die angenäherte Hesse-Matrix invertierbar ist, wird im Levenberg-Marquardt-Algorithmus ein zusätzlicher Term eingeführt:
+\begin{equation}
+H \approx J^T J + \mu I.
+\label{gl:LM_lm-H}
+\end{equation}
+
+Hierbei ist $\mu$ stets positiv und wird als Kombinationskoeffizient bezeichnet. I ist die Einheitsmatrix.
+
+Durch den zusätzlichen Term in \autoref{gl:LM_lm-H} wird die Hauptdiagonale der Hesse-Matrix größer als Null sein und damit ist sichergestellt, dass $H$ immer invertierbar ist. Mit \autoref{gl:LM_GNA} und \autoref{gl:LM_lm-H} kann der Levenberg-Marquard-Algorithmus ausgedrückt werden als:
+\begin{equation}
+\Delta w =-(J^T J + \mu I)^{-1} J e.
+\label{gl:LM_lm-delta-w}
+\end{equation}
+
+Der Levenberg-Marquard-Algorithmus kann als Kombination zwischen dem klassischen Gradientenabstiegsverfahren und dem Gauss-Newton-Algorithmus angesehen werden. Wenn der Kombinationskoeffizient $\mu$ sich sehr nah an der Null befindet so nährt sich die \autoref{gl:LM_lm-delta-w} der \autoref{gl:LM_GNA} an und damit dem Gauss-Newton-Algorithmus. Ist der Kombinationskoeffizient aber sehr groß so nähert sich die \autoref{gl:LM_lm-delta-w} der \autoref{gl:LM_bp_delta-w} an und so bekommt das klassische Gradientenabstiegsverfahren die größere Gewichtung. Für den Fall, dass $\mu$ sehr Groß wird kann es als Lernrate mit folgender Beziehung angesehen werden:\,\citef[12-1 ff]{Wilamowski2011}
+\begin{equation}
+\alpha = \frac{1}{\mu}.
+\label{gl:LM_lernrate}
+\end{equation}
+ 
+
 \subsection{Ergebnisse von \citet{Aggarwal2009} und \citet{Panapakidis2016}}\label{sec:andere_ergebnisse}
 
 \todo{Liste der Märkte aus \citet{Cerjan2013}}
 
 \todo{Tabellen einfügen und Hinweiß dass SVM keine ANN sind}
+
+\subsection{Performancemaße}\label{sec:perfmas}
+In diesem Abschnitt werden die Maße zur Evaluierung der Vorhersagegenauigkeit (weiterhin als Performancemaße bezeichnet) aufgeführt die in der Literaturrecherche zur Strompreismodellierung in \autoref{sec:strompreis} und weiterer Literatur\,\citef[5]{Guertler2017} genannt wurden. Hierbei $y_i$ und $\hat{y}_i$ die tatsächlichen und vorhergesagten Preise zum Zeitpunkt $i$ darstellen und $T$ die Gesamtanzahl der Zeitpunkte angibt. Außerdem gibt $\mean{y}$ den Mittelwert der tatsächlichen Preise und $\mean{y}_{train}$ den Preismittelwert der Trainingsdaten an.
+
+Der Absolute Percentage Error (APE) liefert Informationen über die Fehlerverteilung in der Nähe der Null.\,\citef[14\label{foot:Domanski2017}]{Domanski2017}\farbig{reicht noch nicht}
+
+% APE
+\begin{equation}
+APE= \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{y_i}.
+\label{gl:APE}
+\end{equation}
+
+
+Der Mean Absolute Percentage Error (MAPE) gibt einen prozentualen Mittelwert über den Fehlerbetrag an. Da das Ursprungsmaß (in dieser Arbeit als $MAPE_1$ bezeichnet) bei sehr kleinen Preisen einen hohen Werte liefert und bei einem Preis von Null sogar gegen Unendlich gehen wurden Mehrere Verbesserungen vorgeschlagen. Diese äußern sich durch einen Mittelwert über alle gemessenen Preise bei $MAPE_2$ oder durch einen Mittelwert aus der Betragssumme der des tatsächlichen und vorhergesagten Preises bei $sMAPE$ im Nenner. Hierbei steht ein Wert von 0\,\% für eine exakte und Werte um die 10\,\% für eine akkurate Vorhersage.\,\footnote{\,Vgl. \citet[17]{Bobinaite2016}, \citet[2105]{Amjady2009} und \citet[894]{Lago2018}.}   
+% MAPE
+\begin{equation}
+MAPE_1= \frac{100}{T} \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{y_i},
+\label{gl:MAPE_1}
+\end{equation}
+
+% MAPE
+\begin{equation}
+MAPE_2= \frac{100}{T} \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{\mean{y}},
+\label{gl:MAPE_2}
+\end{equation}
+
+% sMAPE
+\begin{equation}
+sMAPE= \frac{100}{T} \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{(\abs{y_i} + \abs{\hat{y}_i}) / 2}.
+\label{gl:sMAPE}
+\end{equation}
+
+Der Mean Squared Error (MSE) gibt den quadratischen Mittelwert der der Fehler an und gibt an wie weit die vorhergesagten Daten von den tatsächlichen Werten liegen. Ein kleine Wert deutet auf eine gute vorhersage hin.\,\footnoteref{foot:Domanski2017}
+% MSE
+\begin{equation}
+MSE= \frac{1}{T} \sum\limits_{i \in T} (y_i-\hat{y}_i)^2.
+\label{gl:MSE}
+\end{equation}
+
+
+Der Root Mean Squared Error (RMSE) ist die Quadratwurzel des MSE und ist hierdurch sehr ähnlich. Der RMSE weist kleinere Werte auf, der Aussagegehalt ist aber ähnlich zu MSE.
+% RMSE
+\begin{equation}
+RMSE= \sqrt{ \frac{1}{T} \sum\limits_{i \in T} \abs{y_i-\hat{y}_i}^2}.
+\label{gl:RMSE}
+\end{equation}
+
+Der Mean Absolut Error (MAE) ist ebenfalls sehr ähnlich zum MSE und damit auch dem RMSE. Weist aber im Vergleich zum RMSE nochmals kleinere Werte auf.
+% MAE
+\begin{equation}
+MAE= \frac{1}{T} \sum\limits_{i \in T} \abs{y_i-\hat{y}_i}.
+\label{gl:MAE}
+\end{equation}
+
+
+Der Normalized Mean Square Error (NMSE) ist ein Schätzwert über alle Abweichungen zwischen vorhergesagten und gemessenen Werten. Zeigt ein Modell einen sehr geringen NMSE so weist es eine gute örtliche und zeitliche Performance auf. Andererseits bedeuten hohe $NMSE$-Werte nicht, dass das betrachtete Modell komplett falsch ist.
+% NMSE
+\begin{gather}
+\begin{aligned}
+NMSE &= \frac{1}{\Delta^2 T} \sum\limits_{i \in T} (y_i-\hat{y}_i)^2,\\ 
+\Delta^2 &= \frac{1}{T-1} \sum\limits_{i \in T} (y_i-\mean{y})^2.\\
+\end{aligned}
+\label{gl:NMSE}
+\end{gather}
+
+
+Die Error Variance (EV) gibt einen Wert über die nicht erklärten Informationen nach dem Fitten des Modells. Je kleiner der Wert ist desto präziser ist die Vorhersage.\,\citef{Peter2016}
+% EV
+\begin{equation}
+EV= \sigma^2 = \frac{1}{T} \sum\limits_{i \in T} \left ( \frac{\abs{y_i-\hat{y}_i}}{\mean{y}} - MAPE_2  \right ) ^2.
+\label{gl:EV}
+\end{equation}
+
+Pearson Korrelationskoeffizient bewertet die Linearität zwischen der Kovarianz zweier Variablen und dem Produkt der Standardabweichung dieser Variablen. Der Wertebereich dieses Maßes ist [-1,1] und er gibt Auskunft, wie Ähnlich der zeitliche Verlauf zwischen dem tatsächlichen Preis und der Vorhersage ist. Ein Wert von Eins deutet auf eine perfekte vorhersage hin.\,\citef{Davo2016} 
+% cor
+\begin{equation}
+cor = \frac{cov(y_i,\hat{y}_i)}{\sqrt{sd(y_i)sd(\hat{y}_i)}} .
+\label{gl:cor}
+\end{equation}
+
+
+Theils Koeffizienten der Ungleichheit U1 und U2 unterscheiden sich in der Anwesenheit bzw. Abwesenheit eines $\hat{y}_i$ im Nenner. Hierbei steht der Wert von Null in beiden fällen für Gleichheit und somit für eine ideale Vorhersage. Bei einem Wert von Eins spricht man von einer maximalen Ungleichheit. Dies kann bei U1 der Fall sein wenn eine negative Proportionalität besteht oder einer der Terme im Nenner Null ist. Bei dem U2 kann dies der Fall sein, wenn die Vorhersagemethode eine \textit{Na\"{i}ve-No-Change-Extrapolation}\,\citef[6]{Lattyak2011} ist oder wenn U2 zu der gleichen Standardabweichung des Prognosefehlers führt wie die Vorhersagemethode.\,\citef[444 f]{Bliemel1973}
+% U1
+\begin{equation}
+U1 = \frac{\sqrt{\frac{1}{T} \sum_{i \in T} (y_i-\hat{y}_i)^2}}{ \sqrt{\frac{1}{T} \sum_{i \in T} y_i^2} + \sqrt{\frac{1}{T} \sum_{i \in T} \hat{y}_i^2}},
+\label{gl:U1}
+\end{equation}
+
+% U2
+\begin{equation}
+U2 = \frac{\sqrt{\sum_{i \in T} (y_i-\hat{y}_i)^2}}{ \sqrt{ \sum_{i \in T} y_i^2} }.
+\label{gl:U2}
+\end{equation}
+
+
+Das out-of-sample (R²) Bestimmtheitsmaß ist dem Relative Absolute Error (RAE) sehr ähnlich. Wenn das RAE kleiner 100 und das R² größer Null ist, so ist die Vorhersagegenauigkeit höher als der historische Mittelwert der Trainingsdaten.
+% R²
+\begin{equation}
+R^2 = 1 -  \frac{\frac{1}{T} \sum_{i \in T} \abs{y_i-\hat{y}_i}^2}{ \frac{1}{T} \sum_{i \in T} \abs{y_i-\mean{y}_{train}}^2 } ,
+\label{gl:R2}
+\end{equation}
+
+
+% RAE
+\begin{equation}
+RAE = \frac{\frac{1}{T} \sum_{i \in T} \abs{y_i-\hat{y}_i}}{ \frac{1}{T} \sum_{i \in T} \abs{y_i-\mean{y}_{train}} } \cdot 100 .
+\label{gl:RAE}
+\end{equation}
+
+
+Der Absolute Error (ABS) und der Relative Error (REL) wertet den systematischen Fehler aus. Der Idealwert ist hierbei Null, wobei dies mit einer exakten Vorhersage gleichzusetzen ist. Positive Werte weisen dabei auf eine Überschätzung und negative auf eine Unterschätzung der Vorhersage hin.\,\citef[5 f]{Guertler2017}
+
+% ABS
+\begin{equation}
+ABS= \frac{1}{T} \sum\limits_{i \in T} (\hat{y}_i-y_i),
+\label{gl:ABS}
+\end{equation}
+
+
+% REL
+\begin{equation}
+REL= \frac{\sum_{i \in T} (\hat{y}_i-y_i)}{\sum_{i \in T} y_i} .
+\label{gl:REL}
+\end{equation}
+
+
+
+%-----------------------------------------------------------------------------------
+\todo{Fehlermaße aufführen und bedeutung erkären}

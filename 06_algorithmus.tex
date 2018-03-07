@@ -1,6 +1,83 @@
 % !TEX root = 00_arbeit.tex
 
-%---------------------------------------------------------------------------------
-%% Strommarkt
 
-\section{Algorithmen ausgewählter Modelle} 
+%---------------------------------------------------------------------------------
+%% Algorithmen
+
+\section{Algorithmen künstlicher neuronaler Netze zur Modellierung} 
+
+Im \autoref{sec:ANN-Modelle} wurden Modelle künstlicher neuronaler Netze verschiedener Kategorien vorgestellt, stärken sowie schwächen aufgezeigt und in mögliche Anwendungsgebiete eingeteilt. In \autoref{sec:strompreis} wurden die spezifischen Eigenschaften von Strompreisen aufgeführt und Modelle genannt die zur Vorhersage eingesetzt wurden. Vor dem Hintergrund der Beiden Kapitel erfolgt in diesem Abschnitt die Vorstellung der Algorithmen einiger Modelle die zum Zwecke der Modellierung eingesetzt werden können.
+
+\subsection{Multilayerperceptron (MLP)}
+
+Zunächst wird ein MLP mit einer verdeckten Schicht, sigmoidalen Aktivierungsfunktionen und unter Anwendung von Backpropagation vorgestellt. Das  Backpropagation-Verfahrens besteht aus drei Schritten. Zunächst werden die Information von der Eingabe zur Ausgabeschicht und somit nach "vorne" (engl.: forward) durchgegeben. Als nächstes wird die Abweichung (auch als Fehler bezeichnet) zwischen dem errechneten und gewünschten Wert bestimmt. Die Abweichung wird anschließend von der Ausgebe hin zur Eingabeschicht "zurück" (engl.: back) gereicht und dazu genutzt die Gewichte der einzelnen Schichten anzupassen.
+
+\textbf{Algorithmus:}\,\citef[289]{Fausett1993}
+\begin{itemize}
+\item[\textbf{$\bullet$}] Schritt 1: Initialisiere die Gewichte zu kleinen zufälligen Werten.
+\item[\textbf{$\bullet$}] Schritt 2: Solange die Abbruchbedingung falsch ist widerhole Schritt 3--10.
+\item[\textbf{$\bullet$}] Schritt 3: Wiederhole für jedes Trainingspaar Schritt 4--9.
+\end{itemize}
+
+\textbf{\textit{Feedforward:}}
+\begin{itemize}
+\item[\textbf{$\bullet$}] Schritt 4: Jedes Eingabeneuron $(X_{k}, k=1,\dots,K)$ bekommt das Eingabesignal $x_{k}$ und leitet es zu jedem Neuron der nachfolgenden Schicht (verdeckte Schicht).
+
+\item[\textbf{$\bullet$}] Schritt 5: Jedes der verdeckten Neuronen $(Z_{h}, h=1,\dots,H)$ summiert das gewichtete Eingabesignal
+\begin{equation*}
+net_{h}=\sum\limits_{k \in K} x_{k}w_{kh},
+\end{equation*}
+wendet auf das Ergebnis die Aktivierungsfunktion an 
+\begin{equation*}
+z_{h}=f(net_{h})
+\end{equation*}
+und leitet das Resultat an jedes Neuron der nachfolgenden Schicht (Ausgabeschicht).
+
+\item[\textbf{$\bullet$}] Schritt 6: Jedes der Ausgabeneuronen $(Y_{l}, l=1,\dots,L)$ summiert das gewichtete Eingabesignal 
+\begin{equation*}
+net_{l}=\sum\limits_{h \in H} z_{k}w_{hl},
+\end{equation*}
+wendet auf das Ergebnis die Aktivierungsfunktion an 
+\begin{equation*}
+y_{l}=f(net_{l}).
+\end{equation*}
+\end{itemize}
+
+\textbf{\textit{Backpropagation:}}
+\begin{itemize}
+\item[\textbf{$\bullet$}] Schritt 7: Jedes Ausgabeneuron $(Y_{l}, k=1,\dots,L)$ bekommt die zum Eingabesignal passende Lösung $t_{l}$ und berechnet den Fehleranpassungsterm 
+\begin{equation*}
+\delta_{l}=(t_{l}-y_{l})f'(net_{l}),
+\end{equation*}
+kalkuliert anschließend die Gewichtsänderung 
+\begin{equation*}
+\Delta w_{hl}=\alpha \delta_{l} z_{h}
+\end{equation*}
+und leitet den Fehleranpassungsterm $\delta_{l}$ an die unterliegende Schicht.
+
+\item[\textbf{$\bullet$}] Schritt 8: Jedes verdeckte Neuron $(Z_{h}, h=1,\dots,H)$ bekommt die Summe aus Fehleranpassungsthermen $\delta_l$ und Gewichten $w_{hl}$ von der vorgelagerten Schicht und multipliziert die Summe mit der abgeleiteten Aktivierungsfunktion, um seinen Fehleranpassungstherm 
+\begin{equation*}
+\delta_{h}=f'(net_{h}) \cdot \sum\limits_{l \in L} \delta_{l} \cdot w_{hl}
+\end{equation*}
+zu bestimmen. Der Fehleranpassungsther wird anschließend benutzt, um die Gewichtsanpassung 
+\begin{equation*}
+\Delta w_{kh}=\alpha \delta_{h} x_{k}
+\end{equation*}
+zu berechnen.
+\end{itemize}
+
+\textbf{\textit{Anpassen der Gewichte:}}
+\begin{itemize}
+\item[\textbf{$\bullet$}] Schritt 9: Jedes Ausgabeneuron $(Y_{l}, k=1,\dots,L)$ passt seine Gewichte an: 
+\begin{equation*}
+w_{hl}(\text{neu})=w_{hl}(\text{alt})+\Delta w_{hl}.
+\end{equation*}
+Jedes verdeckte Neuron $(Z_{h}, h=1,\dots,H)$ passt seine Gewichte an:
+\begin{equation*}
+w_{kh}(\text{neu})=w_{kh}(\text{alt})+\Delta w_{kh}.
+\end{equation*}
+
+\item[\textbf{$\bullet$}] Schritt 9: Überprüfe die Abbruchbedingung.
+\end{itemize}
+
+ 
