@@ -1,0 +1,75 @@
+    %---------------------------------------------------------------
+        %% Hopfieldnetz
+        %-----------------------------------------
+        %% linkes Bild
+        \begin{tikzpicture}[ node distance=\layersep cm, shorten >=1pt]
+        \def\layersep{2}            % vertikal distance between the layers
+        \def\neuronsep{2}           % Horizontal distance between neurons
+        \def\dlsize{2}              % distance between node and layer lable
+        \def\inout{\layersep*.65}   % Size of in- and output-arrow
+        \def\siz{.8}                % neuronsize
+        \def\y{3}                   % Start of the most upper layer
+        \def\no{3}                  % Amount of output neurons
+        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
+        \tikzstyle{annot} = [text width=6em, text centered]
+        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
+        \tikzset{
+                ident/.pic={
+                    \ifthenelse{\equal{#1}{1} \OR \equal{#1}{3}}{
+                        \draw[semithick,arrows={-Latex[open]}] (0,-\siz/3) -- (0,\siz/3);
+                    }{
+                        \draw[semithick,arrows={Latex[open]-}] (0,-\siz/3) -- (0,\siz/3);
+                    }
+                    
+                }
+            }
+        % Draw the left output layer node
+            \foreach \xn in {1,...,\no}{
+                \node[neuron] (Ol-\xn) at (\xn*\neuronsep-\neuronsep,\y) [fontscale=15] {$\Omega_{\xn}$};
+                \node[above of=Ol-\xn, node distance=\inout cm] (Onla-\xn) {};
+                \node[below of=Ol-\xn, node distance=\inout cm] (Onlb-\xn) {};
+                \draw[arrows={-Stealth[length=7pt]},densely dotted] (Onla-\xn) edge (Ol-\xn);
+                \draw[arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onlb-\xn);
+            }
+        % Connect every node in the output layer
+            \pgfmathsetmacro{\nom}{\no - 1}
+               \foreach \xn in {1,...,\nom}{
+                    \pgfmathtruncatemacro{\xnp}{\xn + 1}
+                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Ol-\xn) edge[bend right=45] (Ol-\xnp);
+                        \node[fill=white,inner sep=.1pt,fontscale=10] at ($(Ol-\xnp)!.4+.1!(Ol-\xn)+(0,-0.65)$) {$w_{\xnp,\xn}$};
+                }
+            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Ol-1) edge[bend right=65] (Ol-\no);
+            \node[fill=white,inner sep=.1pt,fontscale=10] at ($(Ol-1)!.4+.1!(Ol-\no)+(0,-1.45)$) {$w_{1,\no}$};
+        % Annotate the layers
+               \node[annot,right of=Ol-\no, node distance=\dlsize cm] (ol) {\textbf{Eingabe-/Ausgabe- schicht}};
+        %-----------------------------------------
+        %% rechtes Bild
+        % Draw the right output layer nodes
+            \foreach \xn in {1,...,\no}{
+                \node[neuron,right of=ol] (Or-\xn) at ($(ol)+(\xn*\neuronsep-\neuronsep,0)$) {};
+                \pic at (Or-\xn) {ident=\xn};
+            }
+        % Draw the right upper and lower output layer nodes
+            \foreach \xn in {1,...,2}{
+                \node[neuron] (Orb-\xn) at ($(Or-2)+({\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-\layersep)$) {};
+                \node[neuron] (Ora-\xn) at ($(Or-2)+({\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\layersep)$) {};
+                \pic at (Orb-\xn) {ident=\xn};
+                \pic at (Ora-\xn) {ident=\xn};
+            }    
+        % Connect every node in the right output layer
+            \foreach \xn in {1,...,\nom}{
+                \pgfmathtruncatemacro{\xnp}{\xn + 1}
+                \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge (Or-\xnp);
+            }    
+            \foreach \xn in {1,...,\no}{
+                \foreach \xp in {1,2}{
+                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge (Ora-\xp);
+                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge (Orb-\xp);
+                }
+            }
+            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Orb-1) edge[bend right=30] (Ora-2);
+            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Orb-2) edge[bend left=30] (Ora-1);
+            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-3)  edge[bend right=35] (Or-1);
+            \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.5)$) {$\dots\, w_{i,j}\,\dots$};
+            \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},-\layersep*.5)$) {$\dots\, w_{i,j}\,\dots$};
+        \end{tikzpicture}

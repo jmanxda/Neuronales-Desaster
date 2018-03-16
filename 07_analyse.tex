@@ -1,0 +1,75 @@
+% !TEX root = 00_arbeit.tex
+
+%---------------------------------------------------------------------------------
+%% Stata
+
+\section{Analyse der Prognosefähigkeit}\label{sec:analyse}
+
+In diesem Abschnitt erfolgt die Analyse der Prognosefähigkeit eines MLP-Netzwerkes. Hierbei werden die in \autoref{sec:algorithm} hergeleiteten Algorithmen einem Vergleich unterzogen.
+
+\subsection{Erklärung des Datensatzes und Vorbereitung der Messungen}
+
+Untersucht werden sollen beide Lernalgorithmen auf die Lerngeschwindigkeit und das Vorhersagevermögen. Hierzu werden die in \autoref{sec:algorithm} vorgestellten Algorithmen in Stata implementiert und mit Hilfe des in \autoref{tab:datensatz} dargestellten Datensatzes untersucht.
+
+\begin{filecontents*}{datensatz.tex}
+{\setstretch{1.0}
+\captionsetup{skip=1pt,margin=5pt,position=below} %skip=1pt,
+\rowcolors{3}{tableShade}{white}
+
+\begin{longtable}{Zrccl}
+    \caption{\farbig{Datensatz}} \label{tab:datensatz}\\
+    \toprule
+    \hiderowcolors
+
+        Merkmal                         & Einheit    & Minimalwert   & Maximalwert   & Quelle            \\
+    \midrule
+    \endfirsthead
+        \multicolumn{5}{c}{\footnotesize \tablename\ \thetable{}: Fortsetzung der vorherigen Seite} \\
+    \toprule
+        %\multicolumn{1}{l}{\textbf{Verweis}} & \multicolumn{1}{Z}{\textbf{Modell}} & \multicolumn{1}{Z}{\textbf{Lernalgorythmus}} & \multicolumn{1}{Z}{\textbf{Markt}} & \multicolumn{1}{Z}{\textbf{Performancemaß}} \\
+        \multicolumn{2}{l}{Merkmal}    & Minimalwert          & Maximalwert                     & Quelle            \\
+    \midrule
+    \endhead
+    \midrule
+        \multicolumn{5}{c}{{\footnotesize \tablename\ \thetable{}: Fortsetzung auf der nächsten Seite}} \\
+    \bottomrule
+    \endfoot
+    \bottomrule
+        \caption*{\footnotesize $^*$\,Internetseiten der Übertragungsbetreiber: Amprion, Tennet, 50Hertz, TransnetBW. Werte wurden aufsummiert. $^\dagger$\,Der Preis wurde von US-Dollar in Euro umgerechnet, fehlende Daten extra- bzw. interpoliert und der Tagespreis wurde für jede Stunde als konstant angenommen. }
+        %\multicolumn{5}{c}{\footnotesize $^*$\,Internetseiten der Übertragungsbetreiber: Amprion, Tennet, 50Hertz, TransBW. Werte wurden aufsummiert. \farbig{\footnotesize Abkürzungen ausschreiben}}
+        
+    \endlastfoot
+    \showrowcolors
+        Strompreis                      & [€/MWh]       & $-221,99$ & $210$         & EEX.com           \\
+        Erzeugte Energie aus Wind/Sonne & [MWh]         & $263,35$  & $44606,29$    & $^*$              \\
+        Energieverbrauch                & [MWh]         & $29201$   & $79884$       & Entsoe.net        \\
+        Kosten für CO$_2$               & [€/Tonne]     & $2,68$    & $16,84$       & EEX.com           \\
+        Erdgaspreis                     & [€/MWh]       & $11,24$   & $29,06$       & Thomson Reuters   \\
+        Kohlepreis$^\dagger$            & [€/Tonne]     & $47,995$  & $190,414$     & EEX.com           \\
+        Heizölpreis$^\dagger$           & [€/Gallone]   & $0,941$   & $4,867$       & Thomson Reuters   \\
+        Uranpreis$^\dagger$             & [€/kg]        & $81,028$  & $232,458$     & Thomson Reuters   \\
+        Stunde des Tages                & [h]           & $1$       & $24$          & -                 \\
+        Tag der Woche                   & [d]           & So:\,$0$  & Sa:\,$6$      & -                 \\
+        
+\end{longtable}
+
+}
+\end{filecontents*}
+\LTXtable{\textwidth}{datensatz}
+
+Dabei ist in der ersten Spalte das Merkmal des Datensatzes, nachfolgend die Einheiten, in den nächsten beiden Spalten der Minimal- und Maximalwert des Merkmals im betrachteten Zeitraum und in der Letzten Spalte die Herkunft der Information dargestellt. Der betrachtete Zeitraum erstreckt sich vom 01.04.2010 bis zum 27.08.2016. Der Strompreis ist für jede Stunde eines jeden Tages angegeben und beinhaltet somit 56180 Datenpunkte. Nicht jedes Merkmal des Datensatzes besitzt in seiner ursprünglichen Form 24 Werte für einen Tag. In diesen Fällen werden die fehlenden Daten entweder extra- bzw. interpoliert, um die Anzahl der Daten an den Strompreis anzupassen. Außerdem werden die Merkmale an die selbe Währung angepasst. Für diesen Zweck wird der Tägliche US-Dollar/Euro Wechselkurs genutzt, um den Kohlepreis von \$/Tonne, den Heizölpreis von \$/Gallone und den Uranpreis von \$/kg respektive in €/Tonne, €/Gallone und €/kg umzurechnen. 
+
+Im Folgenden wird der Einfluss der Aktivierungsfunktion, der An- bzw. Abwesenheit des Bias-Neurons und der jeweiligen Parameter der Lernalgorithmen auf die Vorhersagegenauigkeit untersucht. Zum Einsatz kommt hierfür ein dreischichtiges MLP, welches in \autoref{fig:MLP-Algorithm} dargestellt ist. 
+
+Die \farbig{Sigmoidale Funktion} und der Tangens-Hyperbolicus werden als Aktivierungsfunktionen gegenübergestellt. Da der Wertebereich der \farbig{Sigmoidalen Funktion} [0,1] und der Wertebereich des Tangens-Hyperbolicus [-1,1] beträgt werden alle Merkmale des Datensatzes auf diese Wertebereiche angepasst. Zu diesem Zweck wird die Min-Max bzw. die lineare Normalisierung
+
+\begin{equation}
+x_i'=(max_{Ziel} - min_{Ziel}) \cdot \left ( \frac{x_i-min_{Daten}}{max_{Daten}-min_{Daten}} \right ) + min_{Ziel}
+\label{gl:norm}
+\end{equation}
+
+mit $x_i$ als Ausgangswert, $x_i'$ als normalisierter Wert, $max_{Ziel}$/$min_{Ziel}$ als Maximal-/Minimalwert des gewünschten Wertebereiches und $max_{Daten}$/$min_{Daten}$ als Maximal-/Minimalwert des Merkmals im betrachteten Zeitraum durchgeführt. Der Vorteil dieses Normalisierungsverfahrens liegt darin, dass die Proportionen der Daten im neuen Wertebereich erhalten bleiben. Somit bleiben auch die Abhängigkeiten und Beziehungen zwischen den Merkmalen erhalten. 
+
+Betrachtet man die \farbig{Sigmoidale Funktion} so werden die Werte Null bzw. Eins asymptotisch in der Unendlichkeit erreicht. Somit lernt das Netzwerk bei der Eingabe der beiden Werte nur sehr langsam.\farbig{(Quelle hinzufügen)} Aus diesem Grund wird der Datensatz auf den Wertebereich \farbig{[0.1,0.9]} geändert. Die gleiche Begründung führt beim Tangens-Hyperbolicus zu einem Wertebereich von \farbig{[-0.9,0.9]}
+\\
+Mit der Variation des Lernalgorythmus, der Aktivierungsfunktion und der An- und Abwesenheit des Bias-Neurons ergeben sich acht Variationsmöglichkeiten die im Folgenden verglichen werden.

@@ -3,11 +3,45 @@
 %---------------------------------------------------------------------------------
 %% Theorie
 
-\section{Künstliche Neuronale Netze}
-
+\section{Neuronale Netze}
 In diesem Kapitel werden zunächst biologische und künstliche neuronale Netze verglichen. Gefolgt von einer Motivation über die Verwendung künstlicher neuronaler Netze (zukünftig als NN bezeichnet) und der Einordnung der NN in die aktuelle Forschungslanschaft. Als nächstes werden die Charakterisierungskriterien für NN vorgestellt und ein Überblick über mögliche Anwendungsgebiete für NN gegeben. Anschließend wird ein Überblick über die Funktionsweise gängiger Modelle gegeben und die Netzwerkmodelle gegenübergestellt.
 
-\subsection{Globaler Überblick über Neuronale Netze}\label{sec:einf_neuro}
+
+\subsection{Biologische Neuronale Netze}
+
+Unser Gehirn besteht aus einer Menge an kleinen sowie großen anatomischen Strukturen und kann vereinfachend in vier Bereiche unterteilt werden (siehe \autoref{fig:Gehirn}). Das Großhirn (Telencephalon) ist hierbei für abstrakte Denkaufgaben zuständig. Unterhalb des Großhirns liegt das Kleinhirn (Cerebellum) welches die Motorik koordiniert und steuert. Daneben gibt es noch das Zwischenhirn (Diencephalon) das für die grundlegenden Körpervorgänge zuständig ist. Schließlich verbindet das Stammhirn (Truncus cerebri) das Gehirn mit dem Rückenmark und steuert die Körperreflexe.
+
+\begin{figure}[!htb]
+    \centering
+        \includegraphics[width=0.5\textwidth]{Bilder/misc/Gehirn.png}
+    \caption{Querschnitt des menschlichen Gehirns mit den im Text genannten Arealen.\protect\footnotemark{}}
+    \label{fig:Gehirn}
+\end{figure}
+\addtocounter{footnote}{-1}     % -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
+\addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
+\wrapfigfoot\footnotetext{\autoref{fig:Gehirn} wurde aus \citet[17]{dkriesel07} übernommen.}
+
+In all diesen Bereichen werden Informationen verarbeitet. Dies wird durch Milliarden sehr ähnlicher Zellen bewerkstelligt, welche miteinander kommunizieren. Diese Zellen werden als Neuronen bezeichnet. Der Aufbau und die Verbindung zweier Neuronen ist in \autoref{fig:Neuronen} dargestellt. Betrachtet wird nun der Weg, den die elektrischen Signale in einem Neuron nehmen.
+
+\begin{figure}[!htb]
+    \centering
+        \includegraphics[width=0.8\textwidth]{Bilder/misc/Neuronen.png}
+    \caption{Verbindung zweier Neuronen in einem biologischen neuronalen Netz.\protect\footnotemark{}}
+    \label{fig:Neuronen}
+\end{figure}
+\addtocounter{footnote}{-1}     % -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
+\addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
+\wrapfigfoot\footnotetext{\autoref{fig:Neuronen} wurde aus \citet[2]{sen_an} übersetzt und angepasst.}
+
+Informationen die von anderen Neuronen oder direkt von Sensorzellen kommen werden einem Neuron über die Synapsen übertragen. Die Synapsen liegen meistens auf den Dendriten, welche sich Baumartig vom Soma (dem Zellkern des Neurons) ausbreiten und für die Aufnahme der elektrischen Signale verschiedener Quellen zuständig sind. Die so im Soma eintreffenden Signale wirken entweder anregend oder abschwächend. Das Soma kumuliert die eintreffenden Signale auf und ab einem bestimmten Wert (der als Schwellwert bezeichnet wird) schickt das Soma über das Axon seinerseits einen elektrischen Impuls. Das Axon leitet den Impuls wiederum über Synapsen an die Dendriten eines nachfolgenden Neurons. Abstrakt kann ein Neuron nun als Schalter mit einem Informationsein- und ausgang betrachtet werden.\,\citef[15 ff]{dkriesel07} 
+
+\todo{Da fehlt noch etwas Text.}
+
+\subsection{Künstliche Neuronale Netze}\label{sec:einf_neuro}
+
+
+
+%\subsection{Globaler Überblick über Neuronale Netze}
 %\farbig{[Erklärung der neuronalen Netze... vielfältige Anwendungsgebiete... Hier erforderlich Netze zur Zeitreihenvorhersage]}
 %\setlength{\intextsep}{0pt}%
 
@@ -21,18 +55,20 @@ In diesem Kapitel werden zunächst biologische und künstliche neuronale Netze v
 
 %\citet[\pno~2~ff.]{sen_an}
 
+Künstliche neuronale Netze sind augenblicklich eine Disziplin der Computerbasierten Intelligenz (engl.: computional intelligence)~(CI), welches wiederum einen Teilbereich der Künstlichenintelligenz (engl.: artificial intelligence)~(AI) darstellt. Die CI fasst verschiedene von der Natur inspirierte Berechnungsmethoden zusammen. Neben den NN sind weitere Methoden der CI Fuzzy-Systeme~(FS), Evolutionäre Algorithmen~(EA), Schwarmintelligenz~(SI) und Künstliche Immunsysteme~(AIS).\citef[11 ff]{Kroll16} Obwohl sich diese Arbeit wesentlich mit NN beschäftigen wird, wird an dieser Stelle auf weitere CI-Methoden hingewiesen, da in der Literatur hybride CI-Systeme bekannt sind und auch genutzt werden.
+
 Ein künstliches neuronales Netz (engl. artificial neural networks)~(NN) ist ein mathematisches Konstrukt. Es bildet ein informationsverarbeitendes System welches aus einer Vielzahl einfacher Einheiten den sogenannten Neuronen besteht. Entstanden ist es Anfang der 40er Jahre des letzten Jahrhunderts\citef[A1.1:1]{Fiesler96} aus der Untersuchung von biologischen Abläufen im Nervensystem von Wirbeltieren, wo Sinneseindrücke des Körpers aufgenommen und mit Hilfe diverser neuronaler Netze verarbeitet werden.
 
 \begin{figure}[!htb]
     \centering
-        \includegraphics[width=1\textwidth]{Bilder/BNN_ANN.png}
+        \includegraphics[width=1\textwidth]{Bilder/misc/BNN_ANN.png}
     \caption{Gegenüberstellung eines Ausschnittes aus einem biologischen neuronalen Netz a)\protect\footnotemark{} und einem künstlichen neuronalen Netz b).}
     \label{fig:BNN_ANN}
 \end{figure}
 
 \addtocounter{footnote}{-1}     % -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
 \addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
-\wrapfigfoot\footnotetext{\autoref{fig:BNN_ANN} a) wurde aus\citet[2]{sen_an} übersetzt und angepasst.}
+\wrapfigfoot\footnotetext{\autoref{fig:BNN_ANN} a) wurde aus \citet[2]{sen_an} übersetzt und angepasst.}
 
 \autoref{fig:BNN_ANN} zeigt eine Gegenüberstellung eines künstlichen und biologischen Neurons. Dieser Vergleich ist auf \citet{kneuron} zurückzuführen. Sie formulierten die Funktion eines Neurons wie folgt:\\ Ankommende Informationen werden von den Dendriten aufegenommen. Daraufhin wird die Aktivität der Dendriten  mit einer bestimmten Gewichtung im Soma summiert und wenn ein bestimmter Schwellwert überschritten ist, wird die Information durch das Axon weitergeleitet. Die Kontaktstellen der Neuronen untereinander bilden die Synapsen. Welche das kontaktierte Neuron erregen oder hemmen können.\citef[17]{bio_neuron} Hirbei können die Dendriten eines biologischen Neurons als Informationseingang, das Axon als Informationsausgang, die Synapsen als Gewichte und die Soma als Propagierungs- und Aktivierungsfunktion des künstlichen Neurons angesehen werden. Die Aufgabe der Propagierungsfunktion ist es die ankommenden Signale zu verarbeiten und für die Aktivierrungsfunktion vorzubereiten. Wobei die Aktivierungsfunktion dann entscheidet wie mit den Informationen umgegangen werden soll.
 
@@ -57,7 +93,7 @@ So summiert es zunächst die gewichteten Eingangsinformationen mit der Propagier
 %    \label{tab:BNN_ANN}
 %\end{wraptable}
 %
-Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wobei die \hbox{Heaviside-,} die lineare Schwellwertfunktion und der Tangens Hyperbolicus bipolar dargestellt sind (Wertebereich [-1,1]) aber auch unipolar (Wertebereich [0,1]) verwendet werden können. Die Fermifunktion weist zwar nur einen Wertebereich von [0,1] auf aber durch den Temperaturfaktor kann sie an die Heavisidefunktion angenährt werden und hat den Vorteil der Differenzierbarkeit.\footnote{\,Vgl. \citet[5]{neuralnet_intro} und \citet[39 f]{dkriesel07}.}
+Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wobei die \hbox{Heaviside-,} die lineare Schwellwertfunktion und der Tangens Hyperbolicus bipolar dargestellt sind (Wertebereich [-1,1]) aber auch unipolar (Wertebereich [0,1]) verwendet werden können. Die Fermifunktion weist zwar nur einen Wertebereich von [0,1] auf aber durch den Temperaturfaktor kann sie an die Heavisidefunktion angenährt werden und hat den Vorteil der Differenzierbarkeit.\footnote{Vgl. \citet[5]{neuralnet_intro} und \citet[39 f]{dkriesel07}.}
 
 \begin{figure}[!htb]
     \centering
@@ -121,21 +157,28 @@ Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wo
 \end{figure}
 \addtocounter{footnote}{-1}     %  -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
 \addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
-\wrapfigfoot\footnotetext{\,\autoref{fig:funktion} wurde in Anlehnung an \citet[5]{neuralnet_intro} Figure 1.5 erstellt.}
+\wrapfigfoot\footnotetext{\autoref{fig:funktion} wurde in Anlehnung an \citet[5]{neuralnet_intro} Figure 1.5 erstellt.}
 
 %\,\autoref{fig:SOM_top} wurde aus \citet[274]{Kroll16} übernommen.
 
-Es gibt Problemstellungen die mit klassischen mathematischen Modellen und Algorithmen gar nicht oder nur schwer zu lösen sind. Neuronale Netze unterscheiden sich zu klassischen Algorithmen durch ihre Lernfähigkeit. Ohne explizite Programmierung sind sie in der Lage eine Aufgabe anhand von Trainingsbeispielen zu erlernen. Einige Beispiele wären die Gesichtserkennung oder die Erkennung von menschlicher Sprache.\\
 
 %\newpage
 
-Künstliche neuronale Netze sind augenblicklich eine Disziplin der Computerbasierten Intelligenz (engl.: computional intelligence)~(CI), welches wiederum einen Teilbereich der Künstlichenintelligenz (engl.: artificial intelligence)~(AI) darstellt. Die CI fasst verschiedene von der Natur inspirierte Berechnungsmethoden zusammen. Neben den NN sind weitere Methoden der CI Fuzzy-Systeme~(FS), Evolutionäre Algorithmen~(EA), Schwarmintelligenz~(SI) und Künstliche Immunsysteme~(AIS).\citef[11 ff]{Kroll16} Obwohl sich diese Arbeit wesentlich mit NN beschäftigen wird, wird an dieser Stelle auf weitere CI-Methoden hingewiesen, da in der Literatur hybride CI-Systeme bekannt sind und auch genutzt werden.
+
 
 \subsection{Charakterisierung und Anwendung künstlicher neuronaler Netze}
 
 Da es nicht das NN gibt sondern viele unterschiedliche Arten, die teilweise spezielle Anwendungsgebiete finden, werden in diesem Unterkapitel Charakterisierungskriterien für NN vorgestellt. Schließlich wird ein Überblick über mögliche Anwendungsgebiete gegeben.\\
 
-Im allgemeinen können NN anhand der folgenden drei Kriterien charakterisiert werden\citef[7 ff]{characterisation_4}:%
+\begin{figure}[!htb]
+    \centering
+        \includegraphics[page=1,width=1\textwidth,trim={.5cm 6cm 0 .6cm},clip]{Bilder/misc/ANN_Organigramme.pdf}
+    \caption{Organigramm der Kriterien zur Charakterisierung künstlicher neuronaler Netze.}
+    \label{fig:ann_charakterisierung}
+\end{figure}
+
+
+Im allgemeinen können NN anhand der in \autoref{fig:ann_charakterisierung} dargestellten Kategorien charakterisiert werden\citef[7 ff]{characterisation_4}:%
 
 \begin{enumerate}
 \item%
@@ -187,8 +230,6 @@ on-line learning: Hier werden die Gewichte nach jeder einzelnen Beobachtung der 
 \end{itemize}
 
 \end{enumerate}
-
-\todo{Organigramm erstellen}
 
 Vollständigkeitshalber wird erwähnt, dass \citet{characterisation_4} vier Charakterisierungskriterien nennen. Wobei als viertes Kriterium der Informationsgewinnungsalgorithmus (recall algorithm) aufgeführt ist. In dieser Arbeit wird auf dieses Kriterium verzichtet, da weder \citet{characterisation_4} eine Einteilung/Auflistung aufführen noch in anderer Literatur dieses Kriterium eine Erwähnung findet.\\
 
@@ -244,74 +285,7 @@ Im vorherigen Kapitel wurde die Charakterisierung der NN beleuchtet und einige N
         %---------------------------------------------------------------
         %% SLP
         %-----------------------------------------
-        %% linkes Bild
-        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
-        \def\layersep{2}            % vertikal distance between the layers
-        \def\neuronsep{1.5}         % Horizontal distance between neurons
-        \def\dlsize{1.5}            % distance between node and layer lable
-        \def\inout{\layersep*.65}   % Size of in- and output-arrow
-        \def\siz{.8}                % neuronsize
-        \def\y{3}                   % Start of the most upper layer
-        \def\ni{5}                  % Amount of input neurons
-        \def\no{2}                  % Amount of output neurons
-        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
-        \tikzstyle{annot} = [text width=5em, text centered]
-        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
-        \newcommand{\neurono}[2][]{
-            \node[neuron,circle split,inner sep=2pt] (#1) at (#2)
-                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} \includegraphics[width=0.225cm]{Bilder/sigma.png}};
-        }
-
-        % Draw the left input layer nodes
-            \foreach \name / \xn in {1,...,\ni}{
-            % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-                \node[neuron,fontscale=15] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
-                \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
-            }
-        % Draw the output layer node
-            \foreach \name / \xn in {1,...,\no}{
-                \node[neuron,fontscale=15] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\y-\layersep) {$\Omega_{\xn}$};
-                \node[node distance=\inout cm, below of=Ol-\xn] (Onl) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onl);
-        % Connect every node in the input layer with the output layer
-            \foreach \source in {1,...,\ni}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Ol-\xn);
-                }
-        % Annotate the layers
-                \node[annot,right of=Il-\ni, node distance=\dlsize cm] (il) {\textbf{Eingabe- schicht}};
-                \node[annot,below of=il] {\textbf{Ausgabe- schicht}};
-        %-----------------------------------------
-        %% rechtes Bild
-            \tikzset{
-                ident/.pic={
-                \draw[semithick] (-\siz/4,-\siz/4) -- (\siz/4,\siz/4);
-            }}
-        % Draw the right input layer nodes
-                \node[xshift=\dlsize cm] (Ir) at (il) {};
-            \foreach \name / \xn in {1,...,\ni}{
-        % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-                \node[neuron] (Ir-\name) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
-                \node[above of=Ir-\name, node distance=\inout cm] (Inr-\name) {};
-                \pic at (Ir-\name) {ident};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\name) edge (Ir-\name);
-            } 
-        % Draw the output layer node
-            \foreach \name / \xn in {1,...,\no}{
-                \neurono[Or-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-\layersep)$}
-
-                \node[node distance=\inout cm, below of=Or-\xn] (Onr) {};
-                
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or-\xn) edge (Onr);
-                
-        % Connect every node in the input layer with the output layer
-            \foreach \source in {1,...,\ni}
-                \draw [->,arrows={-Stealth[length=7pt]},every node/.style={fill=white,inner sep=1pt,fontscale=7}] 
-                (Ir-\source) edge  (Or-\xn) 
-                node at ($(Ir-\source)!.3+.18*(\xn-1)!(Or-\xn)$) {$w_{\source,\xn}$};
-            }
-\end{tikzpicture}
-        %\includegraphics[width=.5\textwidth]{Bilder/MLP/slp.png}
+        \input{Bilder/Netzwerke/SLP.tex}
     \caption{SLP mit fünf Eingabeneuronen $i$ und zwei Ausgabeneuron $\Omega$ auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
     \label{fig:SLP}
 \end{figure}
@@ -324,96 +298,7 @@ Um das SLP zu trainieren gibt es den Perceptron-Lernalgorithmus\citef[78]{dkries
     %---------------------------------------------------------------
         %% MLP
         %-----------------------------------------
-        %% linkes Bild
-        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
-        \def\layersep{1.8}            % vertikal distance between the layers
-        \def\neuronsep{1.8}         % Horizontal distance between neurons
-        \def\dlsize{2}            % distance between node and layer lable
-        \def\inout{\layersep*.65}   % Size of in- and output-arrow
-        \def\siz{.8}                % neuronsize
-        \def\y{5}                   % Start of the most upper layer
-        \def\ni{3}                  % Amount of input neurons
-        \def\nh{4}                  % Amount of hidden neurons
-        \def\no{2}                  % Amount of output neurons
-        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
-        \tikzstyle{annot} = [text width=6em, text centered]
-        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
-
-        \newcommand{\neurono}[2][]{
-            \node[neuron,circle split,inner sep=2pt] (#1) at (#2)
-                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} \includegraphics[width=0.225cm]{Bilder/sigma.png}};
-        }
-        % Draw the left input layer nodes
-            \foreach \name / \xn in {1,...,\ni}{
-            % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-                \node[neuron,fontscale=15] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
-                \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
-            }
-        % Draw the hidden layer node
-            \foreach \name / \xn in {1,...,\nh}{
-                \node[neuron,fontscale=15] (Hl-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},\y-\layersep) {$h_{\xn}$};
-                \node[node distance=\inout cm, below of=Hl-\xn] (Hnl) {};
-        % Connect every node in the inner layer with the hidden layer
-            \foreach \source in {1,...,\ni}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Hl-\xn);
-                }
-        % Draw the output layer node
-            \foreach \name / \xn in {1,...,\no}{
-                \node[neuron,fontscale=15] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\y-2*\layersep) {$\Omega_{\xn}$};
-                \node[node distance=\inout cm, below of=Ol-\xn] (Onl) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onl);
-        % Connect every node in the hidden layer with the output layer
-            \foreach \source in {1,...,\nh}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Hl-\source) edge (Ol-\xn);
-                }
-        % Annotate the layers
-            \ifthenelse{\ni>\nh}{
-                \node[annot,right of=Il-\ni, node distance=\dlsize cm] (il) {\textbf{Eingabe- schicht}};
-                \node[annot,below of=il] (hl) {\textbf{Verdeckte- schicht}};
-            }{
-                \node[annot,right of=Hl-\nh, node distance=\dlsize cm] (hl) {\textbf{Verdeckte- schicht}};
-                \node[annot,above of=hl] (il) {\textbf{Eingabe- schicht}};
-            }
-                \node[annot,below of=hl] {\textbf{Ausgabe- schicht}};
-        %-----------------------------------------
-        %% rechtes Bild
-            \tikzset{
-                ident/.pic={
-                \draw[semithick] (-\siz/4,-\siz/4) -- (\siz/4,\siz/4);
-            }}
-        % Draw the right input layer nodes
-                \coordinate (tIr) at ($(il)-(Il-\ni)$);
-                \coordinate (ttIr) at (tIr |- 0,0);
-                \coordinate (Ir) at ($(il)+(ttIr)$);
-            \foreach \name / \xn in {1,...,\ni}{
-        % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-                \node[neuron] (Ir-\name) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
-                \node[above of=Ir-\name, node distance=\inout cm] (Inr-\name) {};
-                \pic at (Ir-\name) {ident};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\name) edge (Ir-\name);
-            }
-        % Draw the right hidden layer node
-            \foreach \name / \xn in {1,...,\nh}{
-                \neurono[Hr-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},-\layersep)$}
-                \node[node distance=\inout cm, below of=Hr-\xn] (Hnr) {};
-        % Connect every node in the input layer with the hidden layer
-            \foreach \source in {1,...,\ni}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Ir-\source) edge  (Hr-\xn);
-            }            
-
-                \node[fill=white,inner sep=1pt,fontscale=10] at ($(Hr-1)+({(\nh-1)*\neuronsep/2},\layersep*.5)$) {$\dots\,w_{i,h}\,\dots$};
-        % Draw the right output layer node
-            \foreach \name / \xn in {1,...,\no}{
-                \neurono[Or-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-2*\layersep)$}
-                \node[node distance=\inout cm, below of=Or-\xn] (Onr) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or-\xn) edge (Onr);
-        % Connect every node in the hidden layer with the output layer
-            \foreach \source in {1,...,\nh}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Hr-\source) edge  (Or-\xn);
-            }
-                \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.5)$) {$\dots\,w_{h,\Omega}\,\dots$};
-\end{tikzpicture}
+        \input{Bilder/Netzwerke/MLP.tex}
     \caption{Ein MLP mit einer verdeckten Schicht und verdeckten Neuronen $h$ auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
     \label{fig:MLP}
 \end{figure}
@@ -429,96 +314,7 @@ Um das MLP zu trainieren gibt es das sogenannt Backpropagation Verfahren das zu 
     %---------------------------------------------------------------
         %% RBF
         %-----------------------------------------
-        %% linkes Bild
-        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
-        \def\layersep{1.8}          % vertikal distance between the layers
-        \def\neuronsep{1.8}         % Horizontal distance between neurons
-        \def\dlsize{2}              % distance between node and layer lable
-        \def\inout{\layersep*.65}   % Size of in- and output-arrow
-        \def\siz{.8}                % neuronsize
-        \def\y{5}                   % Start of the most upper layer
-        \def\ni{3}                  % Amount of input neurons
-        \def\nh{4}                  % Amount of hidden neurons
-        \def\no{2}                  % Amount of output neurons
-        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
-        \tikzstyle{annot} = [text width=5em, text centered]
-        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
-        \tikzset{
-                ident/.pic={
-                \draw[semithick] (-\siz/#1,-\siz/#1) -- (\siz/#1,\siz/#1);
-            }}
-        \newcommand{\neurono}[3][]{%
-        \ifthenelse{\equal{#3}{0}}{%
-            \node[neuron,circle split,inner sep=1pt,fontscale=6] (#1) at (#2)
-                    {$\mathbf{||c\mathord{,}x||}$ \nodepart{lower}};
-                    
-            \node[fontscale=6] at ($(#2.lower)-(0,\siz/4)$){\textbf{Gauß}};
-            }{
-            \node[neuron,circle split,inner sep=1.3pt] (#1) at (#2)
-                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} };
-            \pic at ($(#1.lower)-(0,\siz/8)$) {ident=#3};
-            }}
-        % Draw the left input layer nodes
-            \foreach \name / \xn in {1,...,\ni}{
-            % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-                \node[neuron,fontscale=15] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
-                \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
-            }
-        % Draw the hidden layer node
-            \foreach \name / \xn in {1,...,\nh}{
-                \node[neuron] (Hl-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},\y-\layersep) [fontscale=15] {$h_{\xn}$};
-                \node[node distance=\inout cm, below of=Hl-\xn] (Hnl) {};
-        % Connect every node in the inner layer with the hidden layer
-            \foreach \source in {1,...,\ni}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Hl-\xn);}
-        % Draw the output layer node
-            \foreach \name / \xn in {1,...,\no}{
-                \node[neuron] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\y-2*\layersep) [fontscale=15] {$\Omega_{\xn}$};
-                \node[node distance=\inout cm, below of=Ol-\xn] (Onl) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onl);
-        % Connect every node in the hidden layer with the output layer
-            \foreach \source in {1,...,\nh}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Hl-\source) edge (Ol-\xn);}
-        % Annotate the layers
-            \ifthenelse{\ni>\nh}{
-                \node[annot,right of=Il-\ni, node distance=\dlsize cm] (il) {\textbf{Eingabe- schicht}};
-                \node[annot,below of=il] (hl) {\textbf{Verdeckte- schicht}};
-            }{
-                \node[annot,right of=Hl-\nh, node distance=\dlsize cm] (hl) {\textbf{Verdeckte-/RBF- schicht}};
-                \node[annot,above of=hl] (il) {\textbf{Eingabe- schicht}};
-            }
-                \node[annot,below of=hl] {\textbf{Ausgabe- schicht}};
-        %-----------------------------------------
-        %% rechtes Bild
-        % Draw the right input layer nodes
-                \coordinate (tIr) at ($(il)-(Il-\ni)$);
-                \coordinate (ttIr) at (tIr |- 0,0);
-                \coordinate (Ir) at ($(il)+(ttIr)$);
-            \foreach \name / \xn in {1,...,\ni}{
-        % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-                \node[neuron] (Ir-\name) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
-                \node[above of=Ir-\name, node distance=\inout cm] (Inr-\name) {};
-                \pic at (Ir-\name) {ident=4};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\name) edge (Ir-\name);}
-        % Draw the right hidden layer node
-            \foreach \name / \xn in {1,...,\nh}{
-                \neurono[Hr-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},-\layersep)$}{0}
-                \node[node distance=\inout cm, below of=Hr-\xn] (Hnr) {};
-        % Connect every node in the input layer with the hidden layer
-            \foreach \source in {1,...,\ni}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Ir-\source) edge  (Hr-\xn);}
-        % Draw the right output layer node
-            \foreach \name / \xn in {1,...,\no}{
-                \neurono[Or-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-2*\layersep)$}{6}
-                \node[node distance=\inout cm, below of=Or-\xn] (Onr) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or-\xn) edge (Onr);
-        % Connect every node in the hidden layer with the output layer
-            \foreach \source in {1,...,\nh}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Hr-\source) edge  (Or-\xn);
-            }
-                \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.5)$) {$\dots\, w_{h,\Omega}\,\dots$};
-        \end{tikzpicture}
+        \input{Bilder/Netzwerke/RBF.tex}
     \caption{RBF mit drei Eingabeneuronen $i$, vier verdeckten Neuronen $h$  und zwei Ausgabeneuronen $\Omega$ auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
     \label{fig:RBF}
 \end{figure}
@@ -527,7 +323,7 @@ RBFs sind feed-forward Netze und ähnlich wie die Perceptrons schichtartig aufge
 
 Ursprünglich wurden die RBFs als Interpolationsverfahren entwickelt. Daher wurde jedem Trainingsbeispiel ein Basispunkt und somit ein RBF-Neuron zugewiesen. Bei großen Datensätzen ergibt sich eine große Anzahl an verdeckten Neuronen die einen hohen Speicherbedarf nach sich ziehen. Um mit einer geringeren Anzahl an verdeckten Neuronen auszukommen können auch die RBF-Netze trainiert werden. Das Training der RBF-Netze findet oftmals in mehreren Stufen statt. Im ersten Schritt werden die Zentren und Formparameter durch unüberwachte Lernmethoden bestimmt. Im nächsten Schritt werden die Gewichte beispielsweise mit der Delta-Regel angepasst.
 
-Die RBFs bieten den Vorteil dass durch das Stauchen/Strecken und Verschieben der Basisfunktionen und das anschließende Aufsummieren jede mögliche Funktion approximiert werden kann. Weiterhin wirkt sich die Anzahl an Ausgabeneuronen nicht wesentlich auf die Berechnungskomplexität aus. Im Gegenzug führt eine hohe Anzahl an Trainingsbeispielen aber auch zu einer gleich hohen Anzahl an verdeckten Neuronen und somit zu einem erhöhten Speicher- und Rechenaufwand. Eine Verringerung der Anzahl der RBF-Neuronen und anschließendes Training sind zwar möglich bestehen aber aus mehreren Stufen und erhöhen einerseits die Algorithmuskomplexität und bieten andererseits mehr Raum für Ungenauigkeiten.\footnote{\,Vgl. \citet[73 ff]{comp_int_07}, \citet[109 ff]{dkriesel07} und \citet[261 ff]{Kroll16}.}
+Die RBFs bieten den Vorteil dass durch das Stauchen/Strecken und Verschieben der Basisfunktionen und das anschließende Aufsummieren jede mögliche Funktion approximiert werden kann. Weiterhin wirkt sich die Anzahl an Ausgabeneuronen nicht wesentlich auf die Berechnungskomplexität aus. Im Gegenzug führt eine hohe Anzahl an Trainingsbeispielen aber auch zu einer gleich hohen Anzahl an verdeckten Neuronen und somit zu einem erhöhten Speicher- und Rechenaufwand. Eine Verringerung der Anzahl der RBF-Neuronen und anschließendes Training sind zwar möglich bestehen aber aus mehreren Stufen und erhöhen einerseits die Algorithmuskomplexität und bieten andererseits mehr Raum für Ungenauigkeiten.\footnote{Vgl. \citet[73 ff]{comp_int_07}, \citet[109 ff]{dkriesel07} und \citet[261 ff]{Kroll16}.}
 
 
 
@@ -537,100 +333,22 @@ Die RBFs bieten den Vorteil dass durch das Stauchen/Strecken und Verschieben der
     %---------------------------------------------------------------
         %% SOM
         %-----------------------------------------
-        %% linkes Bild
-        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
-        \def\layersep{2}            % vertikal distance between the layers
-        \def\neuronsep{1.5}         % Horizontal distance between neurons
-        \def\dlsize{1.5}            % distance between node and layer lable
-        \def\inout{\layersep*.65}   % Size of in- and output-arrow
-        \def\siz{.8}                % neuronsize
-        \def\y{3}                   % Start of the most upper layer
-        \def\ni{5}                  % Amount of input neurons
-        \def\no{3}                  % Amount of output neurons
-        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
-        \tikzstyle{annot} = [text width=6em, text centered]
-        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
-        \tikzset{
-                ident/.pic={
-                \draw[semithick] (-\siz/#1,-\siz/#1) -- (\siz/#1,\siz/#1);
-            }}
-        \newcommand{\neurono}[3][]{%
-        \ifthenelse{\equal{#3}{0}}{%
-            \node[neuron,circle split,inner sep=1pt,fontscale=6] (#1) at (#2) { $\mathbf{||c,x||}$ \nodepart{lower}};
-            \node[fontscale=6] at ($(#2.lower)-(0,\siz/4)$){\textbf{Gauß}};
-            }{
-            \node[neuron,circle split,inner sep=1.3pt] (#1) at (#2)
-                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} };
-            \pic at ($(#1.lower)-(0,\siz/8)$) {ident=#3};
-            }}
-        % Draw the left input layer nodes
-            \foreach \xn in {1,...,\ni}{
-                \node[neuron,fontscale=15] (Il-\xn) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
-                \node[above of=Il-\xn, node distance=\inout cm] (Inl-\xn) {};
-                \draw [arrows={-Stealth[length=7pt]},densely dotted] (Inl-\xn) edge (Il-\xn);
-            }
-        % Draw the output layer node
-            \foreach \xn in {1,...,\no}{
-                \node[neuron] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\y-\layersep) [fontscale=15] {$\Omega_{\xn}$};
-        % Connect every node in the input layer with the output layer                
-            \foreach \source in {1,...,\ni}{
-                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Ol-\xn);}}
-        % Connect every node in the output layer
-            \pgfmathsetmacro{\nom}{\no - 1}
-            \ifthenelse{\equal{\no}{1}}{%
-            }{
-               \foreach \xn in {1,...,\nom}{
-                    \pgfmathtruncatemacro{\xnp}{\xn + 1}
-                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Ol-\xn) edge[bend right=45] (Ol-\xnp);
-            }}
-        % Annotate the layers
-                \node[annot,right of=Il-\ni, node distance=\dlsize cm] (il) {\textbf{Eingabe- schicht}};
-                \node[annot,below of=il] {\textbf{Ausgabe- schicht}};
-        %-----------------------------------------
-        %% rechtes Bild
-        % Draw the right input layer nodes
-                \coordinate (tIr) at ($(il)-(Il-\ni)$);
-                \coordinate (ttIr) at (tIr |- 0,0);
-                \coordinate (Ir) at ($(il)+(ttIr)$);
-            \foreach \name / \xn in {1,...,\ni}{
-        % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-                \node[neuron] (Ir-\xn) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
-                \node[above of=Ir-\xn, node distance=\inout cm] (Inr-\xn) {};
-                \pic at (Ir-\xn) {ident=4};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\xn) edge (Ir-\xn);}
-        % Draw the right output layer node
-            \foreach \xn in {1,...,\no}{
-                \neurono[Or-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-\layersep)$}{0}
-                \node[node distance=\inout cm, below of=Or-\xn] (Onr) {};
-                %\draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or-\xn) edge (Onr);
-        % Connect every node in the hidden layer with the output layer
-            \foreach \source in {1,...,\ni}
-                \draw [arrows={-Stealth[length=7pt]}] (Ir-\source) edge  (Or-\xn);
-            }
-                \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.55)$) {$\dots\, w_{i,\Omega}\,\dots$};
-        % Connect every node in the output layer
-            \ifthenelse{\equal{\no}{1}}{%
-            }{
-               \foreach \xn in {1,...,\nom}{
-                    \pgfmathtruncatemacro{\xnp}{\xn + 1}
-                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge[bend right=45] (Or-\xnp);
-            }}
-        \end{tikzpicture}
+        \input{Bilder/Netzwerke/SOM.tex}
     \caption{Eine SOM mit fünf Eingabeneuronen $i$ und drei Ausgabeneuronen $\Omega$ auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
     \label{fig:SOM}
 \end{figure}
 
 Die SOMs (dargestellt in \autoref{fig:SOM}) wurden in den 1980ern von Teuvo Kohonen vorgestellt und werden daher in der Literatur auch als Kohonen Netzwerke bezeichnet. Die SOMs sind nah verwandt mit den RBFs. Sie bestehen aber aus zwei anstatt drei Schichten. Die Eingabeschicht dient auch der Informationsweitergabe an die Ausgabeschicht und ist mit dieser vollverknüpft. Die größte Ähnlichkeit zwischen SOM- und RBF-Netzen besteht in dem Datenverarbeitenden Neuron welches ebenfalls ein RBF-Neuron darstellt. Im Unterschied zu den RBFs liegen die Gewichte aber zwischen Eingabe- und Ausgabeschicht und es wird nur das Ausgabeneuron aktiv dass der Eingabeinformation am nächsten liegt.
-Bei den SOMs ist es nun von Interesse welches Ausgabeneuron aktiv ist und nicht wie bei Perceptrons oder RBFs was die Neuronen berechnen. Zusätzlich sind die Neuronen der Ausgabeschicht abhängig von der Anwendung untereinander verbunden. Durch die Art der Verbindung ergibt sich die Dimension der Ausgabe.\footnote{\,Vgl. \citet[102 ff]{Kruse15} und \citet[153 ff]{dkriesel07}.} Einige Verbindungsmöglichkeiten sind in \autoref{fig:SOM_top} dargestellt.
+Bei den SOMs ist es nun von Interesse welches Ausgabeneuron aktiv ist und nicht wie bei Perceptrons oder RBFs was die Neuronen berechnen. Zusätzlich sind die Neuronen der Ausgabeschicht abhängig von der Anwendung untereinander verbunden. Durch die Art der Verbindung ergibt sich die Dimension der Ausgabe.\footnote{Vgl. \citet[102 ff]{Kruse15} und \citet[153 ff]{dkriesel07}.} Einige Verbindungsmöglichkeiten sind in \autoref{fig:SOM_top} dargestellt.
 \begin{figure}[tb]
     \centering
-        \includegraphics[width=1\textwidth]{Bilder/SOM/som_top.png}
+        \includegraphics[width=1\textwidth]{Bilder/Netzwerke/som_top.png}
     \caption{Beispiele unterschiedlicher ein-, zwei- und dreidimensionaler Anordnungen der Ausgabeneuronen.\protect\footnotemark{}}
     \label{fig:SOM_top}
 \end{figure}
 \addtocounter{footnote}{-1}     %  -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
 \addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
-\wrapfigfoot\footnotetext{\,\autoref{fig:SOM_top} wurde aus \citet[274]{Kroll16} übernommen.}
+\wrapfigfoot\footnotetext{\autoref{fig:SOM_top} wurde aus \citet[274]{Kroll16} übernommen.}
 
 Trainiert werden die SOMs unüberwacht wobei die Neuronen bei der Eingabe der Testdaten um die Aktivität konkurrieren. Nach dem Prinzip \glqq the winner takes all\grqq werden nur die Gewichte des Neurons trainiert dessen Zentrum am kürzesten von dem Eingabewert liegt.\citef[272 ff]{Kroll16}
 So können SOMs hochdimensionale Daten auf eine niedrigdimensionale Karte abbilden, wobei die Nachbarschaftsbeziehung der Daten erhalten bleibt.\citef[7]{Kramer09} Dies ermöglicht qualitativ die Nachbarschaftsbeziehungen zu visualisieren und Zusammenhänge von Daten durch Anhäufungen von Neuronen zu finden. Hieraus folgt dass SOMs bei der Vorselektion von Daten eingesetzt werden können sind aber für die Approximation von Funktionen weniger geeignet.
@@ -641,128 +359,7 @@ So können SOMs hochdimensionale Daten auf eine niedrigdimensionale Karte abbild
     %---------------------------------------------------------------
         %% GRNN
         %-----------------------------------------
-        %% linkes Bild
-        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
-        \def\layersep{1.8}          % vertikal distance between the layers
-        \def\neuronsep{1.8}         % Horizontal distance between neurons
-        \def\dlsize{2}              % distance between node and layer lable
-        \def\inout{\layersep*.65}   % Size of in- and output-arrow
-        \def\siz{.8}                % neuronsize
-        \def\y{5}                   % Start of the most upper layer
-        \def\ni{3}                  % Amount of input neurons
-        \def\nh{4}                  % Amount of pattern neurons
-        \def\ns{2}                  % Amount of hidden neurons
-        \def\no{1}                  % Amount of output neurons
-        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
-        \tikzstyle{annot} = [text width=7em, text centered]
-        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
-        \tikzset{
-            ident/.pic={
-                \draw[semithick] (-\siz/#1,-\siz/#1) -- (\siz/#1,\siz/#1);
-            }
-        }
-        \newcommand{\neurono}[3][]{%
-            \ifthenelse{\equal{#3}{0}}{%
-                \node[neuron,circle split,inner sep=.8pt,fontscale=6] (#1) at (#2)
-                    { $\mathbf{||x\mathord{,}x'||}$ \nodepart{lower} };
-                    
-                \node[fontscale=6] at ($(#2.lower)-(0,\siz/4)$){\textbf{Exp.}};
-            }{
-                \ifthenelse{\equal{#3}{1}}{
-                \node[neuron] (#1) at (#2) {\includegraphics[width=0.3cm]{Bilder/Sigma.png}};
-                }{
-                \node[neuron,fontscale=15] (#1) at (#2){$\div$};
-                }
-            }
-        }
-        % Draw the left input layer nodes
-            \foreach \name / \xn in {1,...,\ni}{
-                \node[neuron,fontscale=15] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
-                \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
-            }
-        % Draw the pattern layer nodes
-            \foreach \name / \xn in {1,...,\nh}{
-                \node[neuron] (Hl-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},\y-\layersep) [fontscale=15] {$m_{\xn}$};
-                \node[node distance=\inout cm, below of=Hl-\xn] (Hnl) {};
-        % Connect every node in the input layer with the pattern layer
-            \foreach \source in {1,...,\ni}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Hl-\xn);}
-        % Draw the summation layer nodes
-            \foreach \name / \xn in {1,...,\ns}{
-                \node[neuron] (Sl-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\ns-1)+(\xn-1)*\neuronsep},\y-2*\layersep) [fontscale=15] {$s_{\xn}$};
-                \node[node distance=\inout cm, below of=Sl-\xn] (Snl) {};
-        % Connect every node in the pattern layer with the summation layer
-            \foreach \source in {1,...,\nh}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Hl-\source) edge (Sl-\xn);}
-        % Draw the output layer nodes
-            \foreach \name / \xn in {1,...,\no}{
-                \node[neuron] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\y-3*\layersep) [fontscale=15] {$\Omega_{\xn}$};
-                \node[node distance=\inout cm, below of=Ol-\xn] (Onl) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onl);
-        % Connect every node in the summation layer with the output layer
-            \foreach \source in {1,...,\ns}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Sl-\source) edge (Ol-\xn);}
-        % Annotate the layers
-            \def\lni{Eingabe- schicht}                      % Lable of input layer
-            \def\lnh{Musterschicht}                       % Lable of pattern layer
-            \def\lns{Summierungs- schicht}                  % Lable of summation layer
-            \def\lno{Ausgabe- schicht}                      % Lable of output layer
-            \ifthenelse{\ni>\nh \AND \ni>\ns}{
-                \node[annot,right of=Il-\ni, node distance=\dlsize cm] (il) {\textbf{\lni}};
-                \node[annot,below of=il] (hl) {\textbf{\lnh}};
-                \node[annot,below of=hl] (sl) {\textbf{\lns}};
-            }{
-                \ifthenelse{\nh>\ns}{
-                    \node[annot,right of=Hl-\nh, node distance=\dlsize cm] (hl) {\textbf{\lnh}};
-                    \node[annot,above of=hl] (il) {\textbf{\lni}};
-                    \node[annot,below of=hl] (sl) {\textbf{\lns}};
-                }{
-                    \node[annot,right of=Sl-\ns, node distance=\dlsize cm] (sl) {\textbf{\lns}};
-                    \node[annot,above of=sl] (hl) {\textbf{\lnh}};
-                    \node[annot,above of=hl] (il) {\textbf{\lni}};
-                }
-                
-            }
-                \node[annot,below of=sl] {\textbf{\lno}};
-        %-----------------------------------------
-        %% rechtes Bild
-        % Draw the right input layer nodes
-                \coordinate (tIr) at ($(il)-(Il-\ni)$);
-                \coordinate (ttIr) at (tIr |- 0,0);
-                \coordinate (Ir) at ($(il)+(ttIr)$);
-            \foreach \name / \xn in {1,...,\ni}{
-        % This is the same as writing \foreach \name / \y in {1/1,2/2,3/3,4/4}
-                \node[neuron] (Ir-\name) at ($(Ir)+(\xn*\neuronsep-\neuronsep,0)$) {};
-                \node[above of=Ir-\name, node distance=\inout cm] (Inr-\name) {};
-                \pic at (Ir-\name) {ident=4};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inr-\name) edge (Ir-\name);}
-        % Draw the right pattern layer nodes
-            \foreach \name / \xn in {1,...,\nh}{
-                \neurono[Hr-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep},-\layersep)$}{0}
-                \node[node distance=\inout cm, below of=Hr-\xn] (Hnr) {};
-        % Connect every node in the input layer with the pattern layer
-                \foreach \source in {1,...,\ni}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Ir-\source) edge  (Hr-\xn);}
-        % Draw the right summation layer nodes
-            \foreach \name / \xn in {1,...,\ns}{
-                \neurono[Sr-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\ns-1)+(\xn-1)*\neuronsep},-2*\layersep)$}{1}
-                \node[node distance=\inout cm, below of=Sr-\xn] (Snr) {};
-        % Connect every node in the pattern layer with the summation layer
-                \foreach \source in {1,...,\nh}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Hr-\source) edge  (Sr-\xn);}
-            \foreach \xn in {1}{
-                \foreach \source in {1,...,\nh}
-                    \node[fill=white,inner sep=1pt,fontscale=10] at ($(Hr-\source)!.3+.1!(Sr-\xn)$) {$y_{\source}$};} 
-        % Draw the right output layer nodes
-            \foreach \name / \xn in {1,...,\no}{
-                \neurono[Or-\xn]{$(Ir)+({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-3*\layersep)$}{6}
-                \node[node distance=\inout cm, below of=Or-\xn] (Onr) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Or-\xn) edge (Onr);
-        % Connect every node in the summation layer with the output layer
-            \foreach \source in {1,...,\ns}
-                \draw [->,arrows={-Stealth[length=7pt]}] (Sr-\source) edge  (Or-\xn);}
-        \end{tikzpicture}
+        \input{Bilder/Netzwerke/GRNN.tex}
     \caption{GRNN mit drei Eingabeneuronen $i$, vier Musterneuronen $m$, zwei Summierungsneuronen $s$ und einem Ausgabeneuron $\Omega$  auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Aufgaben und Gewichten.}
     \label{fig:GRNN}
 \end{figure}
@@ -779,65 +376,7 @@ Ein Nachteil den RBF und GRNN teilen ist ein größerer Bedarf an Rechenleistung
     %---------------------------------------------------------------
         %% Jordannetz
         %-----------------------------------------
-        \adjustbox{trim=0pt 1.9cm 0pt 0pt,clip}{
-        \begin{tikzpicture}[>=stealth', node distance=\layersep cm, shorten >=1pt]
-        \def\layersep{1.8}            % vertikal distance between the layers
-        \def\neuronsep{1.8}         % Horizontal distance between neurons
-        \def\dlsize{2}            % distance between node and layer lable
-        \def\inout{\layersep*.65}   % Size of in- and output-arrow
-        \def\siz{.8}                % neuronsize
-        \def\y{5}                   % Start of the most upper layer
-        \def\ni{3}                  % Amount of input neurons
-        \def\nh{3}                  % Amount of hidden neurons
-        \def\no{2}                  % Amount of output neurons
-        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
-        \tikzstyle{annot} = [text width=6em, text centered]
-        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
-        \newcommand{\neurono}[2][]{
-            \node[neuron,circle split,inner sep=2pt] (#1) at (#2)
-                    {\includegraphics[width=0.225cm]{Bilder/Sigma.png} \nodepart{lower} \includegraphics[width=0.225cm]{Bilder/sigma.png}};
-        }
-        % Draw the input layer nodes
-            \foreach \name / \xn in {1,...,\ni}{
-                \node[neuron,fontscale=15] (Il-\name) at (\xn*\neuronsep-\neuronsep,\y) {$i_{\xn}$};
-                \node[above of=Il-\name, node distance=\inout cm] (Inl-\name) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Inl-\name) edge (Il-\name);
-            }
-        % Draw the state layer nodes
-            \foreach \name / \xn in {2/1,1/2}{
-                \node[neuron,fontscale=15] (Sl-\name) at (\xn*\neuronsep-\neuronsep+6,\y) {$s_{\name}$};
-            }
-        % Draw the hidden layer nodes
-            \foreach \name / \xn in {1,...,\nh}{
-                \node[neuron] (Hl-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\nh-1)+(\xn-1)*\neuronsep+2.25},\y-\layersep) [fontscale=15] {$h_{\xn}$};
-                \node[node distance=\inout cm, below of=Hl-\xn] (Hnl) {};
-        % Connect every node in the input/state layer with the hidden layer
-                \foreach \source in {1,...,\ni}
-                    \draw [->,arrows={-Stealth[length=7pt]}] (Il-\source) edge (Hl-\xn);
-             
-                \foreach \source in {1,...,2}
-                    \draw [->,arrows={-Stealth[length=7pt]}] (Sl-\source) edge (Hl-\xn);    
-            }
-        % Draw the output layer node
-            \foreach \name / \xn in {1,...,\no}{
-                \node[neuron] (Ol-\xn) at ({(\ni-1)*\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep+2.25},\y-2*\layersep) [fontscale=15] {$\Omega_{\xn}$};
-                ,\y+2*\layersep,
-                \node[node distance=\inout cm, below of=Ol-\xn] (Onl) {};
-                \draw [->,arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onl);
-        % Connect every node in the hidden/state layer with the output layer
-                \foreach \source in {1,...,\nh}
-                    \draw [->,arrows={-Stealth[length=7pt]}] (Hl-\source) edge (Ol-\xn);
-            }
-            \draw[arrows={-Stealth[length=7pt]}, shorten >=1pt, shorten <=1pt] (Ol-2) .. controls (7,1) and  (8,3) .. (Sl-2); 
-            \draw[arrows={-Stealth[length=7pt]}, shorten >=1pt, shorten <=1pt] (Ol-1) .. controls (7,-2) and  (10,2) .. (Sl-1);
-            \draw[arrows={-Stealth[length=7pt]}, shorten <=1pt] (Sl-1) edge[loop above] ();
-            \draw[arrows={-Stealth[length=7pt]}, shorten <=1pt] (Sl-2) edge[loop above] ();
-        % Annotate the layers
-                \node[annot] (il) at (11,5) {\textbf{Eingabe-/Zustands- schicht}};
-                \node[annot,below of=il] (hl) {\textbf{Verdeckte- schicht}};
-                \node[annot,below of=hl] {\textbf{Ausgabe- schicht}};
-    \end{tikzpicture}
-    }
+        \input{Bilder/Netzwerke/Jordannetz.tex}
     \caption{Jordannetz mit drei Eingabeneuronen $i$, zwei Zustandsneuronen $s$, drei verdeckten Neuronen $h$ und zwei Ausgabeneuronen $\Omega$.}
     \label{fig:Hopfield}
 \end{figure}
@@ -853,84 +392,13 @@ Durch die zusätzliche Rückkopplung bekommt das Netzwerk ein zeitliches Gedäch
     %---------------------------------------------------------------
         %% Hopfieldnetz
         %-----------------------------------------
-        %% linkes Bild
-        \begin{tikzpicture}[ node distance=\layersep cm, shorten >=1pt]
-        \def\layersep{2}            % vertikal distance between the layers
-        \def\neuronsep{2}           % Horizontal distance between neurons
-        \def\dlsize{2}              % distance between node and layer lable
-        \def\inout{\layersep*.65}   % Size of in- and output-arrow
-        \def\siz{.8}                % neuronsize
-        \def\y{3}                   % Start of the most upper layer
-        \def\no{3}                  % Amount of output neurons
-        \tikzstyle{neuron}=[circle,draw=black,minimum size=\siz cm,inner sep=2pt]
-        \tikzstyle{annot} = [text width=6em, text centered]
-        \tikzset{fontscale/.style = {font={\fontsize{#1pt}{#1pt}\selectfont}}}
-        \tikzset{
-                ident/.pic={
-                    \ifthenelse{\equal{#1}{1} \OR \equal{#1}{3}}{
-                        \draw[semithick,arrows={-Latex[open]}] (0,-\siz/3) -- (0,\siz/3);
-                    }{
-                        \draw[semithick,arrows={Latex[open]-}] (0,-\siz/3) -- (0,\siz/3);
-                    }
-                    
-                }
-            }
-        % Draw the left output layer node
-            \foreach \xn in {1,...,\no}{
-                \node[neuron] (Ol-\xn) at (\xn*\neuronsep-\neuronsep,\y) [fontscale=15] {$\Omega_{\xn}$};
-                \node[above of=Ol-\xn, node distance=\inout cm] (Onla-\xn) {};
-                \node[below of=Ol-\xn, node distance=\inout cm] (Onlb-\xn) {};
-                \draw[arrows={-Stealth[length=7pt]},densely dotted] (Onla-\xn) edge (Ol-\xn);
-                \draw[arrows={-Stealth[length=7pt]},densely dotted] (Ol-\xn) edge (Onlb-\xn);
-            }
-        % Connect every node in the output layer
-            \pgfmathsetmacro{\nom}{\no - 1}
-               \foreach \xn in {1,...,\nom}{
-                    \pgfmathtruncatemacro{\xnp}{\xn + 1}
-                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Ol-\xn) edge[bend right=45] (Ol-\xnp);
-                        \node[fill=white,inner sep=.1pt,fontscale=10] at ($(Ol-\xnp)!.4+.1!(Ol-\xn)+(0,-0.65)$) {$w_{\xnp,\xn}$};
-                }
-            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Ol-1) edge[bend right=65] (Ol-\no);
-            \node[fill=white,inner sep=.1pt,fontscale=10] at ($(Ol-1)!.4+.1!(Ol-\no)+(0,-1.45)$) {$w_{1,\no}$};
-        % Annotate the layers
-               \node[annot,right of=Ol-\no, node distance=\dlsize cm] (ol) {\textbf{Eingabe-/Ausgabe- schicht}};
-        %-----------------------------------------
-        %% rechtes Bild
-        % Draw the right output layer nodes
-            \foreach \xn in {1,...,\no}{
-                \node[neuron,right of=ol] (Or-\xn) at ($(ol)+(\xn*\neuronsep-\neuronsep,0)$) {};
-                \pic at (Or-\xn) {ident=\xn};
-            }
-        % Draw the right upper and lower output layer nodes
-            \foreach \xn in {1,...,2}{
-                \node[neuron] (Orb-\xn) at ($(Or-2)+({\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},-\layersep)$) {};
-                \node[neuron] (Ora-\xn) at ($(Or-2)+({\neuronsep/2-\neuronsep/2*(\no-1)+(\xn-1)*\neuronsep},\layersep)$) {};
-                \pic at (Orb-\xn) {ident=\xn};
-                \pic at (Ora-\xn) {ident=\xn};
-            }    
-        % Connect every node in the right output layer
-            \foreach \xn in {1,...,\nom}{
-                \pgfmathtruncatemacro{\xnp}{\xn + 1}
-                \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge (Or-\xnp);
-            }    
-            \foreach \xn in {1,...,\no}{
-                \foreach \xp in {1,2}{
-                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge (Ora-\xp);
-                    \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-\xn) edge (Orb-\xp);
-                }
-            }
-            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Orb-1) edge[bend right=30] (Ora-2);
-            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Orb-2) edge[bend left=30] (Ora-1);
-            \draw[arrows={Stealth[length=7pt]-Stealth[length=7pt]},shorten <=1pt] (Or-3)  edge[bend right=35] (Or-1);
-            \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},\layersep*.5)$) {$\dots\, w_{i,j}\,\dots$};
-            \node[fill=white,inner sep=1pt,fontscale=10] at ($(Or-1)+({(\no-1)*\neuronsep/2},-\layersep*.5)$) {$\dots\, w_{i,j}\,\dots$};
-        \end{tikzpicture}
+        \input{Bilder/Netzwerke/Hopfieldnetz.tex}
     \caption{Hopfieldnetz mit drei Neuronen und den zugehörigen Gewichten $w$ in der Seitenansicht auf der linken Seite. Die rechte Seite zeigt das gleiche Netzwerk mit den zugehörigen neuronalen Zustand in der Draufsicht.\,\protect\footnotemark{}}
     \label{fig:Hopfield}
 \end{figure}
 \addtocounter{footnote}{-1}     %  -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
 \addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
-\wrapfigfoot\footnotetext{\,Die rechte Darstellung des Hopfieldnetzes in \autoref{fig:Hopfield} wurde der Abbildung 8.1 aus \citet[136]{dkriesel07} nachempfunden.}
+\wrapfigfoot\footnotetext{Die rechte Darstellung des Hopfieldnetzes in \autoref{fig:Hopfield} wurde der Abbildung 8.1 aus \citet[136]{dkriesel07} nachempfunden.}
 Das Hopfield Netz benannt nach seinem Entwickler zählt zu den rückgekoppelten Netzen. \citet{HOPFIELD1986} stellte ein Netzwerk vor, dass dem Verhalten von Teilchen in einem Magnetfeld nachempfunden ist.\,\citef[135]{dkriesel07} Die Neuronen dieses Netzes sind untereinander vollverknüpft haben aber keine Verbindung zu sich selbst. Weiterhin dient die Heavisidefunktion (\autoref{fig:funktion} links) mit den möglichen Zuständen von $1$ und $-1$ als Aktivierungsfunktion und die Verbindung unter den Neuronen ist gewichtet. Die Gewichte können positiv (je höher der Wert desto mehr tendieren die Neuronen zu gleichem Zustand), negativ (je größer der Betrag des Gewichtes desto mehr streben die Neuronen zu unterschiedlichen Werten) oder null (Neuronen beeinflussen sich gegenseitig nicht) sein. Analogiekonform kann der Zustand der Neuronen auch als Spinn (Drehwinkel) der Teilchen betrachtet werden. Die Eingabe des Netzwerks geschieht durch die Festlegung der Neuronenzustände. Trainiert wird das Netz indem die Trainigsbeispiele eingegeben werden und die Gewichte nach der Beziehung zueinander verändert werden. Am Ende der Trainingsphase haben die Gewichte einen hohen positiven Wert bei denen die Neuronen oft den gleichen Zustand inne gehabt haben und für hohe negative Gewichte gilt der umgekehrte Fall. Das Netzwerk sucht nach der Eingabe von Informationen selbstständig den energetisch geringsten Zustand zum betreffenden Eingabemuster. Dies geschieht unter Berücksichtigung der Gewichte und Veränderung der Spins. Hierbei wird der Zustand der Neuronen einzeln verändert, wobei das zu verändernde Neuron zufällig ausgewählt wird. Wenn die Spins sich nicht mehr ändern ist der energetisch geringste Zustand erreicht. Die resultierende Spinnverteilung der Neuronen ergibt dann die Ausgabe des Netzwerks. Hauptsächlich wir dieses Netzwerk zur Mustererkennung eingesetzt. Das zu erkennende Muster dient als Trainingsbeispiel und das Netzwerk ist dann in der Lage das gleiche Muster in verrauschter Form wiederzuerkennen.
 
 
@@ -940,7 +408,7 @@ Das Hopfield Netz benannt nach seinem Entwickler zählt zu den rückgekoppelten 
 Den Grundstein für die Theorie des ART Netzes legte \citet{Grossberg1973} und es zählt zu den rückgekoppelten Netzen, welche unbeaufsichtigt lernen. Das ART1, dass in diesem Kapitel näher erläutert wird, wurde von \citet{Carpenter1987} vorgestellt. Dieses Netzwerk wurde mit dem Hintergedanken entwickelt, dass die bis dato vorgestellten Netzwerktypen Schwierigkeiten gehabt haben neue Informationen zu bestehenden hinzuzufügen ohne die bisherigen Informationen zu "vergessen". Daher ist das ART Netzwerk in der Lage binäre Muster in Klassen einzuteilen wobei es zusätzlich neue Klassen finden kann. Aufgebaut ist das Netzwerk aus zwei Schichten. Nämlich der Eingabeschicht und der Erkennungsschicht, wobei die Erkennungsschicht auch für die augabe der Informationen zuständig ist. Beide Schichten sind untereinander vollverknüpft. Hierbei wird der Informationsfluss von den Eingabeneuronen zu den Erkennungsneuronen hin als Bottom-Up Verbindung bezeichnet und der rückwärtige Informationsfluss als Top-Down Verbindung. Anfänglich wird das Netzwerk mit unbestimmten Gewichten initialisiert. Darauffolgend werden binäre Eingaben von der gleichnamigen Schicht an die Erkennungsschicht weitergegeben wo nach dem Winnter-Takes-All Schema das Neuron mit der größten Aktivierung ausgewählt wird. Nun werden die Gewichte der Bottom-Up Verbindung die zum "Gewinnerneuron" führen erhöht. Hiermit wird die Klassenzugehörigkeit des Eingabemusters verstärkt. Die Aktivität der Erkennungsschicht wird anschließend über die Top-Down Verbindung an die Eingabeschicht zurückgegeben. Hier werden ebenfalls nur die Gewichte trainiert die vom "Gewinnerneuron" zur Eingabeschicht führen. Die "Aktiviät" wird so von einer Schicht an die andere und wieder zurück geleitet wodurch der Begriff der Resonanz geprägt wird.\\
 Es kommt vor, dass mehrere Neuronen der Erkennungsschicht eine gleiche Aktivität aufweisen. In diesem Fall erzeugt ein Steuerungsneuron ein zusätzliches Ausgabeneuron und ordnet diesem das aktuelle Muster zu. Bei der Eingabe ähnlicher Muster stellt sich die Frage wann ein Neuron aktiv werden darf und wann gelernt wird. Hierfür existieren im ART-Netz Kontrollneurone welche diese Spezialfälle durch verschiedene mathematische Regeln behandeln.\\
 Der Vorteil dieses Netzes ist nicht nur, dass es die Eingabe in Klassen einordnen kann sondern durch die Aktivierung des des Ausgabeneurons auch verraten kann wie ein typischer Vertreter dieser Klasse aussieht. Als größter Kritikpunkt gilt hier die Notwendigkeit von Spezialfallunterscheidungen die durch diverse "IF-Abfragen" abgefangen werden müssen.\,\citef[173 ff]{dkriesel07}\\
-Wie zu Beginn dieses Unterkapitels durch ART1 angedeutet gibt es nicht das ART-Netz sondern eine Vielzahl von Weiterentwicklungen und Verbesserungen. Einige erlauben neben binären auch kontinuierliche Eingaben, andere bieten eine höhere Lerngeschwindigkeit.\,\footnote{\,Vgl. \citet[C2.2:1 ff]{Fiesler96} und \citet[89 ff]{Gurney1997}.} 
+Wie zu Beginn dieses Unterkapitels durch ART1 angedeutet gibt es nicht das ART-Netz sondern eine Vielzahl von Weiterentwicklungen und Verbesserungen. Einige erlauben neben binären auch kontinuierliche Eingaben, andere bieten eine höhere Lerngeschwindigkeit.\,\footnote{Vgl. \citet[C2.2:1 ff]{Fiesler96} und \citet[89 ff]{Gurney1997}.} 
 
 %Eine genauere Beschreibung und Übersicht der ART-Familie geben \citet[C2.2:1 ff]{Fiesler96} und \citet[89 ff]{Gurney1997}.
 
@@ -989,7 +457,7 @@ RCC             & R-d       & überwacht         & K-r, AM-h                    
 \end{table}
 \addtocounter{footnote}{-1}     %  -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
 \addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
-\wrapfigfoot\footnotetext{\,Vgl. \citet[F1.2:4]{Fiesler96}.}
+\wrapfigfoot\footnotetext{Vgl. \citet[F1.2:4]{Fiesler96}.}
 
 
 \begin{comment} %--------DAS IST EIN KOMMENTAR----ANFANG----------%

@@ -94,7 +94,7 @@
 
 %-------------------------------------------
 %% Pakete für die richtige Darstellung von Fußnoten
-\usepackage[bottom]{footmisc}           % Setzt die Fußnoten ans Ende der Seite
+\usepackage[bottom,hang]{footmisc}           % Setzt die Fußnoten ans Ende der Seite
 \usepackage{caption}
 %\usepackage{bigfoot}
 %\usepackage{savefnmark}
@@ -102,6 +102,7 @@
 %\deffootnote{0.6cm}{1em}{\makebox[0.6cm][l]{\thefootnotemark}}
 \setkomafont{footnote}{\fontsize{10pt}{10.5pt}\selectfont}  % Stellt die Fußnotengröße auf 10 ein
 \setlength{\footnotesep}{13.5pt}                              % Sellt den Fußnotenzeilenabstand auf einfachen Zeilenabstand ein
+\setlength\footnotemargin{10pt}                             % Stellt den Abstand zwischen Fußnote und Text ein
 
 %% Quelle: https://tex.stackexchange.com/questions/35043/reference-different-places-to-the-same-footnote#35044
 \makeatletter
@@ -131,9 +132,9 @@
 %% Erstellt mit \citef ein Zitat in der Fußzeile in der Form "Vgl. Kramer (2009), S. 2."
 \newcommand{\citef}[2][]{%              
     \ifempty{#1}%
-        \footnote{\,Vgl.~\citeauthor{#2}~(\citeyear{#2}).}%
+        \footnote{Vgl.~\citeauthor{#2}~(\citeyear{#2}).}%
     \else%
-        \footnote{\,Vgl.~\citeauthor{#2}~(\citeyear{#2}),~S.~#1.}%
+        \footnote{Vgl.~\citeauthor{#2}~(\citeyear{#2}),~S.~#1.}%
     \fi%
 }
 %-------------
@@ -172,10 +173,13 @@
 \usepackage{lipsum}                     % Erstellt blindtext
 
 %-------------------------------------------
-%% Deckblatt
+%% Pakete für das Erstellen von Bildern
 \usepackage{pdfpages}                   % Ermöglicht das Einbinden von PDF Dokumenten (wird verwendet für die Einbindung der Aufgabenstellung)
 \usepackage[showboxes,absolute]{textpos}   % Ermöglicht das Setzen von Inhalt an einem beliebigen Ort
 \usepackage{tikz}
+\usepackage{pgfplots}                   % Ermöglicht das Erstellen von Graphen
+\pgfplotsset{compat=newest}             % Bindet das neueste pfgplot ein
+\usepackage{lscape}                     % Ermöglicht das Plazieren von Objekten im Querformat
 
 \newcommand\Mygrid{%                        % Erzeugt ein Grid für textpos mit \Mygrid        
 \tikz[

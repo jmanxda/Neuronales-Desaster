@@ -1,0 +1,310 @@
+\pgfplotsset{every axis/.append style={
+                label style={font=\footnotesize},
+                tick label style={font=\footnotesize},
+                x label style={yshift=.5em},
+            }}
+%%--------------------alle-------------------------%%
+ \begin{tikzpicture}
+ 
+    \def\datafile{Daten/BP/logist/m/BP_logis_m-epochen.dat}
+
+    \def\xshiftlab{1.1cm}
+ 
+    \pgfplotsset{}
+ 
+    \pgfplotsset{
+        %scale only axis,
+        minor x tick num=1,
+        xmin=0, xmax=51,
+        width=15cm, %\textwidth,
+        height=13cm,
+        ylabel style={rotate=180},
+        xticklabel style={
+            /pgf/number format/precision=3,
+            /pgf/number format/fixed},
+        every axis legend/.append style={
+        at={(0.5,1.03)},
+        anchor=south},
+    }
+ %%----------------------RMSE-----------------------------%%
+    \begin{axis}[
+    axis y line*=left,
+    xlabel=Epochen,
+    ylabel=RMSE,
+    y label style={yshift=.5em},
+    xlabel near ticks,
+    minor y tick num=1,
+    ]
+    \addplot[
+    mark=none,
+    draw=black,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=RMSE_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \label{RMSE}
+    \end{axis}
+
+%%------------------------U2------------------------------%%
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=left,
+    ylabel=U2,
+    y label style={yshift=.75em},
+    minor y tick num=1,
+    ] 
+    \pgfplotsset{
+        every outer y axis line/.style={xshift=-\xshiftlab*1.2}, 
+        every tick/.style={xshift=-\xshiftlab*1.2}, 
+        every y tick label/.style={xshift=-\xshiftlab*1.2} 
+    }
+    
+    \addplot[
+    mark=none,
+    draw=red,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=U2_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \label{U2}
+    \end{axis}
+
+%%------------------------REL------------------------------%%
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=left,
+    ylabel=REL,
+    y label style={yshift=.6em},
+    minor y tick num=1,
+    ] 
+    \pgfplotsset{
+        every outer y axis line/.style={xshift=-\xshiftlab*2.3}, 
+        every tick/.style={xshift=-\xshiftlab*2.3}, 
+        every y tick label/.style={xshift=-\xshiftlab*2.3} 
+    }
+    
+    \addplot[
+    mark=none,
+    draw=orange,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=REL_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \label{REL}
+    \end{axis}
+
+%%------------------------ABS------------------------------%%
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=left,
+    ylabel=ABS,
+    y label style={yshift=.6em},
+    minor y tick num=1,
+    ] 
+    \pgfplotsset{
+        every outer y axis line/.style={xshift=-\xshiftlab*3.45}, 
+        every tick/.style={xshift=-\xshiftlab*3.45}, 
+        every y tick label/.style={xshift=-\xshiftlab*3.45} 
+    }
+    
+    \addplot[
+    mark=none,
+    draw=lime,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=ABS_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \label{ABS}
+    \end{axis}
+
+%%------------------------EV------------------------------%%
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=left,
+    ylabel=EV,
+    y label style={yshift=.5em},
+    minor y tick num=1,
+    ] 
+    \pgfplotsset{
+        every outer y axis line/.style={xshift=-\xshiftlab*4.45}, 
+        every tick/.style={xshift=-\xshiftlab*4.45}, 
+        every y tick label/.style={xshift=-\xshiftlab*4.45} 
+    }
+    
+    \addplot[
+    mark=none,
+    draw=brown,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=EV_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \label{EV}
+    \end{axis}
+
+
+
+
+
+%%----------------------sMAPE-----------------------------%%
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=right,
+    %xlabel=Epochen,
+    ylabel=sMAPE,
+    y label style={yshift=-.5em},
+    minor y tick num=1,
+    ]
+    \addplot[
+    mark=none,
+    draw=magenta,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=sMAPE_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \label{sMAPE}
+    \end{axis}
+
+%%----------------------MAPE-----------------------------%%
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=right,
+    %xlabel=Epochen,
+    ylabel=MAPE,
+    y label style={yshift=-.5em},
+    minor y tick num=1,
+    ]
+    
+    \pgfplotsset{
+        every outer y axis line/.style={xshift=\xshiftlab}, 
+        every tick/.style={xshift=\xshiftlab}, 
+        every y tick label/.style={xshift=\xshiftlab} 
+    }
+    
+    \addplot[
+    mark=none,
+    draw=green,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=MAPE_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \label{MAPE}
+    \end{axis}
+
+%%----------------------MAE-----------------------------%%
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=right,
+    ylabel=MAE,
+    y label style={yshift=-.85em},
+    minor y tick num=1,
+    ] 
+    %\addlegendimage{/pgfplots/refstyle=MAPE}\addlegendentry{MAPE}
+    \pgfplotsset{
+        every outer y axis line/.style={xshift=\xshiftlab*2}, 
+        every tick/.style={xshift=\xshiftlab*2}, 
+        every y tick label/.style={xshift=\xshiftlab*2} 
+    }
+    
+    \addplot[
+    mark=none,
+    draw=purple,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=MAE_mean,
+    col sep=tab,
+    ] {\datafile};
+    \label{MAE}
+    \end{axis}
+
+%%----------------------RAE-----------------------------%%
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=right,
+    ylabel=RAE,
+    y label style={yshift=-.5em},
+    minor y tick num=1,
+    ]
+
+    \pgfplotsset{
+        every outer y axis line/.style={xshift=\xshiftlab*3}, 
+        every tick/.style={xshift=\xshiftlab*3}, 
+        every y tick label/.style={xshift=\xshiftlab*3} 
+    }
+
+    \addplot[
+    mark=none,
+    draw=cyan,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=RAE_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \label{RAE}
+    \end{axis}
+
+%%----------------------R²-----------------------------%%
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=right,
+    ylabel=R$^2$,
+    y dir=reverse,
+    y label style={yshift=-.5em},
+    minor y tick num=1,
+    legend columns=10,
+    ]
+    
+    \addlegendimage{/pgfplots/refstyle=RMSE}\addlegendentry{RMSE}
+    \addlegendimage{/pgfplots/refstyle=U2}\addlegendentry{U2}
+    \addlegendimage{/pgfplots/refstyle=REL}\addlegendentry{REL}
+    \addlegendimage{/pgfplots/refstyle=ABS}\addlegendentry{ABS}
+    \addlegendimage{/pgfplots/refstyle=EV}\addlegendentry{EV}
+    \addlegendimage{/pgfplots/refstyle=sMAPE}\addlegendentry{sMAPE}
+    \addlegendimage{/pgfplots/refstyle=MAPE}\addlegendentry{MAPE}
+    \addlegendimage{/pgfplots/refstyle=MAE}\addlegendentry{MAE}
+    \addlegendimage{/pgfplots/refstyle=RAE}\addlegendentry{RAE}
+
+    \pgfplotsset{
+        every outer y axis line/.style={xshift=\xshiftlab*4}, 
+        every tick/.style={xshift=\xshiftlab*4}, 
+        every y tick label/.style={xshift=\xshiftlab*4} 
+    }
+
+    \addplot[
+    mark=none,
+    draw=blue,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=R2_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \addlegendentry{R2}
+    \end{axis}
+
+   \end{tikzpicture}

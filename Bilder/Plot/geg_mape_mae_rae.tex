@@ -1,0 +1,102 @@
+
+\pgfplotsset{every axis/.append style={
+                label style={font=\footnotesize},
+                tick label style={font=\footnotesize},
+                x label style={yshift=.5em},
+            }}
+%%--------------------MAPE-MAE-RAE-------------------------%%
+ \begin{tikzpicture}
+ 
+    \def\datafile{Daten/BP/logist/m/BP_logis_m-epochen.dat}
+ 
+    \pgfplotsset{
+        %scale only axis,
+        minor x tick num=1,
+        xmin=0, xmax=51,
+        width=15cm,
+        height=8cm,
+        ylabel style={rotate=180},
+        xticklabel style={
+            /pgf/number format/precision=3,
+            /pgf/number format/fixed,
+            x label style={yshift=.5em},
+        },
+    }
+ 
+    \begin{axis}[
+    axis y line*=left,
+    xlabel=Epochen,
+    ylabel=MAPE,
+    y label style={yshift=.5em},
+    %xlabel near ticks,
+    minor y tick num=1,
+    ]
+    \addplot[
+    mark=none,
+    draw=green,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=MAPE_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \label{MAPE-}
+
+
+       %\addplot[pattern=crosshatch,pattern color=blue!30!white,draw=blue!30!white]{x^2} \closedcycle;
+       %\addplot[red,line legend] coordinates {(0,0) (1,1)};
+       %\legend{RMSE,U2}
+    \end{axis}
+
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=left,
+    ylabel=MAE,
+    y label style={yshift=.5em},
+    minor y tick num=1,
+    ] 
+    %\addlegendimage{/pgfplots/refstyle=MAPE}\addlegendentry{MAPE}
+    \pgfplotsset{
+        every outer y axis line/.style={xshift=-1.2cm}, 
+        every tick/.style={xshift=-1.2cm}, 
+        every y tick label/.style={xshift=-1.2cm} 
+    }
+    
+    \addplot[
+    mark=none,
+    draw=purple,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=MAE_mean,
+    col sep=tab,
+    ] {\datafile};
+    \label{MAE-}
+    \end{axis}
+    
+    \begin{axis}[
+    axis x line=none,
+    axis y line*=right,
+    ylabel=RAE,
+    y label style={yshift=-.5em},
+    minor y tick num=1,
+    ] 
+    \addlegendimage{/pgfplots/refstyle=MAPE-}\addlegendentry{MAPE}
+    \addlegendimage{/pgfplots/refstyle=MAE-}\addlegendentry{MAE}
+
+    \addplot[
+    mark=none,
+    draw=cyan,
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=epochen, 
+    y=RAE_mean, 
+    col sep=tab,
+    ] {\datafile};
+    \addlegendentry{RAE}
+    \end{axis}
+
+   \end{tikzpicture}
