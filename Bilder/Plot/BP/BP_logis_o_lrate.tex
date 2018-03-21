@@ -1,0 +1,87 @@
+
+\makeatletter
+\def\datafilea{Daten/BP/logist/o/BP_logis_o-lernrate_0-1_0,001.txt}
+\def\datafileb{Daten/BP/logist/o/BP_logis_o-lernrate_0-0,2_0,0002.txt}
+\makeatother
+
+    \pgfplotsset{
+        xticklabel style={
+            /pgf/number format/precision=3,
+            /pgf/number format/fixed},
+    }
+
+
+%%-------------------Lernrate-BP-logis-o---------------------%%
+
+
+\begin{tikzpicture}
+\def\x{l_rate}
+\def\y{RMSE}
+\def\xname{Lernrate}
+\def\yname{\y}
+ \begin{groupplot}[
+        group style = {group size = 1 by 2},
+        height = 6cm,
+        width = 15cm,
+        ylabel=\yname,
+        minor x tick num=1,
+        minor y tick num=1,
+    ]
+%%----------------------RMSE-0_1-----------------------------%%
+    \nextgroupplot[
+        xmin=-0.015,
+        xmax=1.015,
+    ]
+ 
+    \addplot[
+        mark=none,
+        draw=black,
+    ] 
+    table[
+        skip coords between index={0}{1},
+        /pgf/number format/read comma as period,
+        x=\x, 
+        y=\y_mean, 
+        col sep=tab,
+    ] {\datafilea};
+    
+    \draw[blue, dashed, line width=1pt] (axis cs:-0.015,0) rectangle (axis cs:0.2,30);
+    \coordinate (top) at (rel axis cs:0,0);
+    \coordinate (top-) at (rel axis cs:0.208,0);
+%%----------------------RMSE-0_0,2-----------------------------%%
+    \nextgroupplot[
+        xlabel=\xname,
+        xmin=-0.005,
+        xmax=.2005,
+    ]
+ 
+    \addplot[
+        mark=none,
+        draw=black,
+    ] 
+    table[
+        skip coords between index={0}{3},
+        /pgf/number format/read comma as period,
+        x=\x, 
+        y=\y_mean, 
+        col sep=tab,
+    ] {\datafileb};
+    \addlegendentry{Messung}
+    
+    \addplot[
+        line width=1pt,
+        mark=none,
+        draw=red,
+        domain=0.0006:0.2,
+        samples=401, 
+        unbounded coords=discard,
+    ] {((1.13588E-8)*x^2+(9.75296E-9)*x + (1.13103E-11))/((7.22463E-10)*x+(1.44668E-13))};
+    \addlegendentry{Fit}
+    \coordinate (bot) at (axis cs:-0.005,31.5);
+    \coordinate (bot-) at (axis cs:0.2,31.5);
+
+\end{groupplot}
+\draw[blue, dashed, line width=1pt] (top) -- (bot);
+\draw[blue, dashed, line width=1pt] (top-) -- (bot-);
+
+\end{tikzpicture}

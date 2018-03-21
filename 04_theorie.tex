@@ -131,6 +131,7 @@ Klassische Aktivierungsfunktionen sind in \autoref{fig:funktion} dargestellt. Wo
         %% Fermifunktion
         \begin{tikzpicture}[scale=.7,font=\scriptsize,thick,>=stealth']
             \draw[white] (1,-2) -- (3,2);
+            
             \draw[scale=.5,domain=-4:4,smooth,variable=\x,lightgray]      plot ({\x+4},{4*(1/(exp(-\x/.2)+1))});
             \draw[scale=.5,domain=-4:4,smooth,variable=\x,lightgray]      plot ({\x+4},{4*(1/(exp(-\x/.5)+1))});
             \draw[scale=.5,domain=-4:4,smooth,variable=\x,black]          plot ({\x+4},{4*(1/(exp(-\x/.8)+1))});
@@ -414,7 +415,18 @@ Wie zu Beginn dieses Unterkapitels durch ART1 angedeutet gibt es nicht das ART-N
 
 
 \subsubsection{Cascade-Correlation Netze (CCNN/RCC)}%\\
-\todo{Grafik}
+\begin{figure}[!htb]
+    %\centering
+    %---------------------------------------------------------------
+        %% CCNN
+        %-----------------------------------------
+        \includestandalone[mode=image|tex,trim=0pt 0pt 0pt .9cm,clip]{Bilder/Netzwerke/CCNN}
+    \caption{\farbig{caption einfügen}.\,\protect\footnotemark{}}
+    \label{fig:ccnn}
+\end{figure}
+\addtocounter{footnote}{-1}     %  -1 mal die Gesamtanzahl an Fußnoten in der wrapfigure
+\addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
+\wrapfigfoot\footnotetext{Die \autoref{fig:ccnn} wurde der Figure 2 aus \citet[3]{Balazs2009} nachempfunden.}
 
 Das Cascade-Correlation Modell wurde als überwacht lernendes Feed-Foreward Netzwerk von \citet{Fahlman1990} vorgestellt. Die Idee hinter CCNN ist, dass es zunächst mit einem SLP initialisiert und angelernt wird und solange nach bedarf selbstständig neue Neuronen hinzufügen kann bis der Gewünschte Fehlerterm erreicht ist.\\
 Genauer gesagt wird nach der initialisierung des SLP das Netzwerk trainiert und der Fehlerterm zwischen der Ausgabe und der Lösung des Trainingsbeispiels beobachtet. Falls nicht der gewünschte Wert erreicht wird fügt der Algorythmus ein verdecktes Neuron (das sogenannte Kandidatneuron) hinzu und trainiert dieses. Hier liegt auch der Unterschied zwischen den anderen Mehrschichtnetzen. Wird ein Kandidatneuron hinzugefügt so werden zunächst gewichtete Verbindungen zu den bisherigen Neuronen (hierzu zählen die Eingabe- wie auch die verdeckten Neuronen) gebildet mit Ausnahme der Ausgabeneuronen. Die Gewichte des neu erzeugten Neurons werden nun mit einem Gradientenabstiegsverfahren trainiert, wobei die Gewichte der anderen Neuronen eingefroren werden. Nach einem im Vorfeld festgelegten Fehlerreduktionsterm wird das Training des Kandidatneurons beendet. Als nächstes wird das Kandidatneuron mit einer Gewichteten Verbindung ebenfalls mit den Ausgabeneurone verbunden. Nun werden alle Gewichte mit Ausnahme der Gewichte Der Ausgabeneuronen eingefrohren und mit Hilfe eines Lernalgorithmus für Einschichtige Netze (beispielsweise mit der Deltaregel) trainiert.\\

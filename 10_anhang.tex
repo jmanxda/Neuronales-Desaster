@@ -76,7 +76,7 @@ Das Ziel des Trainings ist nun, dass die Ausgabe $o$ bei allen Trainingsbeispiel
 \delta=t-o
 \label{gl:delta}
 \end{equation}
-
+%
 aus Lösung und Ausgabe möglichst klein  wird, also soll formal gelten
 \begin{equation*}
 \forall p:o \approx t \quad \text{bzw.} \quad \forall p:\delta \approx 0.
@@ -166,7 +166,7 @@ Für das Offlinelernverfahren muss noch die Summe über alle Trainingsbeispiele 
 
 
 
-\subsection{Ergebnisse von \citet{Aggarwal2009} und \citet{Panapakidis2016}}\label{sec:andere_ergebnisse}
+%\subsection{Ergebnisse von \citet{Aggarwal2009} und \citet{Panapakidis2016}}\label{sec:andere_ergebnisse}
 
 \todo{Liste der Märkte aus \citet{Cerjan2013}}
 
@@ -174,58 +174,58 @@ Für das Offlinelernverfahren muss noch die Summe über alle Trainingsbeispiele 
 
 \subsection{Performancemaße}\label{sec:perfmas}
 In diesem Abschnitt werden die Maße zur Evaluierung der Vorhersagegenauigkeit (weiterhin als Performancemaße bezeichnet) aufgeführt die in der Literaturrecherche zur Strompreismodellierung in \autoref{sec:strompreis} und weiterer Literatur\,\citef[5]{Guertler2017} genannt wurden. Hierbei $y_i$ und $\hat{y}_i$ die tatsächlichen und vorhergesagten Preise zum Zeitpunkt $i$ darstellen und $T$ die Gesamtanzahl der Zeitpunkte angibt. Außerdem gibt $\mean{y}$ den Mittelwert der tatsächlichen Preise und $\mean{y}_{train}$ den Preismittelwert der Trainingsdaten an.
-
+%
 Der Absolute Percentage Error (APE) liefert Informationen über die Fehlerverteilung in der Nähe der Null.\,\citef[14\label{foot:Domanski2017}]{Domanski2017}\farbig{reicht noch nicht}
-
+%
 % APE
 \begin{equation}
 APE= \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{y_i}.
 \label{gl:APE}
 \end{equation}
-
-
+%
+%
 Der Mean Absolute Percentage Error (MAPE) gibt einen prozentualen Mittelwert über den Fehlerbetrag an. Da das Ursprungsmaß (in dieser Arbeit als $MAPE_1$ bezeichnet) bei sehr kleinen Preisen einen hohen Werte liefert und bei einem Preis von Null sogar gegen Unendlich gehen wurden Mehrere Verbesserungen vorgeschlagen. Diese äußern sich durch einen Mittelwert über alle gemessenen Preise bei $MAPE_2$ oder durch einen Mittelwert aus der Betragssumme der des tatsächlichen und vorhergesagten Preises bei $sMAPE$ im Nenner. Hierbei steht ein Wert von 0\,\% für eine exakte und Werte um die 10\,\% für eine akkurate Vorhersage.\,\footnote{Vgl. \citet[17]{Bobinaite2016}, \citet[2105]{Amjady2009} und \citet[894]{Lago2018}.}   
 % MAPE
 \begin{equation}
 MAPE_1= \frac{100}{T} \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{y_i},
 \label{gl:MAPE_1}
 \end{equation}
-
+%
 % MAPE
 \begin{equation}
 MAPE_2= \frac{100}{T} \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{\mean{y}},
 \label{gl:MAPE_2}
 \end{equation}
-
+%
 % sMAPE
 \begin{equation}
 sMAPE= \frac{100}{T} \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{(\abs{y_i} + \abs{\hat{y}_i}) / 2}.
 \label{gl:sMAPE}
 \end{equation}
-
+%
 Der Mean Squared Error (MSE) gibt den quadratischen Mittelwert der der Fehler an und gibt an wie weit die vorhergesagten Daten von den tatsächlichen Werten liegen. Ein kleine Wert deutet auf eine gute vorhersage hin.\,\footnoteref{foot:Domanski2017}
 % MSE
 \begin{equation}
 MSE= \frac{1}{T} \sum\limits_{i \in T} (y_i-\hat{y}_i)^2.
 \label{gl:MSE}
 \end{equation}
-
-
+%
+%
 Der Root Mean Squared Error (RMSE) ist die Quadratwurzel des MSE und ist hierdurch sehr ähnlich. Der RMSE weist kleinere Werte auf, der Aussagegehalt ist aber ähnlich zu MSE.
 % RMSE
 \begin{equation}
 RMSE= \sqrt{ \frac{1}{T} \sum\limits_{i \in T} (y_i-\hat{y}_i)^2}.
 \label{gl:RMSE}
 \end{equation}
-
+%
 Der Mean Absolut Error (MAE) ist ebenfalls sehr ähnlich zum MSE und damit auch dem RMSE. Weist aber im Vergleich zum RMSE nochmals kleinere Werte auf.
 % MAE
 \begin{equation}
 MAE= \frac{1}{T} \sum\limits_{i \in T} \abs{y_i-\hat{y}_i}.
 \label{gl:MAE}
 \end{equation}
-
-
+%
+%
 Der Normalized Mean Square Error (NMSE) ist ein Schätzwert über alle Abweichungen zwischen vorhergesagten und gemessenen Werten. Zeigt ein Modell einen sehr geringen NMSE so weist es eine gute örtliche und zeitliche Performance auf. Andererseits bedeuten hohe $NMSE$-Werte nicht, dass das betrachtete Modell komplett falsch ist.
 % NMSE
 \begin{gather}
@@ -235,61 +235,61 @@ NMSE &= \frac{1}{\Delta^2 T} \sum\limits_{i \in T} (y_i-\hat{y}_i)^2,\\
 \end{aligned}
 \label{gl:NMSE}
 \end{gather}
-
-
+%
+%
 Die Error Variance (EV) gibt einen Wert über die nicht erklärten Informationen nach dem Fitten des Modells. Je kleiner der Wert ist desto präziser ist die Vorhersage.\,\citef{Peter2016}
 % EV
 \begin{equation}
 EV= \sigma^2 = \frac{1}{T} \sum\limits_{i \in T} \left ( \frac{\abs{y_i-\hat{y}_i}}{\mean{y}} - MAPE_2  \right ) ^2.
 \label{gl:EV}
 \end{equation}
-
+%
 Pearson Korrelationskoeffizient bewertet die Linearität zwischen der Kovarianz zweier Variablen und dem Produkt der Standardabweichung dieser Variablen. Der Wertebereich dieses Maßes ist [-1,1] und er gibt Auskunft, wie Ähnlich der zeitliche Verlauf zwischen dem tatsächlichen Preis und der Vorhersage ist. Ein Wert von Eins deutet auf eine perfekte vorhersage hin.\,\citef{Davo2016} 
 % cor
 \begin{equation}
 cor = \frac{cov(y_i,\hat{y}_i)}{\sqrt{sd(y_i)sd(\hat{y}_i)}} .
 \label{gl:cor}
 \end{equation}
-
-
+%
+%
 Theils Koeffizienten der Ungleichheit U1 und U2 unterscheiden sich in der Anwesenheit bzw. Abwesenheit eines $\hat{y}_i$ im Nenner. Hierbei steht der Wert von Null in beiden fällen für Gleichheit und somit für eine ideale Vorhersage. Bei einem Wert von Eins spricht man von einer maximalen Ungleichheit. Dies kann bei U1 der Fall sein wenn eine negative Proportionalität besteht oder einer der Terme im Nenner Null ist. Bei dem U2 kann dies der Fall sein, wenn die Vorhersagemethode eine \textit{Na\"{i}ve-No-Change-Extrapolation}\,\citef[6]{Lattyak2011} ist oder wenn U2 zu der gleichen Standardabweichung des Prognosefehlers führt wie die Vorhersagemethode.\,\citef[444 f]{Bliemel1973}
 % U1
 \begin{equation}
 U1 = \frac{\sqrt{\frac{1}{T} \sum_{i \in T} (y_i-\hat{y}_i)^2}}{ \sqrt{\frac{1}{T} \sum_{i \in T} y_i^2} + \sqrt{\frac{1}{T} \sum_{i \in T} \hat{y}_i^2}},
 \label{gl:U1}
 \end{equation}
-
+%
 % U2
 \begin{equation}
 U2 = \frac{\sqrt{\sum_{i \in T} (y_i-\hat{y}_i)^2}}{ \sqrt{ \sum_{i \in T} y_i^2} }.
 \label{gl:U2}
 \end{equation}
-
-
+%
+%
 Das out-of-sample (R²) Bestimmtheitsmaß ist dem Relative Absolute Error (RAE) sehr ähnlich. Wenn das RAE kleiner 100 und das R² größer Null ist, so ist die Vorhersagegenauigkeit höher als der historische Mittelwert der Trainingsdaten.
 % R²
 \begin{equation}
 R^2 = 1 -  \frac{\frac{1}{T} \sum_{i \in T} \abs{y_i-\hat{y}_i}^2}{ \frac{1}{T} \sum_{i \in T} \abs{y_i-\mean{y}_{train}}^2 } ,
 \label{gl:R2}
 \end{equation}
-
-
+%
+%
 % RAE
 \begin{equation}
 RAE = \frac{\frac{1}{T} \sum_{i \in T} \abs{y_i-\hat{y}_i}}{ \frac{1}{T} \sum_{i \in T} \abs{y_i-\mean{y}_{train}} } \cdot 100 .
 \label{gl:RAE}
 \end{equation}
-
-
+%
+%
 Der Absolute Error (ABS) und der Relative Error (REL) wertet den systematischen Fehler aus. Der Idealwert ist hierbei Null, wobei dies mit einer exakten Vorhersage gleichzusetzen ist. Positive Werte weisen dabei auf eine Überschätzung und negative auf eine Unterschätzung der Vorhersage hin.\,\citef[5 f]{Guertler2017}
-
+%
 % ABS
 \begin{equation}
 ABS= \frac{1}{T} \sum\limits_{i \in T} (\hat{y}_i-y_i),
 \label{gl:ABS}
 \end{equation}
-
-
+%
+%
 % REL
 \begin{equation}
 REL= \frac{\sum_{i \in T} (\hat{y}_i-y_i)}{\sum_{i \in T} y_i} .

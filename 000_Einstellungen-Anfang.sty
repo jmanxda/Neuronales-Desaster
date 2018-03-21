@@ -3,10 +3,11 @@
 %---------------------------------------------------------------------------------
 %% Einstellungen die am Anfang des Dokumentes erfolgen
 
+\ProvidesPackage{000_Einstellungen-Anfang}
+
 %-------------------------------------------
 %% Zusätzliche Pakete werden geladen
-%\documentclass[a4paper,12pt,titlepage]{article}  
-\documentclass[a4paper, 12pt, titlepage]{scrartcl} % Schrift- und Papiergröße werden eingestellt  
+%\documentclass[a4paper, 12pt, titlepage]{scrartcl} % Schrift- und Papiergröße werden eingestellt  
 \usepackage[top=2.5cm, bottom=2cm, left=2.5cm, right=2.5cm]{geometry} % Korrekturrand wird eingestellt
 \usepackage[ngerman]{babel}             % Dokumentsprache wird auf deutsch gesetzt
 \usepackage[table]{xcolor}              % Ermöglicht die Änderung der Schriftfarbe
@@ -60,6 +61,14 @@
 \usepackage{physics}                    % Erweitert die Mathematikumgebung um \abs{} und \norm{}
 \newcommand*\mean[1]{\bar{#1}}
 
+\usepackage{xpatch}                     % Ermöglicht das Einstellen des Abstandes über- und unterhalb von Gleichungen 
+\xapptocmd\normalsize{%
+ \abovedisplayskip=5pt plus 3pt minus 9pt
+ \belowdisplayskip=5pt plus 3pt minus 9pt 
+ \abovedisplayshortskip=5pt plus 3pt
+ \belowdisplayshortskip=5pt plus 3pt minus 4pt
+}{}{}
+
 
 %-------------------------------------------
 %% Pakete für das Erstellen von Refferenzen
@@ -80,17 +89,10 @@
 \renewcommand{\tabularxcolumn}[1]{m{#1}}    % Der X-Spaltentyp basiert auf dem p-Spaltentyp dieser zentriert die Zellen nicht vertikal. Dieser Befehl ändert X(p) in X(m) da der m-Spaltentyp eine vertikale Zentrierung durchführt 
    
 \newcolumntype{Z}{>{\RaggedRight\let\newline\\\hspace{0pt}}X}   % Ermöglicht linksbündige Spalten mit Zeilenumbruch in tabularx durch verwenden von Z
+%\newcolumntype{Y}{>{\centering\arraybackslash}X}
+\newcolumntype{Y}{>{\centering\let\newline\arraybackslash\hspace{0pt}}X}
 
 \definecolor{tableShade}{gray}{0.95}        % Einfärben der Zeilen in Grau
-
-
-
-%-------------------------------------------
-%% Pakete für das Erstellen von Grafiken
-\usepackage{tikz-cd}                    % Ermöglicht das Erstellen von Grafiken
-\usepackage{circuitikz}                 % Ermöglicht das Zeichnen elektrischer Schaltungen und logischer Blöcke 
-%\usepackage{relsize}                   % Ermöglicht die Fontgröße zu skalieren
-\usetikzlibrary{arrows,calc,intersections,shapes}
 
 %-------------------------------------------
 %% Pakete für die richtige Darstellung von Fußnoten
@@ -172,14 +174,28 @@
 %-------------------------------------------
 \usepackage{lipsum}                     % Erstellt blindtext
 
+
+
 %-------------------------------------------
-%% Pakete für das Erstellen von Bildern
+%% Pakete für das Erstellen von Bildern/Grafiken
 \usepackage{pdfpages}                   % Ermöglicht das Einbinden von PDF Dokumenten (wird verwendet für die Einbindung der Aufgabenstellung)
 \usepackage[showboxes,absolute]{textpos}   % Ermöglicht das Setzen von Inhalt an einem beliebigen Ort
-\usepackage{tikz}
+\usepackage{pgf,tikz}                   % Ermöglicht das Erstellen von Grafiken
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows,calc,intersections,shapes}
+\usepackage{circuitikz}                 % Ermöglicht das Zeichnen elektrischer Schaltungen und logischer Blöcke 
 \usepackage{pgfplots}                   % Ermöglicht das Erstellen von Graphen
 \pgfplotsset{compat=newest}             % Bindet das neueste pfgplot ein
+\usepgfplotslibrary{groupplots,fillbetween}
 \usepackage{lscape}                     % Ermöglicht das Plazieren von Objekten im Querformat
+\usepackage{standalone} 
+%\usepackage{relsize}                   % Ermöglicht die Fontgröße zu skalieren
+
+%%--faster_compilation_when_compyling_on_local_computer--%%
+%\usepgfplotslibrary{external}
+%\tikzexternalize
+%%-------------------------------------------------------%%
+
 
 \newcommand\Mygrid{%                        % Erzeugt ein Grid für textpos mit \Mygrid        
 \tikz[

@@ -1,0 +1,174 @@
+%%-------------------------------------------------------------------------
+%% Quellen:
+%% Discontinuity: http://www.yesterdayscoffee.de/tag/tikz/
+%% https://tex.stackexchange.com/questions/149081/collapse-range-in-x-axis-with-pgfplots-break-x-axis
+%% http://guido.vonrudorff.de/pgfplots-discontinuities/
+
+\makeatletter
+\def\datafile{Daten/BP/logist/o/BP_logis_result.txt}
+\makeatother
+
+    \pgfplotsset{
+        minor x tick num=5,
+        minor y tick num=1,
+        x label style={yshift=.5em},
+        y label style={yshift=-.5em},
+        width=15cm, %\textwidth,
+        height=6cm,
+        xticklabel style={
+            rotate=90,
+        },
+        every axis legend/.append style={
+        at={(0.5,1.03)},
+        anchor=south},
+    }
+
+%%----------------------result-----------------------%%
+\begin{tikzpicture}
+\begin{axis}[
+    ylabel={Preis\,[€/MWh]},
+    xlabel={Stunde\,[h]},
+    xmin=25,
+    xmax=2025,
+    clip=false,
+    xticklabels ={25,225,425,625,825,,9200,9400,9600,9800,10000},
+    xtick       ={25,225,425,625,825,1025,1225,1425,1625,1825,2025},
+    extra x ticks={1025},
+    extra x tick style={grid=major, tick style={white, ultra thick}, tick label style={xshift=0cm,yshift=.30cm,rotate=90,}},
+    extra x tick labels={\color{white}{/}},
+    legend style={at={(.5,1.8)},anchor=north},
+    legend columns=-1,
+    ]
+
+\addplot [mark=none,draw=black,restrict x to domain=25:1024,] 
+table[
+    x=index,
+    y=real,
+    col sep=tab,
+    /pgf/number format/read comma as period,
+] {\datafile};
+\addlegendentry{Tats\"achlich}
+
+\coordinate (unten) at (axis cs:1025,-12.5);
+\coordinate (oben) at (axis cs:1025,73.5);
+\draw[white, dashed, line width=.5pt] (unten) -- (oben);
+
+\addplot [mark=none,blue,restrict x to domain=25:1024,] 
+table[
+    x=index,
+    y=predict,
+    col sep=tab,
+    /pgf/number format/read comma as period,
+] {\datafile};
+\addlegendentry{Vorhergesagt}
+
+\coordinate (oben1) at (axis cs:245,103);
+%\coordinate (oben1) at (axis cs:55,50);
+\draw[red, dashed, line width=1pt] (axis cs:25,19) rectangle (axis cs:55,42);
+\draw[gray, line width=.2pt] (axis cs:45,43) -- (axis cs:245,80);
+
+\coordinate (oben2) at (axis cs:760,102);
+%\coordinate (oben2) at (axis cs:425,40);
+\draw[red, dashed, line width=1pt] (axis cs:400,-8) rectangle (axis cs:470,48);
+\draw[gray, line width=.2pt] (axis cs:440,49) -- (axis cs:760,80);
+
+\coordinate (oben3) at (axis cs:1285,102);
+%\coordinate (oben3) at (axis cs:825,50);
+\draw[red, dashed, line width=1pt] (axis cs:778,15) rectangle (axis cs:909,52);
+\draw[gray, line width=.2pt] (axis cs:844,53) -- (axis cs:1285,79);
+
+\coordinate (oben4) at (axis cs:1810,100);
+%\coordinate (oben4) at (axis cs:1625,45);
+\draw[red, dashed, line width=1pt] (axis cs:1548,7) rectangle (axis cs:1698,43);
+\draw[gray, line width=.2pt] (axis cs:1624,44) -- (axis cs:1810,75);
+
+\addplot [mark=none,draw=black,restrict x to domain=1025:2024,] 
+table[
+    x=index,
+    y=real,
+    col sep=tab,
+    /pgf/number format/read comma as period,
+] {\datafile};
+
+\addplot [mark=none,blue,restrict x to domain=1025:2024,] 
+table[
+    x=index,
+    y=predict,
+    col sep=tab,
+    /pgf/number format/read comma as period,
+] {\datafile};
+
+\end{axis}
+\node at (unten)[white,thick] {/};
+\node at (unten) {/\!\!/};
+\node at (oben)[white,thick] {/};
+\node at (oben) {/\!\!/};
+
+\node at (oben1) {%
+    \begin{tikzpicture}[baseline,trim axis left,trim axis right]
+    \begin{axis}[
+      tiny,
+      width=4.5cm, height=3.5cm,
+      minor x tick num=1,
+      minor y tick num=1,
+      xmin=25,xmax=50,
+      ytick       ={20,30,40},
+      enlargelimits,
+    ]
+    \addplot +[mark=none,black,] table [x=index,y=real,col sep=tab,/pgf/number format/read comma as period,] {\datafile};
+    \addplot +[mark=none,blue,] table [x=index,y=predict,col sep=tab,/pgf/number format/read comma as period,] {\datafile};
+    \end{axis}
+    \end{tikzpicture}%
+    };
+
+\node at (oben2) {%
+    \begin{tikzpicture}[baseline,trim axis left,trim axis right]
+    \begin{axis}[
+      tiny,
+      width=4.5cm, height=3.5cm,
+      minor x tick num=1,
+      minor y tick num=1,
+      xmin=405,xmax=465,
+      ytick       ={0,10,20,30,40},
+      enlargelimits,
+    ]
+    \addplot +[mark=none,black,] table [x=index,y=real,col sep=tab,/pgf/number format/read comma as period,] {\datafile};
+    \addplot +[mark=none,blue,] table [x=index,y=predict,col sep=tab,/pgf/number format/read comma as period,] {\datafile};
+    \end{axis}
+    \end{tikzpicture}%
+    };
+
+\node at (oben3) {%
+    \begin{tikzpicture}[baseline,trim axis left,trim axis right]
+    \begin{axis}[
+      tiny,
+      width=4.5cm, height=3.5cm,
+      minor x tick num=1,
+      minor y tick num=2,
+      xmin=785,xmax=905,
+      enlargelimits,
+    ]
+    \addplot +[mark=none,black,] table [x=index,y=real,col sep=tab,/pgf/number format/read comma as period,] {\datafile};
+    \addplot +[mark=none,blue,] table [x=index,y=predict,col sep=tab,/pgf/number format/read comma as period,] {\datafile};
+    \end{axis}
+    \end{tikzpicture}%
+    };
+
+\node at (oben4) {%
+    \begin{tikzpicture}[baseline,trim axis left,trim axis right]
+    \begin{axis}[
+      tiny,
+      width=4.5cm, height=3.5cm,
+      minor x tick num=1,
+      minor y tick num=1,
+      xticklabels ={9535,9555,9575,9595,9615,9635,9655},
+      xtick       ={1560,1580,1600,1620,1640,1660,1680},
+      xmin=1555,xmax=1685,
+      enlargelimits,
+    ]
+    \addplot +[mark=none,black,] table [x=index,y=real,col sep=tab,/pgf/number format/read comma as period,] {\datafile};
+    \addplot +[mark=none,blue,] table [x=index,y=predict,col sep=tab,/pgf/number format/read comma as period,] {\datafile};
+    \end{axis}
+    \end{tikzpicture}%
+    };
+\end{tikzpicture}

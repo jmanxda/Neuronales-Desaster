@@ -1,0 +1,37 @@
+%% Compiler: XeLaTeX
+
+\makeatletter
+\def\datafile{Daten/misc/autocorrelation.txt}
+\makeatother
+
+
+    \pgfplotsset{
+        xlabel near ticks,
+        xmin=-3, xmax=171,
+        width=15cm, %\textwidth,
+        height=6cm,
+    }
+
+\usepgfplotslibrary{statistics}
+
+\begin{tikzpicture}
+\begin{axis}[
+    xlabel=Lag,
+    ylabel=Autocorrelation,
+    xtick       ={0,24,48,72,96,120,144,168},
+    xmajorgrids=true,
+    ymajorgrids=true,
+    major grid style={line width=.2pt,draw=black!80,dotted},
+]
+\addplot [
+    ycomb,
+    restrict x to domain=0:171,
+] 
+table [
+    x=lag, 
+    y=AC, 
+    /pgf/number format/read comma as period,
+    col sep=tab,
+] {\datafile};
+\end{axis}
+\end{tikzpicture}

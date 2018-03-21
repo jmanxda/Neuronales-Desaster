@@ -1,0 +1,76 @@
+
+
+\colorlet{shadecolor}{gray!40}
+
+\makeatletter
+\def\datafile{Daten/BP/logist/o/BP_logis_o-epochen.txt}
+\makeatother
+
+    \pgfplotsset{
+        minor x tick num=1,
+        minor y tick num=1,
+        xmin=0, xmax=51,
+        width=15cm, %\textwidth,
+        height=6cm,
+        %ylabel style={rotate=180},
+        xticklabel style={
+            /pgf/number format/precision=3,
+            /pgf/number format/fixed},
+    }
+
+
+%%----------------------RMSE-epochen-----------------------%%
+\begin{tikzpicture}
+\def\x{epochs}
+\def\y{RMSE}
+\def\xname{Epochen}
+\def\yname{\y}
+\begin{axis}[
+    xlabel=\xname,
+    ylabel=\yname,
+    ]
+ 
+    \addplot[
+    mark=none,
+    draw=black,
+    ] 
+    table[
+    skip coords between index={40}{41},
+    /pgf/number format/read comma as period,
+    x=\x, 
+    y=\y_mean, 
+    col sep=tab,
+    ] {\datafile};
+    
+    \addplot[
+    name path=min,
+    mark=none,
+    draw=shadecolor,
+    %domain=-0.01:1.01,    
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=\x, 
+    y=RMSE_min, 
+    col sep=tab,
+    ] {\datafile};
+    
+    \addplot[
+    name path=max,
+    mark=none,
+    draw=shadecolor,
+    %domain=-0.01:1.01,    
+    ] 
+    table[
+    /pgf/number format/read comma as period,
+    x=\x, 
+    y=RMSE_max, 
+    col sep=tab,
+    ] {\datafile};
+    
+    \addplot [shadecolor] fill between[ 
+    of = min and max,
+    ];
+    
+\end{axis}
+\end{tikzpicture}
