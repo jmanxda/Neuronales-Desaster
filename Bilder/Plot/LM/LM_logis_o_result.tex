@@ -1,24 +1,34 @@
+%% Compiler: XeLaTeX
+
 \documentclass[tikz,border=0pt]{standalone}%
-\usepackage{pgfplots,color,amsmath,amssymb}
+\usepackage{pgfplots,tikz,color,amsmath,amssymb}
 \pgfplotsset{compat=newest}
 
+%\usetikzlibrary{pgfplots.groupplots}
 %%-------------------------------------------------------------------------
 %% Quellen:
 %% Discontinuity: http://www.yesterdayscoffee.de/tag/tikz/
 %% https://tex.stackexchange.com/questions/149081/collapse-range-in-x-axis-with-pgfplots-break-x-axis
 %% http://guido.vonrudorff.de/pgfplots-discontinuities/
 
+
+
+
+
 \begin{document}
+\makeatletter
+\def\datafile{Daten/LM/logist/o/LM_logis_result.txt}
+\makeatother
 
     \pgfplotsset{
         minor x tick num=5,
         minor y tick num=1,
         x label style={yshift=.5em},
         y label style={yshift=-.5em},
-        width=15cm, %\textwidth,
+        width=15cm,
         height=6cm,
         xticklabel style={
-            rotate=90,
+             rotate=90,
         },
         every axis legend/.append style={
         at={(0.5,1.03)},
@@ -26,85 +36,75 @@
     }
 
 
-
-
-\makeatletter
-\def\datafile{Daten/BP/logist/o/BP_logis_result.txt}
-\makeatother
-
 %%----------------------result-----------------------%%
 \begin{tikzpicture}
 \begin{axis}[
-    ylabel={Preis\,[€/MWh]},
-    xlabel={Stunde\,[h]},
-    xmin=25,
-    xmax=2025,
-    clip=false,
-    xticklabels ={25,225,425,625,825,,9200,9400,9600,9800,10000},
-    xtick       ={25,225,425,625,825,1025,1225,1425,1625,1825,2025},
-    extra x ticks={1025},
-    extra x tick style={grid=major, tick style={white, ultra thick}, tick label style={xshift=0cm,yshift=.30cm,rotate=90,}},
-    extra x tick labels={\color{white}{/}},
-    legend style={at={(.5,1.8)},anchor=north},
-    legend columns=-1,
-    ]
+ylabel={Preis\,[€/MWh]},
+xlabel={Stunde\,[h]},
+xmin=25,
+xmax=2025,
+clip=false,
+xticklabels ={25,225,425,625,825,,9200,9400,9600,9800,10000},
+xtick       ={25,225,425,625,825,1025,1225,1425,1625,1825,2025},
+extra x ticks={1025},
+extra x tick style={grid=major, tick style={white, ultra thick}, tick label style={xshift=0cm,yshift=.30cm,rotate=90,}},
+extra x tick labels={\color{white}{/}},
+legend style={at={(.5,1.8)},anchor=north},
+legend columns=-1,
+]
 
 \addplot [mark=none,draw=black,restrict x to domain=25:1024,] 
 table[
-    x=index,
-    y=real,
-    col sep=tab,
-    /pgf/number format/read comma as period,
+x=index,
+y=real,
+col sep=tab,
+/pgf/number format/read comma as period,
 ] {\datafile};
 \addlegendentry{Tats\"achlich}
-
 \coordinate (unten) at (axis cs:1025,-12.5);
 \coordinate (oben) at (axis cs:1025,73.5);
 \draw[white, dashed, line width=.5pt] (unten) -- (oben);
 
+
 \addplot [mark=none,blue,restrict x to domain=25:1024,] 
 table[
-    x=index,
-    y=predict,
-    col sep=tab,
-    /pgf/number format/read comma as period,
+x=index,
+y=predict,
+col sep=tab,
+/pgf/number format/read comma as period,
 ] {\datafile};
 \addlegendentry{Vorhergesagt}
 
 \coordinate (oben1) at (axis cs:245,102);
-%\coordinate (oben1) at (axis cs:55,50);
 \draw[red, dashed, line width=1pt] (axis cs:25,19) rectangle (axis cs:55,42);
 \draw[gray, line width=.2pt] (axis cs:45,43) -- (axis cs:245,78);
 
 \coordinate (oben2) at (axis cs:760,101);
-%\coordinate (oben2) at (axis cs:425,40);
 \draw[red, dashed, line width=1pt] (axis cs:400,-8) rectangle (axis cs:470,48);
 \draw[gray, line width=.2pt] (axis cs:440,49) -- (axis cs:760,78);
 
-\coordinate (oben3) at (axis cs:1285,101);
-%\coordinate (oben3) at (axis cs:825,50);
+\coordinate (oben3) at (axis cs:1285,103);
 \draw[red, dashed, line width=1pt] (axis cs:778,15) rectangle (axis cs:909,52);
 \draw[gray, line width=.2pt] (axis cs:844,53) -- (axis cs:1285,78);
 
 \coordinate (oben4) at (axis cs:1810,101);
-%\coordinate (oben4) at (axis cs:1625,45);
 \draw[red, dashed, line width=1pt] (axis cs:1548,7) rectangle (axis cs:1698,43);
 \draw[gray, line width=.2pt] (axis cs:1624,44) -- (axis cs:1810,77);
 
 \addplot [mark=none,draw=black,restrict x to domain=1025:2024,] 
 table[
-    x=index,
-    y=real,
-    col sep=tab,
-    /pgf/number format/read comma as period,
+x=index,
+y=real,
+col sep=tab,
+/pgf/number format/read comma as period,
 ] {\datafile};
 
 \addplot [mark=none,blue,restrict x to domain=1025:2024,] 
 table[
-    x=index,
-    y=predict,
-    col sep=tab,
-    /pgf/number format/read comma as period,
+x=index,
+y=predict,
+col sep=tab,
+/pgf/number format/read comma as period,
 ] {\datafile};
 
 \end{axis}

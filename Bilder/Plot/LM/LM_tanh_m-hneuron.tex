@@ -1,0 +1,89 @@
+%% Compiler: XeLaTeX
+
+\documentclass[tikz,border=0pt]{standalone}%
+\usepackage{pgfplots}
+\pgfplotsset{compat=newest}
+
+\begin{document}
+
+\usepgfplotslibrary{fillbetween}
+
+\colorlet{shadecolor}{gray!40}
+
+\makeatletter
+\def\datafile{Daten/LM/tanh/m/LM_tanh_m-hneuron.txt}
+\makeatother
+
+    \pgfplotsset{
+        minor x tick num=1,
+        minor y tick num=1,
+        xmin=0, xmax=21,
+        width=15cm, %\textwidth,
+        height=6cm,
+        %ylabel style={rotate=180},
+        xticklabel style={
+            /pgf/number format/precision=3,
+            /pgf/number format/fixed},
+    }
+
+
+
+
+%%--------------------Hneuron----------------------------%%
+
+%%------------tanh-m-RMSE-hneuron-----------------------%%
+\begin{tikzpicture}
+\def\x{h_neuron}
+\def\y{RMSE}
+\def\xname{Anzahl verdeckter Neuronen}
+\def\yname{\y}
+\begin{axis}[
+    xlabel=\xname,
+    ylabel=\yname,
+    ]
+ 
+    \addplot[
+    mark=none,
+    draw=black,
+    ] 
+    table[
+    %skip coords between index={40}{41},
+    /pgf/number format/read comma as period,
+    x=\x, 
+    y=\y_mean, 
+    col sep=tab,
+    ] {\datafile};
+    
+    %\addplot[
+    %name path=min,
+    %mark=none,
+    %draw=shadecolor,
+    %%domain=-0.01:1.01,    
+    %] 
+    %table[
+    %/pgf/number format/read comma as period,
+    %x=\x, 
+    %y=RMSE_min, 
+    %col sep=tab,
+    %] {\datafile};
+    
+    %\addplot[
+    %name path=max,
+    %mark=none,
+    %draw=shadecolor,
+    %%domain=-0.01:1.01,    
+    %] 
+    %table[
+    %/pgf/number format/read comma as period,
+    %x=\x, 
+    %y=RMSE_max, 
+    %col sep=tab,
+    %] {\datafile};
+    
+    %\addplot [shadecolor] fill between[ 
+    %of = min and max,
+    %];
+    
+\end{axis}
+\end{tikzpicture}
+\end{document}

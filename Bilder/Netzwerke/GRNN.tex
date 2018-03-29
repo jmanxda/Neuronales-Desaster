@@ -1,3 +1,9 @@
+\documentclass[tikz,border=0pt]{standalone}%
+\usepackage{tikz-cd}
+\usepackage{ifthen}
+\usepackage{amsmath}
+\usetikzlibrary{arrows,calc,intersections,shapes}
+\begin{document}
 %---------------------------------------------------------------
         %% GRNN
         %-----------------------------------------
@@ -31,7 +37,7 @@
                 \ifthenelse{\equal{#3}{1}}{
                 \node[neuron] (#1) at (#2) {\includegraphics[width=0.3cm]{Bilder/Sigma.png}};
                 }{
-                \node[neuron,fontscale=15] (#1) at (#2){$\divisionsymbol$};
+                \node[neuron,fontscale=15] (#1) at (#2){$\divisionsymbol$}; % if physics package is loaded use \divisionsymbol instead of \div 
                 }
             }
         }
@@ -123,3 +129,4 @@
             \foreach \source in {1,...,\ns}
                 \draw [->,arrows={-Stealth[length=7pt]}] (Sr-\source) edge  (Or-\xn);}
         \end{tikzpicture}
+\end{document}}

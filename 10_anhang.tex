@@ -43,7 +43,7 @@ Das exklusive Oder bzw. XOR-Gatter ist ein Begriff aus dem Bereich der Logik. Mi
 $$Y=\left ( \overline{A}  \land B \right)\lor \left ( A \land \overline{B} \right ).$$
 Der Ausgang dieses Gatters ist dann~\glqq 1\grqq~wenn eine ungerade Anzahl an Eingängen auf~\glqq 1\grqq~liegt und die restlichen auf~\glqq 0\grqq. Das Blockschaltbild und die Wahrheitstabelle sind in \autoref{fig_a:XOR} dargestellt.
 
-\todo{AND/OR funktion hinzufügen}
+%\todo{AND/OR funktion hinzufügen}
 
 \subsection{Lernalgorithmen}
 An dieser Stelle werden die Deltaregel und das Backpropagation-Verfahren hergeleitet.\,\footnote{Vgl. \citet[79 ff]{dkriesel07} und \citet[322 ff]{Rumelhart1986}.}
@@ -54,6 +54,7 @@ An dieser Stelle werden die Deltaregel und das Backpropagation-Verfahren hergele
     %http://www.theprojectspot.com/tutorial-post/introduction-to-artificial-neural-networks-part-2-learning/8
 
 \todo{Grafik: SLP mit Linearer Aktivierungsfunktion und Abkürzungsübersicht}
+\todo{sagen dass die Delta-Regel ein gradientenabstiegsverfahren ist und das Verfahren beschreiben}
 
 Dargestellt ist ein Einschichtigesperceptron mit lierarer Aktikvierungsfunktion.
 Zunächst wird die Verarbeitung von Informationen in dem in \farbig{Abbildung ??} dargestellten Netzwerk betrachtet. Die Information jedes Eingabeneurons $x_i$ wird mit einem Gewicht $w_{ij}$ versehen und an das Ausgabeneuron weitergeleitet. Die Propagierungsfunktion (die in diesem Fall die Summe darstellt) verarbeitet die Eingabe zu Netzeingabe $net_j$
@@ -298,28 +299,28 @@ REL= \frac{\sum_{i \in T} (\hat{y}_i-y_i)}{\sum_{i \in T} y_i} .
 
 
 
-\begin{figure}[!htb]
-    \centering
-        \input{Bilder/Plot/geg_mape_mae_rae.tex}
-    \caption{Gegenüberstellung des $MAPE$, des $MAE$ und des $RAE$ wobei auffällt, dass die Maße sich in einem Faktor unterscheiden.}
-    \label{fig:geg_mape_mae_rae}
-\end{figure}
+%\begin{figure}[!htb]
+%    \centering
+%        \input{Bilder/Plot/geg_mape_mae_rae.tex}
+%    \caption{Gegenüberstellung des $MAPE$, des $MAE$ und des $RAE$ wobei auffällt, dass die Maße sich in einem Faktor unterscheiden.}
+%    \label{fig:geg_mape_mae_rae}
+%\end{figure}
 
-\begin{figure}[!htb]
-    \centering
-        \input{Bilder/Plot/geg_rmse_u2.tex}
-    \caption{Die gleiche Beobachtung wie in \autoref{fig:geg_mape_mae_rae} kann auch bei der Gegenüberstellung des $RMSE$ und des $U2$ gemacht werden.}
-    \label{fig:geg_rmse_u2}
-\end{figure}
+%\begin{figure}[!htb]
+%    \centering
+%        \input{Bilder/Plot/geg_rmse_u2.tex}
+%    \caption{Die gleiche Beobachtung wie in \autoref{fig:geg_mape_mae_rae} kann auch bei der Gegenüberstellung des $RMSE$ und des $U2$ gemacht werden.}
+%    \label{fig:geg_rmse_u2}
+%\end{figure}
 
-\begin{landscape}
-\begin{figure}[!htb]
-    \centering
-        \input{Bilder/Plot/geg_alle.tex}
-    \caption{Dargestellt ist die Messung der optimalen Epochenanzahl eines MLPs mit Bias-Neuron welches mit dem BP-Verfahren trainiert wird und eine logistische Aktivierungsfunktion besitzt. Dieser Graph dient der Gegenüberstellung aller in dieser Arbeit betrachteten Performancemaße.}
-    \label{fig:geg_alle}
-\end{figure}
-\end{landscape}
+%\begin{landscape}
+%\begin{figure}[!htb]
+%    \centering
+%        \input{Bilder/Plot/geg_alle.tex}
+%    \caption{Dargestellt ist die Messung der optimalen Epochenanzahl eines MLPs mit Bias-Neuron welches mit dem BP-Verfahren trainiert wird und eine logistische Aktivierungsfunktion besitzt. Dieser Graph dient der Gegenüberstellung aller in dieser Arbeit betrachteten Performancemaße.}
+%    \label{fig:geg_alle}
+%\end{figure}
+%\end{landscape}
 
 %-----------------------------------------------------------------------------------
 \todo{Fehlermaße aufführen und bedeutung erkären}

@@ -5,7 +5,7 @@
 
 \section{Analyse der Prognosefähigkeit}\label{sec:analyse}
 
-Aufgrund der in \autoref{sec:vergleich_la} festgestellten Einflüsse auf die Vorhersagegenauigkeit eines Netzwerkes werden in diesem Abschnitt diese Faktoren variiert, um festzustellen welche Faktoren und dessen Werte zu einem Netzwerk mit geringster Prognoseabweichung führen.
+Aufgrund der in \autoref{sec:vergleich_la} festgestellten Einflüsse auf die Vorhersagegenauigkeit eines Netzwerkes werden in diesem Abschnitt diese Faktoren variiert, um herauszufinden welche Faktoren und dessen Werte zu einem Netzwerk mit geringster Prognoseabweichung führen.
 
 %In diesem Abschnitt erfolgt die Analyse der Prognosefähigkeit eines MLP-Netzwerkes. Hierbei werden die in \autoref{sec:algorithm} hergeleiteten Algorithmen einem Vergleich unterzogen.
 
@@ -26,7 +26,7 @@ Betrachtet man die logistische Funktion so werden die Werte Null bzw. Eins asymp
 
 Um die Einflüsse der in \autoref{sec:vergleich_la} besprochenen \glqq schlechten\grqq~Minima zu reduzieren werden in dieser Arbeit 20 Neuinitialisierungen durchgeführt, um die optimalen Parameter zu finden.
 
-Mit der Variation des Lernalgorythmus, der Aktivierungsfunktion und der An- und Abwesenheit des Bias-Neurons ergeben sich acht Variationsmöglichkeiten bei denen zunächst, aus der Begründung aus \autoref{sec:eval_maße} folgernd, mit Hilfe des $RMSE$ die optimalen Netzparameter bestimmt werden. Das Optimum eines Parameters ist erreicht wenn die Abweichung zwischen vorhergesagtem und tatsächlichen Preis am geringsten ist und somit den niedrigsten $RMSE$ aufweist. Anschließend wird die Vorhersagegenauigkeit eines jeden Lernalgorithmus mit den jeweiligen optimalen Parametern, wie in \autoref{sec:eval_maße} erleutert, mit Hilfe des $RMSE$, $MAE$, $ABS$, $REL$, $R^2$, $RAE$, $MAPE_2$, $sMAPE$, $EV$ und des $U2$ ausgewertet.
+Mit der Variation des Lernalgorythmus, der Aktivierungsfunktion und der An- und Abwesenheit des Bias-Neurons ergeben sich acht Variationsmöglichkeiten bei denen zunächst, aus der Begründung aus \autoref{sec:eval_maße} folgernd, mit Hilfe des $RMSE$ die optimalen Netzparameter bestimmt werden. Das Optimum eines Parameters ist erreicht wenn die Abweichung zwischen vorhergesagtem und tatsächlichen Preis am geringsten ist und somit den niedrigsten $RMSE$ aufweist. Anschließend wird die Vorhersagegenauigkeit eines jeden Lernalgorithmus mit den jeweiligen optimalen Parametern, wie in \autoref{sec:eval_maße} erleutert, mit Hilfe des $RMSE$, $MAE$, $ABS$, $REL$, $R^2$, $RAE$, $MAPE_2$ und des $sMAPE$ ausgewertet.
 
 \subsection{Erklärung des Datensatzes}\label{sec:datensatz}
 
@@ -81,7 +81,7 @@ Untersucht werden sollen beide Lernalgorithmen auf die Lerngeschwindigkeit und d
 
 Der Datensatz besteht aus einer Zeitreihe der in \autoref{tab:datensatz} dargestellten Variablen. Dabei ist in der ersten Spalte die Variable des Datensatzes, nachfolgend die Einheiten, in den nächsten beiden Spalten der Minimal- und Maximalwert der Variable im betrachteten Zeitraum und in der Letzten Spalte die Herkunft der Information dargestellt. Der betrachtete Zeitraum erstreckt sich vom 01.04.2010 bis zum 27.08.2016. Der Strompreis ist für jede Stunde eines jeden Tages angegeben und beinhaltet somit 56180 Datenpunkte. Nicht jede Variable des Datensatzes besitzt in seiner ursprünglichen Form 24 Werte für einen Tag. In diesen Fällen werden die fehlenden Daten entweder extra- bzw. interpoliert, um die Anzahl der Daten an den Strompreis anzupassen. Außerdem werden die Variablen an die selbe Währung angepasst. Für diesen Zweck wird der Tägliche US-Dollar/Euro Wechselkurs genutzt, um den Kohlepreis von \$/Tonne, den Heizölpreis von \$/Gallone und den Uranpreis von \$/kg respektive in €/Tonne, €/Gallone und €/kg umzurechnen.
 
-Um das Vorhersagevermögen eines Netzes untersuchen zu können wird der Datensatz bestehend aus 56180 Datenpunkten pro Variable in zwei Sets unterteilt. Das Trainingsset beinhaltet 46180 Datenpunkte und das Testset besteht aus 10000 Datenpunkten. Diese Unterteilung ist notwendig, um die Netzwerke out-of-sample\,\footnote{Dies ist ein aus dem englischen ins deutsche übernommener Begriff und beteutet, dass das zu testende Modell mit Daten getestet wird welche es während dem Training nicht \glqq gesehen\grqq~hat. Bei guten Ergebnissen beweist das Modell damit seine Generalisierungsfähigkeit.} untersuchen zu können und so dem in \autoref{sec:vergleich_la} besprochenen \glqq Auswendiglernen\grqq~vorzubeugen. Somit wird ein Netzwerk nach dem Training danach bewertet wie es die Strompreise der nächsten 10000 Stunden vorhersagen kann.
+Der Datensatz bestehend aus 56180 Datenpunkten wird pro Variable in zwei Sets unterteilt. Das Trainingsset beinhaltet 46180 Datenpunkte und das Testset besteht aus 10000 Datenpunkten. Diese Unterteilung ist notwendig, um die Netzwerke out-of-sample\,\footnote{Dies ist ein aus dem englischen ins deutsche übernommener Begriff und beteutet, dass das zu testende Modell mit Daten getestet wird welche es während dem Training nicht \glqq gesehen\grqq~hat. Bei guten Ergebnissen beweist das Modell damit seine Generalisierungsfähigkeit.} untersuchen zu können und so dem in \autoref{sec:vergleich_la} besprochenen \glqq Auswendiglernen\grqq~vorzubeugen. Somit wird ein Netzwerk nach dem Training danach bewertet wie es die Strompreise der nächsten 10000 Stunden vorhersagen kann.
 
 \begin{figure}[!htb]
     \centering
@@ -89,10 +89,12 @@ Um das Vorhersagevermögen eines Netzes untersuchen zu können wird der Datensat
     \caption{Autocorrelation der stündlichen Elektrizitätspreise.}
     \label{fig:autocorrelation}
 \end{figure}
-\todo{autocorellations untersuchung und warum der 24. Wert}
 
+Da anhand von zum Zeitpunkt der Vorhersage verfügbaren Daten der zukünftige Strompreis bestimmt werden soll ist es wichtig zu überlegen welcher Vorhersagehorizont sinnvoll ist. 
+Zu diesem Zweck ist in \autoref{fig:autocorrelation} die Autocorrelation der Elektrizitätspreise dargestellt. Wobei ein Lag (deutsch: Verschiebung) eine Stunde repräsentiert. Die Betrachtung der Autocorrelation ermöglicht es uns eine Zeitreihe dahingehend zu untersuchen ob und wie zwei Beobachtungen in Beziehung zueinander stehen. Je höher die Autokorrelation ist desto höher ist auch die Abhängigkeit einer Beobachtung zum Zeitpunkt t$\neq$0 in Bezug auf die Beobachtung zum Zeitpunkt t$=$0. Diese Abhängigkeit wird auch als Korrelation bezeichnet. Der \autoref{fig:autocorrelation} kann entnommen werden, dass die Beobachtung mit einem Lag von Eins die höchste Korrelation aufweist. Zusätzlich bilden die Autocorrelationswerte im Abstand von 12 und 24 Stunden Maxima aus. Wobei die Maxima im Abstand von 24 Stunden deutlich höhere Werte aufweist als die Maxima der 12 stündigen Abstände. Daneben weisen die 24. und 168. Stunde die höchste Autocorrelation auf. 
+Hieraus kann geschlossen werden, dass die vorherige Stunde den höchsten Informationsgehalt zur Vorhersage der betrachten Stunde liefert. Unter der Berücksichtigung von \autoref{sec:vorhersagemodelle} in dem erläutert wurde, dass der Strompreis durch den Marktbetreiber nicht einzeln für jede Stunde sondern für 24 Stunden eines nächsten Tages gebildet wird ist ersichtlich, dass der Preis der vorherigen Stunde zum Zeitpunkt einer Vorhersage nicht zur Verfügung steht. Unter Realbedingungen ist es somit am erfolgversprechendsten wenn die gleiche Stunde des vorherigen Tages oder der vergangenen Woche des gleichen Tages zur Vorhersage genutzt wird. In dieser Arbeit wird daher der 24 stündige Vorhersagehorizont für die nachfolgenden Untersuchungen gewählt. 
 
-\subsection{Auswertung Backpropagation}\label{sec:aus_backprop}
+\subsection{Auswertung des Backpropagation Algorithmus}\label{sec:aus_backprop}
 
 Bei dem klassischen Backpropagation-Verfahren, welches in \autoref{sec:Backpropagation} vorgestellt wird, wird zunächst die optimale Lernrate $\alpha$ bestimmt. Anschließend wird die passende Anzahl an verdeckten Neuronen ermittelt und schließlich wird die vertretbare Anzahl an Epochen festgelegt.
 
@@ -105,7 +107,7 @@ Hierzu wird in \autoref{fig:BP_logist_o_lrate} zunächst anhand eines MLP mit lo
     \label{fig:BP_logist_o_lrate}
 \end{figure}
 
-Aus diesem Grund wird nochmals eine höher auflösende Messung im Bereich von Null und 0,2 mit einer Schrittweite von 0,0002 durchgeführt, die in \autoref{fig:BP_logist_o_lrate} unten dargestellt ist. Der sich so ergebende Verlauf lässt sich durch eine schiefe Asymptote annähern. Durch die erste Ableitung der angenäherten Funktion lässt sich auch das $RMSE$-Minimum bei einer Lernrate von 0,025 bestimmen.\\
+Aus diesem Grund wird nochmals eine höher auflösende Messung im Bereich von Null und 0,2 mit einer Schrittweite von 0,0002 durchgeführt, die in \autoref{fig:BP_logist_o_lrate} unten dargestellt ist. Der sich so ergebende Verlauf lässt sich durch eine schiefe Asymptote annähern, die in \autoref{fig:BP_logist_o_lrate} unten in rot abgebildet ist. Durch die erste Ableitung der angenäherten Funktion lässt sich auch das $RMSE$-Minimum bei einer Lernrate von 0,025 bestimmen.\\
 
 
 \begin{figure}[!htb]
@@ -115,7 +117,7 @@ Aus diesem Grund wird nochmals eine höher auflösende Messung im Bereich von Nu
     \label{fig:BP_logist_o_hneuron}
 \end{figure}
 
-Im nächsten Schritt wird die Anzahl der verdeckten Neuronen ermittelt. Dabei wird die Lernrate auf den zuvor bestimmten Wert eingestellt und die Anzahl der verdeckten Neuronen von Eins an, um ein Neuron erhöht. Die Grenze hierbei wird nur durch die Rechenkapazität des Computers bestimmt auf dem das Netzwerk berechnet wird. Wie aber in \autoref{BP_logist_o_hneuron} festgestellt tendiert ein Netzwerk mit steigender Anzahl an verdeckten Neuronen zum Auswendiglernen der Daten. Daher ist eine niedrige Anzahl zu bevorzugen. In dem gleichen Netzwerk wie vorher die Lernrate bestimmt wird kann der $RMSE$-Verlauf in Abhängigkeit der Anzahl verdeckter Neuronen in \autoref{fig:BP_logist_o_hneuron} eingesehen werden. Der niedrigste $RMSE$-Wert wird hier bei Drei verdeckten Neuronen gemessen.\\ 
+Im nächsten Schritt wird die Anzahl der verdeckten Neuronen ermittelt. Dabei wird die Lernrate auf den zuvor bestimmten Wert eingestellt und die Anzahl der verdeckten Neuronen von Eins an, um ein Neuron erhöht. Die Grenze hierbei wird nur durch die Rechenkapazität des Computers bestimmt auf dem das Netzwerk berechnet wird. Wie aber in \autoref{sec:vergleich_la} festgestellt tendiert ein Netzwerk mit steigender Anzahl an verdeckten Neuronen zum Auswendiglernen der Daten. Daher ist eine niedrige Anzahl zu bevorzugen. In dem gleichen Netzwerk wie vorher die Lernrate bestimmt wird kann der $RMSE$-Verlauf in Abhängigkeit der Anzahl verdeckter Neuronen in \autoref{fig:BP_logist_o_hneuron} eingesehen werden. Der niedrigste $RMSE$-Wert wird hier bei Drei verdeckten Neuronen gemessen.\\ 
 
 \begin{figure}[!htb]
     \centering
@@ -124,10 +126,10 @@ Im nächsten Schritt wird die Anzahl der verdeckten Neuronen ermittelt. Dabei wi
     \label{fig:BP_logis_o_epochen}
 \end{figure}
 
-Schließlich wird die Anzahl der Epochen bestimmt in dem die Lernrate auf 0,025 und die Anzahl an verdeckten Neuronen auf Drei gesetzt wird und die Epochenanzahl von Eins an erhöht wird. Das Ergebniss dieser Messung ist in \autoref{fig:BP_logis_o_epochen} dargestellt. Hierbei gibt die graue Fläche den jeweiligen Maximal- bzw. Minimalwert einer Messung an und der schwarze Verlauf den Mittelwert. Gerade an dem Maximalwert lässt sich erkennen, dass die Höhe der Fehler mit steigender Epochenanzahl geringer wird und ab 30 Epochen auch die Höhe der Ausreißer sprunghaft abnimmt. Wohingegen der Minimalwert sich durchgehend zwischen Acht und Neun bewegt. Daraus kann geschlossen werden, dass mit steigender Anzahl an Epochen die Wahrscheinlichkeit steigt bessere Minima zu erreichen oder das Netzwerk anfängt die Daten auswendig zu lernen. Dies wurde zwar versucht durch den geteilten Datensatz zu vermeiden dennoch wird in der Literatur\,\citef[60]{dkriesel07} darauf hingewiesen, dass in wenn das Testset dazu benutzt wird, um die optimalen Parameter eines Netzwerkes zu bestimmen das Netztzwerk so auch auf die Testdaten zugeschnitten wird. Um hier Abhilfe zu schaffen wird empfohlen ein drittes Validierungsset zu erstellen\,\citef[44]{neuralnet_intro} welches nur der Evaluation des Netzes dient oder man wählt bewusst eine geringere Anzahl an Epochen. In dieser Arbeit wird die letztere Methode gewählt. Somit wird für das MLP mit logistischer Aktivierungsfunktion und ohne Bias-Neuron eine Epochenanzahl von 30 gewählt. Da ab diesem Wert eine deutliche Veränderung des $RMSE$-Verlaufes zu beobachten ist.
+Schließlich wird die Anzahl der Epochen bestimmt in dem die Lernrate auf 0,025 und die Anzahl an verdeckten Neuronen auf Drei gesetzt wird und die Epochenanzahl von Eins an, um eine Epoche erhöht wird. Das Ergebniss dieser Messung ist in \autoref{fig:BP_logis_o_epochen} dargestellt. Hierbei gibt die graue Fläche den jeweiligen Maximal- bzw. Minimalwert einer Messung an und der schwarze Verlauf den Mittelwert. Gerade an dem Maximalwert lässt sich erkennen, dass die Höhe der Fehler mit steigender Epochenanzahl geringer wird und ab 30 Epochen auch die Höhe der Ausreißer sprunghaft abnimmt. Wohingegen der Minimalwert sich durchgehend zwischen Acht und Neun bewegt. Daraus kann geschlossen werden, dass mit steigender Anzahl an Epochen die Wahrscheinlichkeit steigt bessere Minima zu erreichen oder das Netzwerk anfängt die Daten auswendig zu lernen. Dies wurde zwar versucht durch den geteilten Datensatz zu vermeiden dennoch wird in der Literatur\,\citef[60]{dkriesel07} darauf hingewiesen, dass wenn das Testset dazu benutzt wird, um die optimalen Parameter eines Netzwerkes zu bestimmen das Netztzwerk so auch auf die Testdaten zugeschnitten wird. Um hier Abhilfe zu schaffen wird empfohlen ein drittes Validierungsset zu erstellen\,\citef[44]{neuralnet_intro} welches nur der Evaluation des Netzes dient oder man wählt bewusst eine geringere Anzahl an Epochen. In dieser Arbeit wird die letztere Methode gewählt. Somit wird für das MLP mit logistischer Aktivierungsfunktion und ohne Bias-Neuron eine Epochenanzahl von 30 gewählt. Da ab diesem Wert eine deutliche Veränderung des $RMSE$-Verlaufes zu beobachten ist.
 
-Bei der Bestimmung der optimalen Parameter der Netzwerke welche sich in der Aktivierungsfunktion und dem Vorhandensein eines Bias-Neurons unterscheiden wird analog vorgegangen. 
-
+Bei der Bestimmung der optimalen Parameter der Netzwerke welche sich in der Aktivierungsfunktion und dem Vorhandensein eines Bias-Neurons unterscheiden wird analog vorgegangen.
+In \autoref{tab:BP_resultat} ist das Ergebnis der Untersuchung dargestellt. Dabei ist links zunächst die genutzte Aktivierungsfunktion und nachfolgend ob das Netzwerk ein Bias-Neuron besitzt aufgeführt. Als nächstes werden die optimalen Werte für die Lernrate, Anzahl der verdeckten Neuronen und Anzahl der Epochen genannt. Darauf folgend wird die für das Bestimmen der optimalen Parameter benötigte Zeit angegeben. Hierfür wurden die Dauer der einzelnen Messungen aufsummiert. An dieser Stelle wird darauf hingewiesen, dass die Trainingszeit für das Netzwerk mit dem Tangens-Hyperbolicus als Aktivierungsfunktion geringer ist da bei der Bestimmung der optimalen Lernrate die Messung von Null bis Eins in einer Schrittweite von 0,001 ausgereicht hat. Weiterhin wurde für jedes Netzwerk die Messungen bis zu 40 verdeckte Neuronen und bis zu 50 Epochen durchgeführt, um die Vergleichbarkeit der Daten zu gewährleisten. Schließlich wurden mit den optimalen Parametern eines jeden Netzwerkes 20 vorhersagen mit dem Testset erstellt und das beste Ergebnis in Form des kleinsten $RMSE$ (aufgeführt als min. $RMSE$) ermittelt. Die zum Training des Netzwerkes und anschließenden abrufen der Prognosen dieses Ergebnisses benötigte Zeit wird als Berechnungszeit angegeben.
 
 \begin{filecontents*}{BP_resultat.tex}
 {\setstretch{1.0}
@@ -139,14 +141,13 @@ Bei der Bestimmung der optimalen Parameter der Netzwerke welche sich in der Akti
     \toprule
     \hiderowcolors
 
-       \multicolumn{1}{Y}{Aktivierungs funktion} &      \multicolumn{1}{Y}{Bias- Neuron} &   \multicolumn{1}{Y}{Lern- rate} &  \multicolumn{1}{Y}{verd. Neuronen} &  \multicolumn{1}{Y}{Epochen} &  \multicolumn{1}{Y}{Trainings zeit} & \multicolumn{1}{Y}{min RMSE}  & \multicolumn{1}{Y}{Berechnungs zeit} \\
+       \multicolumn{1}{Y}{Aktivierungs funktion} &      \multicolumn{1}{Y}{Bias- Neuron} &   \multicolumn{1}{Y}{Lern- rate} &  \multicolumn{1}{Y}{verd. Neuronen} &  \multicolumn{1}{Y}{Epochen} &  \multicolumn{1}{Y}{Trainings zeit} & \multicolumn{1}{Y}{min. $RMSE$}  & \multicolumn{1}{Y}{Berechnungs zeit} \\
 
     \midrule
     \endfirsthead
         \multicolumn{8}{c}{\footnotesize \tablename\ \thetable{}: Fortsetzung der vorherigen Seite} \\
     \toprule
-        %\multicolumn{1}{l}{\textbf{Verweis}} & \multicolumn{1}{Z}{\textbf{Modell}} & \multicolumn{1}{Z}{\textbf{Lernalgorythmus}} & \multicolumn{1}{Z}{\textbf{Markt}} & \multicolumn{1}{Z}{\textbf{Performancemaß}} \\
-       % Aktivierungsfunktion &      Bias-Neuron &   Lernrate &  verdeckte Neuronen &  Epochen &  Trainingszeit &  min RMSE  & Berechnungszeit \\
+       \multicolumn{1}{Y}{Aktivierungs funktion} &      \multicolumn{1}{Y}{Bias- Neuron} &   \multicolumn{1}{Y}{Lern- rate} &  \multicolumn{1}{Y}{verd. Neuronen} &  \multicolumn{1}{Y}{Epochen} &  \multicolumn{1}{Y}{Trainings zeit} & \multicolumn{1}{Y}{min. $RMSE$}  & \multicolumn{1}{Y}{Berechnungs zeit} \\
     \midrule
     \endhead
     \midrule
@@ -159,10 +160,10 @@ Bei der Bestimmung der optimalen Parameter der Netzwerke welche sich in der Akti
         
     \endlastfoot
     \showrowcolors
-        logist.                 & o       & $0,025$ & $3$         & 30  & $7$h:$44$m:$39$s & $8,31$ & $10$s         \\
-        logist.                 & m       & $0,016$ & $3$         & 33  & $8$h:$44$m:$11$s & $8,95$ & $15$s         \\
-        Tanh.                   & o       & $0,81$  & $5$         & 30  & $6$h:$46$m:$50$s & $9,24$ & $14$s         \\
-        Tanh.                   & m       & $0,83$  & $5$         & 27  & $8$h:$29$m:$29$s & $9,83$ & $16$s         \\
+        logist.                 & o       & 0,025 & 3         & 30  & 7h:44m:39s & 8,31 & 10s         \\
+        logist.                 & m       & 0,016 & 3         & 33  & 8h:44m:11s & 8,95 & 15s         \\
+        Tanh.                   & o       & 0,81  & 5         & 30  & 6h:46m:50s & 9,24 & 14s         \\
+        Tanh.                   & m       & 0,83  & 5         & 27  & 8h:29m:29s & 9,83 & 16s         \\
 
         
 \end{longtable}
@@ -171,11 +172,169 @@ Bei der Bestimmung der optimalen Parameter der Netzwerke welche sich in der Akti
 \end{filecontents*}
 \LTXtable{\textwidth}{BP_resultat}
 
+Aus der \autoref{tab:BP_resultat} folgt, dass die Lernrate und die optimale Anzahl verdeckter Neuronen von der Aktivierungsfunktion abhängen. Aber die An- oder Abwesenheit von Bias-Neuronen beeinflusst diese Faktoren nicht. Die optimale Anzahl an Epochen liegt durchgehend in der Nähe von 30 und ist somit in Gänze unabhängig von den anderen Parametern. Durch die abweichende Herangehensweise bei der Bestimmung der Lernrate können die Trainingszeiten der Aktivierungsfunktionen nicht direkt verglichen werden. Bei gleichen Aktivierungsfunktion führt das Vorhandensein von Bias-Neuronen aber zu längeren Trainingszeiten, wobei der Unterschied bei gleichen Bedingungen mehr als eineinhalb Stunden betragen kann. Es deutet auch die längere Berechnungszeit mit Bias-Neuronen auf diese Abhängigkeit hin. Die Unterschiede in dem $RMSE$-Wert liegen im niedrigen einstelligen Bereich und sind damit nicht groß. Diese sind daher auf ungünstige Minima in der Fehlerladschaft als auf die Parameter des Netzwerkes zurückzuführen. Schließlich weist das Netzwerk mit logistischer Aktivierungsfunktion und ohne Bias-Neuronen die kleinste Abweichung in der Vorhersage über 10000 Werte auf und wird daher im nächsten Schritt zur Bewertung der Vorhersagegenauigkeit näher betrachtet.
+
+In \autoref{fig:BP_logis_o_result} ist nun der tatsächliche und der vorhergesagte Preis dargestellt. Der Übersichtlichkeit halber wurden die ersten und letzten 1000 Werte im unteren Graphen aufgetragen. Dabei entsprechen 1000 Stunden circa sechs Wochen. Die vier Graphen im oberen Bereich der Abbildung stellen Teilausschnitte des Gesamtverlaufes dar, die im unteren Graphen mit roten gestrichelten Linien umrandet sind. Für die weiteren Erläuterungen dient der obere linke Graph als Bezugspunkt, der nachfolgend als 1. Graph bezeichnet wird.
+\todo{In der fertigen Version den Graphen mit |input anstatt |includestandalone erzeugen. Da die Schrift falsch dargestellt wird}
 
 \begin{figure}[!htb]
     \centering
-        %\input{Bilder/Plot/BP/BP_logis_o_result.tex}
+        %\includestandalone[mode=build,width=\textwidth]{Bilder/Plot/BP/BP_logis_o_result}
+        \input{Bilder/Plot/BP/BP_logis_o_result.tex}
     \caption{\farbig{Beschreibung erstellen}}
     \label{fig:BP_logis_o_result}
 \end{figure}
+
+Bemerkenswert ist, dass gerade zu Beginn des Testsets die Vorhersage sehr nah an den tatsächlichen Wert kommt. Dies ist an der Darstellung der ersten 50 Stunden im 1. Grafen zu erkennen. Hier beträgt die maximale Abweichung bei der Vorhersage der ersten 50 Stunden circa 8 €/MWh. Dies kann durch die Unterteilung des gesamten Datensatzes in Trainings- und Testset begründet sein. Da die letzten Datenpunkte des Trainingssets direkt an die ersten Datenpunkte des Testsets anknüpfen und so das Netzwerk in den ersten Stunden des Testsets über \glqq gelernte\grqq~Vorinformationen verfügt.
+Bei einem gemäßigten Wochenverlauf folgt der vorhergesagte Preis gerade in den ersten 1000 Stunden annähernd dem tatsächlichen Preis, was im 3. Graphen zu erkennen ist. Schwierigkeiten hat das Netzwerk aber bei der Vorhersage von spitzen-Werten. Dies lässt sich durchgehend beobachten und in dem 2. Graphen wird dies sehr deutlich. Hier beträgt die Abweichung bis zu 25 €/MWh und der Verlauf der vorhergesagten Werte folgt nur annähernd den tatsächlichen Werten. Abschließend lässt sich im 4. Graphen erkennen, dass gegen Ende des Testsets die lokalen Wochenminima zwar kleinere Abweichungen zeigen aber die Vorhersage, im Vergleich zu den ersten 1000 Stunden, eine größere Überschätzung aufweist.
+
+Abschließend erfolgt die Bewertung des Vorhersagevermögens des Netzwerkes anhand der zuvor ausgewählten Performancemaße. Diese sind in \autoref{tab:BP_schaetzer} aufgeführt.
+
+\todo{EV und U2 werden gestrichen.}
+
+\begin{filecontents*}{BP_resultat.tex}
+{\setstretch{1.0}
+\captionsetup{skip=1pt,margin=5pt,position=below} %skip=1pt,
+\rowcolors{3}{tableShade}{white}
+
+\begin{longtable}{cccccccc}
+    \caption{\farbig{BP resultat}} \label{tab:BP_schaetzer}\\
+    \toprule
+    \hiderowcolors
+        $RMSE$ & $MAE$ & $ABS$ & $REL$ & $R^2$ & $RAE$ & $MAPE_2$ & $sMAPE$ \\
+    \midrule
+    \endfirsthead
+        \multicolumn{8}{c}{\footnotesize \tablename\ \thetable{}: Fortsetzung der vorherigen Seite} \\
+    \toprule
+        $RMSE$ & $MAE$ & $ABS$ & $REL$ & $R^2$ & $RAE$ & $MAPE_2$ & $sMAPE$ \\
+    \midrule
+    \endhead
+    \midrule
+        \multicolumn{8}{c}{{\footnotesize \tablename\ \thetable{}: Fortsetzung auf der nächsten Seite}} \\
+    \bottomrule
+    \endfoot
+    \bottomrule
+    \endlastfoot
+    \showrowcolors
+        8,307 & 6,18 & -0,421 & -0,015 & 0,754 & 43,929 & 21,597 & 26,041 \\
+\end{longtable}
+
+}
+\end{filecontents*}
+\LTXtable{\textwidth}{BP_resultat}
+
+Das $R^2$ besitzt mit 0,754 einen positiven Wert der näher an der 1 als an 0,5 ist und der $RAE$-Wert ist mit 43,929 deutlich unter 100. Hiermit weist das Netzwerk eine höhere Vorhersagegenauigkeit auf als der historische Mittelwert. Das $ABS$ und $REL$ weisen beide einen negativen Wert auf was auf eine Unterschätzung bei der Gesamtvorhersage hindeutet. Das $RMSE$ und das $MAE$ weisen bei kleinen Werten auf eine gute Vorhersage hin. Die gleiche Aussage trifft auch auf das $MAPE_2$ und $sMAPE$ zu. Diese vier Maße liefern aber erst bei einem Vergleich eine Auskunft darüber welche Methode eine bessere Vorhersage liefert. Dieser Vergleich wird während der Auswertung des Levenberg-Marquardt Algorithmus durchgeführt.
+
+\newpage
+
+\subsection{Auswertung des Levenberg-Marquardt Algorithmus}\label{sec:aus_LM}
+
+Bei dem Levenberg-Marquardt-Algorithmus, welches in \autoref{sec:LM_herleitung} vorgestellt wird, werden zuerst die Anfangswerte der Kombinationskoeffizienten $\mu_o$, $\mu_h$ und des Abklingfaktors $\lambda$ gewählt. Als nächstes wird der maximal vertretbare Fehler und die Anzahl der Iterationen Festgelegt. Anschließend wird die optimale Anzahl an verdeckten Neuronen ermittelt.
+
+Die Anfangswerte der Kombinationskoeffizienten und des Abklingfaktors werden in Anlehnung an \citet{Kwak2012} auf $\mu_o=\mu_h=$\,0,01 und $\lambda=$\,0,1 gesetzt und der maximal vertretbare Fehler wird auf 0,0001 eingestellt. Dieser Fehlerwert lässt sich über die lineare Normalisierung mit \autoref{gl:norm} rückrechnen in eine Differenz zwischen vorhergesagten und tatsächlichen Wert von 0,054 €/MWh für den Wertebereich [0.9,0.1] und 0,024 €/MWh für den Wertebereich [0.9,-0.9]. \farbig{Dieser vertretbare Fehler wurde so niedrig eingestellt, um sicher zu gehen, dass das Netzwerk nicht zu früh mit dem Training endet obwohl der Fehlern noch kleiner werden könnte.} Da die Möglichkeit somit besteht dass das Netzwerk den Fehler nicht unterschreitet wird die Anzahl an Iterationen auf 10 gesetzt, um wie in \autoref{sec:vergleich_la} beschrieben die Berechnungszeit nicht unnötig zu erhöhen. 
+
+Zur Bestimmung der optimalen Anzahl an verdeckten Neuronen wird die Anzahl der Iterationen zunächst auf Eins gesetzt. Anschließend wird die Anzahl der verdeckten Neuronen um ein Neuron erhöht und das Ergebnis über 20 neuinitialisierungen gemittelt. Das Resultat dieser Messung ist anhand eines MLP mit dem Tangens-Hyperbolicus als Aktivierungsfunktion und mit Bias-Neuron beispielhaft in \autoref{fig:LM_tanh_m-hneuron} dargestellt. Aufgetragen ist dort der mittlere $RMSE$-Wert in Abhängigkeit der Anzahl der verdeckten Neuronen.
+
+\begin{figure}[!htb]
+    \centering
+        \input{Bilder/Plot/LM/LM_tanh_m-hneuron.tex}
+    \caption{\farbig{hneuron}}
+    \label{fig:LM_tanh_m-hneuron}
+\end{figure}
+
+Zwar weist das Netzwerk bei einem verdeckten Neuron den niedrigsten mittleren $RMSE$-Wert auf so ist dieser im Vergleich zu den Ergebnissen des Backpropagation-Verfahren doch sehr hoch. Außerdem lassen die vorherigen Untersuchungen des gleichen Netzwerkes welches mit dem BP-Verfahrens trainiert wurde darauf schließen, dass die Generalisierungsfähigkeit eines verdeckten Neurons für diese Problemstellung nicht ausreicht. Aus diesem Grund wird bei dem untersuchten Netzwerk der nächste minimale mittlere $RMSE$-Wert als Optimum gewählt. Dieses liegt bei dieser Konstellation bei 13 verdeckten Neuronen. 
+
+Für die anderen Netzwerkkonstellationen wurde bei der Bestimmung der Anzahl an verdeckter Neuronen analog vorgegangen. In der \autoref{tab:LM_resultat} sind die Ergebnisse der Untersuchungen aufgeführt. Dabei ist links zunächst die genutzte Aktivierungsfunktion und nachfolgend ob das Netzwerk Bias-Neuronen besitzt aufgeführt. Als nächstes wird die optimale Anzahl der verdeckten Neuronen für die jeweilige Konstellation angegeben. Darauf folgend wird die für das Bestimmen der optimalen Anzahl an verdeckten Neuronen benötigte Zeit angegeben. Hierfür wurden die Dauer der einzelnen Messungen aufsummiert. Da die Jacobimatrix mit jedem zusätzlichen Neuron größer und somit die Berechnungen des Netzwerkes länger wird ist die Untersuchung auf 20 Neuronen beschränkt. Schließlich wurden mit jedem Netzwerk 20 vorhersagen mit dem Testset erstellt und das beste Ergebnis in Form des kleinsten $RMSE$ (aufgeführt als min. $RMSE$) ermittelt. Die zum Training des Netzwerkes und anschließenden abrufen der Prognosen dieses Ergebnisses benötigte Zeit wird als Berechnungszeit angegeben.
+
+\begin{filecontents*}{LM_resultat.tex}
+{\setstretch{1.0}
+\captionsetup{skip=1pt,margin=5pt,position=below} %skip=1pt,
+\rowcolors{3}{tableShade}{white}
+
+\begin{longtable}{cccccc}
+    \caption{\farbig{LM resultat}} \label{tab:LM_resultat}\\
+    \toprule
+    \hiderowcolors
+
+       \multicolumn{1}{Y}{Aktivierungsfunktion} &      \multicolumn{1}{Y}{Bias- Neuron} &  \multicolumn{1}{Y}{verd. Neuronen} &  \multicolumn{1}{Y}{Trainingszeit} & \multicolumn{1}{Y}{min. $RMSE$}  & \multicolumn{1}{Y}{Berechnungszeit} \\
+
+    \midrule
+    \endfirsthead
+        \multicolumn{6}{c}{\footnotesize \tablename\ \thetable{}: Fortsetzung der vorherigen Seite} \\
+    \toprule
+       \multicolumn{1}{Y}{Aktivierungsfunktion} &      \multicolumn{1}{Y}{Bias- Neuron} &  \multicolumn{1}{Y}{verd. Neuronen} &  \multicolumn{1}{Y}{Trainingszeit} & \multicolumn{1}{Y}{min. $RMSE$}  & \multicolumn{1}{Y}{Berechnungszeit} \\
+    \midrule
+    \endhead
+    \midrule
+        \multicolumn{6}{c}{{\footnotesize \tablename\ \thetable{}: Fortsetzung auf der nächsten Seite}} \\
+    \bottomrule
+    \endfoot
+    \bottomrule
+        %\caption*{\footnotesize $^*$\,Internetseiten der Übertragungsbetreiber: Amprion, Tennet, 50Hertz, TransnetBW. Werte wurden aufsummiert. $^\dagger$\,Der Preis wurde von US-Dollar in Euro umgerechnet, fehlende Daten extra- bzw. interpoliert und der Tagespreis wurde für jede Stunde als konstant angenommen. }
+  
+    \endlastfoot
+    \showrowcolors
+        logist.                 & o       & 10  & 5h:05m:04s  & 7,95  & 7m:10s          \\
+        logist.                 & m       & 10  & 11h:29m:02s & 8,27  & 4m:15s          \\
+        Tanh.                   & o       & 11  & 4h:52m:11s  & 11,39 & 5m:14s          \\
+        Tanh.                   & m       & 13  & 11h:24m:31s & 8,06  & 19m:16s         \\
+
+\end{longtable}
+
+}
+\end{filecontents*}
+\LTXtable{\textwidth}{LM_resultat}
+
+Aus der \autoref{tab:LM_resultat} folgt, dass das Vorhandensein von Bias-Neuronen mindestens eine Verdoppelung der Trainingszeit bei der Bestimmung der optimalen Anzahl an verdeckten Neuronen aufweist. Da aber die Ergebnisse ebenfalls zeigen, dass die Berechnungszeit eines einzelnen Netzerkes beim Vorhanden sein von Bias-Neuronen auch geringer ausfallen kann als ohne, sollte der Einfluss der Bias-Neuronen mit einer größeren Stichprobe in einer Nachfolgearbeit untersucht werden. Die Anzahl der verdeckten Neuronen fällt mit circa 10 Neuronen höher aus als beim Backpropagation-Verfahren und unterliegt bei verschiedenen Konstellationen keinen großen Schwankungen. Abschließend liegen die Abweichungen der $RMSE$-Werte, bis auf das Netzwerk mit dem Tangens-Hyperbolicus als Aktivierungsfunktion und ohne Bias-Neuronen, im niedrigen einstelligen Bereich. Der Erhöhte $RMSE$-Wert bei dem Netzwerk mit dem Tangens-Hyperbolicus als Aktivierungsfunktion lässt mehrere Schlussfolgerungen zu. Einerseits könnte der Tangens-Hyperbolicus zu höheren $RMSE$-Werten führen. Hier zeigt aber das Netzwerk mit Bias-Neuronen ein anderes Ergebnis. In diesem Fall könnten die Bias-Neuronen einen positiven Einfluss ausüben. Andererseits besteht ebenfalls die Möglichkeit, dass die 20 Berechnungen stets in \glqq schlechten\grqq~Minima mündeten. Eine endgültige Begründung erfordert eine Untersuchung mit einer größeren Anzahl an Einzelberechnungen die den Rahmen dieser Arbeit sprengen würden. Abschließend lässt sich schlussfolgern, dass das bei diesem Lernalgorithmus das Netzwerk mit logistischer Aktivierungsfunktion und ohne Bias-Neuronen die kleinste Abweichung in der Vorhersage über 10000 Werte aufweist.
+
+Die prognostizierten und tatsächlichen Preise des Netzwerkes mit dem geringsten $RMSE$-Wert sind in \autoref{fig:LM_logis_o_result} dargestellt. In Anlehnung an die Analyse des Backpropagation-Verfahren sind im unteren Graphen ebenfalls die ersten und die letzten 1000 Werte des Testsatzes aufgetragen. Die vier Graphen im oberen Bereich der Abbildung stellen Teilausschnitte des Gesamtverlaufes dar, die im unteren Graphen mit roten gestrichelten Linien umrandet sind. Für die weiteren Erläuterungen dient der obere linke Graph, welcher nachfolgend als 1. Graph bezeichnet wird, als Bezugspunkt.
+
+\begin{figure}[!htb]
+    \centering
+        %\includestandalone[mode=build,width=\textwidth]{Bilder/Plot/LM/LM_logis_o_result}
+        \input{Bilder/Plot/LM/LM_logis_o_result.tex}
+    \caption{\farbig{Beschreibung erstellen}}
+    \label{fig:LM_logis_o_result}
+\end{figure}
+
+Zu Beginn der Prognose liegt der vorhergesagte nah an dem tatsächlichen Preis. Wobei, wie in dem 1. Graphen zu erkennen ist, der maximale Preisunterschied in den ersten 50 Stunden bei circa 10\,€/MWh liegt. Im 3. Graphen lässt sich erkennen, dass das Netzwerk in moderat ausgeprägten Wochenverlauf zwar sehr nah an die negativen Spitzen im Preisverlauf kommt bei den positiven aber zur Unterschätzung neigt. Wobei extreme Preisänderungen auch bei diesem Lernalgorithmus zu schlechteren Prognosen führen, wie die Preisverläufe des 2. Graphen zeigen in dem die größte Preisdifferenz bei 30\,€/MWh liegt. Am Ende des Testsets, wie im 4. Graphen zu sehen ist, weist die Prognose neben geringen Abweichungen vom tatsächlichen Preis auch entgegen läufige Preisentwicklungen. 
+
+Abschließend erfolgt die Bewertung des Vorhersagevermögens des Netzwerkes anhand der zuvor ausgewählten Performancemaße. Diese sind in \autoref{tab:LM_schaetzer} aufgeführt.
+
+\begin{filecontents*}{LM_resultat.tex}
+{\setstretch{1.0}
+\captionsetup{skip=1pt,margin=5pt,position=below} %skip=1pt,
+\rowcolors{3}{tableShade}{white}
+
+\begin{longtable}{cccccccc}
+    \caption{\farbig{BP resultat}} \label{tab:LM_schaetzer}\\
+    \toprule
+    \hiderowcolors
+        $RMSE$ & $MAE$ & $ABS$ & $REL$ & $R^2$ & $RAE$ & $MAPE_2$ & $sMAPE$ \\
+    \midrule
+    \endfirsthead
+        \multicolumn{8}{c}{\footnotesize \tablename\ \thetable{}: Fortsetzung der vorherigen Seite} \\
+    \toprule
+        $RMSE$ & $MAE$ & $ABS$ & $REL$ & $R^2$ & $RAE$ & $MAPE_2$ & $sMAPE$ \\
+    \midrule
+    \endhead
+    \midrule
+        \multicolumn{8}{c}{{\footnotesize \tablename\ \thetable{}: Fortsetzung auf der nächsten Seite}} \\
+    \bottomrule
+    \endfoot
+    \bottomrule
+    \endlastfoot
+    \showrowcolors
+        7,946 & 5,694 & 0,804 & 0,028 & 0,775 & 40,483 & 19,9 & 22,95 \\
+\end{longtable}
+
+}
+\end{filecontents*}
+\LTXtable{\textwidth}{LM_resultat}
+
+Der $ABS$ und der $REL$-Wert sind beide positiv und zeigen somit das die Gesamtschätzung eine überschätzte Prognose aufweist. Das $R^2$ besitzt mit 0,775 einen positiven Wert der näher an der 1 als an 0,5 ist und der $RAE$-Wert ist mit 40,483 deutlich unter 100. Hiermit weist das Netzwerk eine höhere Vorhersagegenauigkeit auf als der historische Mittelwert. 
+
+Die Abweichung des $RMSE$ sowie des $MAE$-Schätzers zwischen den beiden Lernalgorithmen beträgt 0,361 und 0,486 respektive. Wobei Der LM-Algorithmus jeweils den geringeren Wert aufweist. Die Differenz des $MAPE$ und des $sMAPE$ beträgt 1,697 und 3,091, wobei ebenfalls der LM-Algorithmus den geringeren Wert besitzt. Hieraus geht hervor, dass der Levenberg-Marquardt Algorithmus eine bessere vorhersage trifft als das Backpropagation Verfahren. 
+
+Bei der Auswertung der Messungen ist aufgefallen, dass der implementierte LM-Algorithmus in einigen Fällen optimale Fehlerwerte ausgibt (ergo einen $RMSE$-Wert von Null usw.). Dies führte bei der Mittelwertbildung der Fehler zu verzerrten Ergebnissen. Nach Bekanntwerden dieser Problematik konnte festgestellt werden, dass hin und wieder nach dem Training die Gewichtsmatrizen des Netzwerkes leer sind. Da die restlichen Ergebnisse aber plausible Werte liefern wurde von einer Neuprogrammierung abgesehen und die Fehlermittelwerte an die veränderte Anzahl an Ergebnissen angepasst. Des weiteren ist dieser Fehler erst zu einer sehr fortgeschrittenen Zeit dieser Arbeit bekannt geworden daher konnte er nicht weiter eingegrenzt geschweige den behoben werden. Das Programm wurde nun aber soweit modifiziert, dass falls das Netzwerk nach dem Training leere Gewichte aufweist so wird es neuinitialisiert.
 

@@ -1,0 +1,10 @@
+\defaultfontfeatures[TimesNewRoman]
+{
+    Path            = Fonts/,%
+    Extension       = .ttf,
+    UprightFont     = times,%
+    BoldFont        = timesbd,%
+    ItalicFont      = timesi,%
+    BoldItalicFont  = timesbi,%
+% <any other desired options>
+}

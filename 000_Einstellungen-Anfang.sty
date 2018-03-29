@@ -23,7 +23,26 @@
 %\usepackage{caption,subcaption}
 %\usepackage{subfig}                     % Ermöglicht mehrere Bilder in  einer Abbildung
 %\usepackage{fp}                         % Ermöglicht Kalkulationen innerhalb von LaTeX
+\usepackage{silence}
 
+%-------------------------------------------
+%% Fonteinstellungen abhängig vom Compiler
+%% Quellen: https://en.wikibooks.org/wiki/LaTeX/Fonts
+%%          https://www.sharelatex.com/learn/XeLaTeX
+%%          https://tex.stackexchange.com/questions/12565/load-fonts-that-are-in-a-fonts-directory
+\usepackage{ifxetex}                    % Ermöglicht das Prüfen ob XeLaTeX benutz wird
+    \ifxetex
+        \usepackage{fontspec}
+        \defaultfontfeatures{Ligatures=TeX} % To support LaTeX quoting style
+        \setmainfont{TimesNewRoman}         % Times New Roman (aus Windows) wird als Standardschrift gesetzt
+        % Specify different font for section headings
+        \newfontfamily\headingfont[]{TimesNewRoman}
+        \addtokomafont{disposition}{\headingfont}
+    \else
+        \usepackage[T1]{fontenc}            % Liefert die meisten Text-Zeichen für westeuropäische Sprachen
+        \usepackage[utf8]{inputenc}         % Ermöglicht die direkte Eingabe der Umlaute
+        \usepackage{mathptmx}               % Times wird als Standardschrift gesetzt
+    \fi
 
 %-------------------------------------------
 %% Stellt Zeilenabstand auf Word vergleichbaren Abstand von 1,5 
@@ -35,29 +54,9 @@
 
 
 %-------------------------------------------
-%% Fonteinstellungen abhängig vom Compiler
-%% Quellen: https://en.wikibooks.org/wiki/LaTeX/Fonts
-%%          https://www.sharelatex.com/learn/XeLaTeX
-%%          https://tex.stackexchange.com/questions/12565/load-fonts-that-are-in-a-fonts-directory
-\usepackage{ifxetex}                    % Ermöglicht das Prüfen ob XeLaTeX benutz wird
-    \ifxetex
-        \usepackage{fontspec}
-        \defaultfontfeatures{Ligatures=TeX} % To support LaTeX quoting style
-        \setmainfont[%                      % Times New Roman (aus Windows) wird als Standardschrift gesetzt
-            Path = Fonts/,%                 % Dateien Pfad wird auf Fonts/ gesetzt
-            BoldFont=timesbd.ttf,%
-            ItalicFont=timesi.ttf,%
-            BoldItalicFont=timesbi.ttf,%
-            ]{times.ttf}
-    \else
-        \usepackage[T1]{fontenc}            % Liefert die meisten Text-Zeichen für westeuropäische Sprachen
-        \usepackage[utf8]{inputenc}         % Ermöglicht die direkte Eingabe der Umlaute
-        \usepackage{mathptmx}               % Times wird als Standardschrift gesetzt
-    \fi
-
-%-------------------------------------------
 %% Pakete zur Erweiterung der Mathematikumgebung
 \usepackage{amsmath}                    % Erweitert die Mathematikumgebung
+\usepackage{bm}                         % Ermöglicht die Bold Schrift in der Mathematikumgebung
 \usepackage{physics}                    % Erweitert die Mathematikumgebung um \abs{} und \norm{}
 \newcommand*\mean[1]{\bar{#1}}
 
