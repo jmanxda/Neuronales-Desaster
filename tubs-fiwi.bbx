@@ -1,0 +1,54 @@
+\ProvidesFile{mybibstyle.bbx}
+[\abx@bbxid]
+
+\RequireBibliographyStyle{authoryear-icomp}
+
+
+
+\DefineBibliographyStrings{german}{%    % Verändert beim zitieren "u.a." zu "et al." und "und" zu "and"
+  andothers = {et al.},
+  edition   = {Auflage},
+  %and      = {and}
+}
+
+\DeclareFieldFormat{journaltitle}{#1\addcomma} % italic journal title with comma
+\DeclareFieldFormat[article]{title}{#1} % title of journal article is printed as normal text
+\DeclareFieldFormat[book]{title}{#1} % title of book is printed as normal text
+\DeclareFieldFormat[inproceedings]{booktitle}{#1} % title of inproceedings is printed as normal text
+\DeclareFieldFormat[inproceedings]{title}{#1} % title of inproceedings is printed as normal text
+\DeclareFieldFormat[online]{title}{#1} % title of online is printed as normal text
+\DeclareFieldFormat[report]{title}{#1} % title of online is printed as normal text
+\DeclareFieldFormat[incollection]{title}{#1} % title of online is printed as normal text
+\DeclareFieldFormat[incollection]{booktitle}{#1} % title of online is printed as normal text
+
+\DeclareFieldFormat{url}{WWW\addcolon\space\url{#1}}
+\DeclareFieldFormat{urldate}{\mkbibparens{#1}}
+
+\renewbibmacro{in:}{\printtext{in:\addspace}}
+\renewcommand*{\labelnamepunct}{\addcolon \space} 
+\renewcommand*{\newunitpunct}{\addcomma\space}
+%\renewcommand*{\mkbibacro}[1]{#1}
+
+
+
+
+\newbibmacro{vol}{\printtext{Vol.}}
+\renewbibmacro*{volume+number+eid}{%
+  \iffieldundef{volume}
+    {}
+    {%
+  \usebibmacro{vol}%
+  \setunit*{\addspace}%
+  \printfield{volume}%
+  %\setunit*{\addspace}%
+  \printfield[parens]{number}%
+  \setunit{\addcomma\space}%
+  \printfield{eid}}}
+  
+
+\setlength{\bibitemsep}{5pt}            % Stellt den Zeilenabstand zwischen den Literaturverzeichnis Einträgen ein
+\setlength{\bibhang}{40pt}              % Stellt den Einzug des Literaturverzeichnisses ein
+%\setlength{\bibitemsep}{5pt}
+%\setlength{\bibparsep}{10pt}
+
+\endinput

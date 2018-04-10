@@ -4,9 +4,17 @@
 %% Inhaltsverzeichniss
 
 \setcounter{page}{5}
-\tableofcontents
+{
+\setstretch{1.25} 
+\tableofcontents%
+\newpage
+\printglossary[type=abbreviations, title={Abkürzungsverzeichnis}]%
+\newpage
+\listoffigures%
+\newpage
+\listoftables%
+\newpage
+\printglossary[type=symbols, style=superborder, nopostdot=false, title={Variablenverzeichnis}]%
+}
 
-\thispagestyle{fancy}   % \tableofcontents überschreibt die Position der Seitenangabe. Dies korrigiert es wieder.
-\rhead{\thepage}
-\cfoot{}
 

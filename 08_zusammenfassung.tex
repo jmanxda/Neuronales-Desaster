@@ -3,6 +3,35 @@
 %---------------------------------------------------------------------------------
 %% Zusammenfassung
 
-\section{Zusammenfassung} 
+\section{Zusammenfassung und Ausblick} 
+
+Ziel dieser Arbeit war die Anwendbarkeit künstlicher neuronaler Netze auf die Prognose von Strompreisen zu untersuchen. Für diese Aufgabe wurde zunächst der Aufbau des menschlichen Gehirns betrachtet. Im Anschluss wurde die Funktion des biologischen und des künstlichen Neurons gegenübergestellt. Als nächstes wurden Charakterisierungsmöglichkeiten künslicher neuronaler Netze aufgezeigt, aktuelle Modell vorgestellt und hinsichtlich ihrer Einsatzgebiete eingeordnet. Nachfolgend wurden die Eigenheiten des Strommarktes und die Besonderheiten des Strompreises erläutert. Anschließend wurde ein Literaturüberblick über die Anwendung künstlicher neuronaler Netze zur Vorhersage des Strompreises im Zeitraum zwischen 2016 und 2018 gegeben. Im Anschluss wurden die in der Literatur angewandten Maße zur Evaluierung der Vorhersagegenauigkeit disskutiert. Schließlich wurden die am häufigsten angewandten Algorithmen zur Strompreisvorhersage hergeleitet und gegenübergestellt. Abschließend wurde der zur Analyse der Algorithmen genutzte Datensatz vorgestellt und die Prognosegenauigkeit der Algorithmen analysiert.\\
+
+Die Charakterisierungsmöglichkeiten künstlicher neuronaler Netze sind vielfältig. In dieser Arbeit wurden verschiedene Netzwerke anhand der eingesetzten Neuronen, ihrer Verbindungsarchitektur und des überwiegend eingesetzten Lernalgorithmus vorgestellt. Vielfältig sind ebenfalls die Einsatzgebiete aber es gibt auch Netzwerke, wie das Hopfieldnetz, die sehr spezielle Anwendungen besitzen. Allgemein wurden die Einsatzgebiete eingeteilt in Klassifizierung, Kombinatorische Optimierung sowie assoziatives Gedächtnis, wobei die Einteilung nicht als starr und klar umgrenzt angesehen werden kann. Aufgrund der Vielseitigkeit künstlicher neuronaler Netze können sie nicht direkt sondern nur innerhalb der gleichen Anwendung miteinander verglichen werden. \\
+
+Der Strompreis ist gekennzeichnet durch Volatilität, Saisonalität, Preis-Spitzen, Sprünge und Nichtlinearitäten und kann daher nur schwer mit ökonometrischen Modellen vorhergesagt werden. Es wurde gezeigt, dass es in der Literatur unterschiedliche Herangehensweisen und Modelle gibt die den Versuch unternehmen den Strompreis zu prognostizieren. Die vielversprechendsten Ansätze liefern hierbei hybride Modelle, da sie unterschiedliche Muster in den Daten erfassen können und somit zu einer geringeren Vorhersageabweichung führen. Da der Fokus dieser Arbeit auf den künstlichen neuronalen Netzen lag wurde bei der Literaturrecherche auch beim Einsatz hybrider Modelle nur das angewandte neuronale Netz betrachtet. Die Literaturrecherche im genannten Zeitraum ergab, dass das MLP das am häufigsten zur Strompreisvorhersage eingesetzte Netzwerk ist. Zusätzlich wurde herausgefunden, dass als Lernalgorithmen das Backpropagation-Verfahren und der Levenberg-Marquardt Algorithmus am häufigsten zur Anwendung kommen. Schließlich lassen die Ergebnisse der Veröffentlichungen, durch den Einsatz unterschiedlicher Datensätze, keinen Schluss über die beste Netzwerkkonstellation zur generellen Prognose von Strompreisen zu.
+
+Um herauszufinden welche Netzwerkkonstellationen zu einer besseren Prognose führen und ob der Lernalgorithmus ebenfalls einen Einfluss auf die Prognosefähigkeit eines Netzwerkes ausübt, wurde zunächst das Backpropagation-Verfahren und der Levenberg-Marquardt Algorithmus hergeleitet und gegenübergestellt. Die Gegenüberstellung der Lernalgorithmen ergab, dass das BP-Verfahren im Vergleich zum LM Algorithmus simpler aufgebaut ist. Dafür arbeitet der LM Algorithmus nach der Initialisierung autonom, im Gegensatz zum BP-Verfahren bei dem die optimalen Parameter iterativ bestimmt werden müssen. Da der LM Algorithmus Matritzen enthält welche die Gesamtheit der Gewichte sowie Trainingsbeispiele beinhalten, benötigt dieser Algorithmus bei großen Datensätzen einen hohen Speicherbedarf. Der zu untersuchende Datensatz beinhaltet im Trainingsset 46.180 Datenpunkte und wurde als groß angesehen. Um möglichen Berechnungsproblemen vorzubeugen und den Speicherbedarf zu reduzieren wurde der Algorithmus bei der Implementierung dahingehend abgewandelt, dass für jede Gewichtsschicht eine eigene Matrix erstellt wurde.\\  
+
+Anschließend wurde die Prognosefähigkeit des MLP-Netzes untersucht. Zusätzlich zu den Lernalgorithmen wurden als Netzwerkkonstellationen die logistische Funktion und der Tahngens-Hyperbolicus als Aktivierungsfunktion betrachtet und die An- bzw. Abwesenheit von Bias-Neuronen berücksichtigt. 
+
+
+Unter diesem Gesichtspunkt kann die in der Literatur zu findende Aussage nicht bestätigt werden wonach der LM Algorithmus schneller Lernt.
+
+
+Nach dem Training mit dem Backpropagation-Verfahren weist das MLP mit einer logistischen Aktivierungsfunktion und ohne Bias-Neuronen den geringsten $RMSE$-Wert und somit die geringste Vorhersageabweichung auf. Wobei die $ABS$- und $REL$-Werte negativ sind und somit auf eine Unterschätzung der Gesamtvorhersage hindeuten. 
+
+
+
+
+
+
+In der betrachteten Literatur werden diverse Netzwerke auf unterschiedlichen Märkten und unter Zuhilfenahme unterschiedlicher Performancemaße zur Strompreisvorhersage eingesetzt. Die Vergleichbarkeit dieser Ergebnisse, geschweige denn die Beurteilung ob ein Modell besser oder schlechter ist, gestaltet sich daher als schwer.\\ 
+
 
 Da aber die Differenzen der Schätzer im niedrigen einstelligen Bereich liegen, weisen sie eine geringe Abweichung auf. Aus diesem Grund lassen die Ergebnisse hieraus keine Bewertung darüber treffen ob eines der beiden vorgestellten Lernalgorithmen generell zu besseren Ergebnissen führt. Dieses Ergebnis war zu erwarten da das zugrundeliegende Netzwerk gleich bleibt und sie Art und Weise wie die Gewichte verändert wurden variiert wurde. 
+
+
+%----Ausblick
+
+\todo{gemeinsamer Datensatz um Ergebnisse untereinander vergleichen zu können}

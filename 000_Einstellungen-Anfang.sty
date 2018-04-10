@@ -7,23 +7,57 @@
 
 %-------------------------------------------
 %% Zusätzliche Pakete werden geladen
-%\documentclass[a4paper, 12pt, titlepage]{scrartcl} % Schrift- und Papiergröße werden eingestellt  
-\usepackage[top=2.5cm, bottom=2cm, left=2.5cm, right=2.5cm]{geometry} % Korrekturrand wird eingestellt
-\usepackage[ngerman]{babel}             % Dokumentsprache wird auf deutsch gesetzt
-\usepackage[table]{xcolor}              % Ermöglicht die Änderung der Schriftfarbe
-\usepackage{graphicx}                   % Ermöglicht das Einbinden von Bildern
-\usepackage{adjustbox}
-\usepackage{fancyhdr}                   % Ermöglicht die freie Bearbeitung der Fuß und Kopfzeilen
-\usepackage{tocloft}                    % Ermöglicht das anpassen des Inhaltsverzeichnisses
-%\usepackage{wrapfig}                    % Ermöglicht textumschlossene Abbildungen
-\usepackage{array}                      % Ermöglicht das Anpassen von Tabellen
-\usepackage{esdiff}                     % Vereinfacht die Benutzung von Differentiation in der Mathematikumgebung
 \usepackage{ifthen}                     % Ermöglicht wenn dann Abfragen
 \usepackage{verbatim}                   % Ermöglicht das Auskommentieren mehrerer Zeilen an Code
+\usepackage{adjustbox}
+\usepackage{silence}
+%\usepackage{wrapfig}                    % Ermöglicht textumschlossene Abbildungen
 %\usepackage{caption,subcaption}
 %\usepackage{subfig}                     % Ermöglicht mehrere Bilder in  einer Abbildung
 %\usepackage{fp}                         % Ermöglicht Kalkulationen innerhalb von LaTeX
-\usepackage{silence}
+
+
+
+
+
+
+%-------------------------------------------
+%% Pakete zum einstellen des Seitenlayouts
+%\documentclass[a4paper, 12pt, titlepage]{scrartcl} % Schrift- und Papiergröße werden eingestellt  
+\usepackage[top=2.5cm, bottom=2cm, left=2.5cm, right=2.5cm]{geometry} % Korrekturrand wird eingestellt
+\usepackage[ngerman]{babel}             % Dokumentsprache wird auf deutsch gesetzt
+\usepackage{fancyhdr}                   % Ermöglicht die freie Bearbeitung der Fuß und Kopfzeilen
+\usepackage[titles]{tocloft}            % Ermöglicht das anpassen des Inhaltsverzeichnisses
+\usepackage{fancyvrb}                   % Erweitert die Verbatimumgebung
+\usepackage{listings}                   % Ermöglicht hervorgehobenen Quellcode
+\usepackage{inconsolata}                % Fügt das Font "Consolata" ein
+
+\usepackage{etoolbox}                   % Ermöglicht das verändern von Eigenschaften anderer Packete
+\makeatletter                           % Entfernt das Extraspacing der Verbatimumgebung
+\patchcmd{\FV@ListVSpace}{\@topsepadd\topsep}{}{}
+\makeatother
+
+\setlength{\parindent}{0pt}             % Entfernt den Einzug der ersten Zeile
+
+\pagestyle{fancy}                       % Ermöglicht benutzerdefinierte Kopf- und Fußzeilen
+\lhead{}
+\chead{}
+\rhead{\thepage}                        % Seitenangabe oben rechts
+\cfoot{} 
+\renewcommand{\headrulewidth}{0pt}      % Breite des Dekostriches in der Kopfzeile
+\renewcommand{\footrulewidth}{0pt}      % Breite des Dekostriches in der Fußzeile
+
+\fancypagestyle{plain}{%
+%\fancyhf                               % clear all headers and footers fields
+\fancyhead[R]{\thepage}                 % prints the page number on the right side of the header
+}
+
+%-------------------------------------------
+%% Stellt Zeilenabstand auf Word vergleichbaren Abstand von 1,5 
+\usepackage{setspace}                   % Ermöglicht das Einstellen des Zeilenabstandes
+\setstretch{1.428}                      % Zeilenabstand wird auf 1,5 gesetzt
+
+
 
 %-------------------------------------------
 %% Fonteinstellungen abhängig vom Compiler
@@ -44,19 +78,12 @@
         \usepackage{mathptmx}               % Times wird als Standardschrift gesetzt
     \fi
 
-%-------------------------------------------
-%% Stellt Zeilenabstand auf Word vergleichbaren Abstand von 1,5 
-%\usepackage[onehalfspacing]{setspace}   % Zeilenabstand wird auf 1,5 gesetzt
-\usepackage{setspace}
-%\FPeval\zeilenabstand{175/122}            % Berechnet den Wert innerhalb der Klammern und speichert ihn in der Variable \zeilenabstand
-\setstretch{1.428}                      % Zeilenabstand wird auf 1,5 gesetzt
-
-
 
 %-------------------------------------------
 %% Pakete zur Erweiterung der Mathematikumgebung
 \usepackage{amsmath}                    % Erweitert die Mathematikumgebung
 \usepackage{bm}                         % Ermöglicht die Bold Schrift in der Mathematikumgebung
+\usepackage{esdiff}                     % Vereinfacht die Benutzung von Differentiation in der Mathematikumgebung
 \usepackage{physics}                    % Erweitert die Mathematikumgebung um \abs{} und \norm{}
 \newcommand*\mean[1]{\bar{#1}}
 
@@ -69,17 +96,16 @@
 }{}{}
 
 
-%-------------------------------------------
-%% Pakete für das Erstellen von Refferenzen
-\usepackage{varioref}
-\usepackage{hyperref} % Erweitert die Referenzmöglichkeiten
-\usepackage{cleveref}
 
 %-------------------------------------------
 %% Pakete für das Erstellen von Tabellen
 %% Quellen: https://ctan.org/pkg/filecontents
 %%          https://www.overleaf.com/latex/examples/a-longtable-plus-tabularx-example/rcrxtjbrvyft
 %%          http://texwelt.de/wissen/fragen/1805/ist-es-moglich-x-spalten-in-tabellen-linksbundig-auszurichten
+
+\usepackage[table]{xcolor}                  % Ermöglicht die Änderung der Schriftfarbe
+\usepackage{array}                          % Ermöglicht das Anpassen von Tabellen
+
 
 \usepackage{filecontents}                   % Ermöglicht das erstellen von Dateien direkt im Quelltext
 \usepackage{ragged2e}                       % \raggedright verhindert die Silbentrennung mit diesem Paket und \RaggedRight ist dies wieder möglich
@@ -114,14 +140,30 @@
 %-------------------------------------------
 %% Pakete für das Erstellen des Literaturverzeichnisses
 \usepackage[babel,german=quotes]{csquotes}  % Verwendet die deutsche Art der Anführungszeichen
-\usepackage[backend=biber, style=authoryear, citestyle=authoryear, maxitems=1]{biblatex}
+% \usepackage[backend=biber, style=authoryear-icomp, citestyle=authoryear, sorting=nyt, maxitems=1]{biblatex}
+\usepackage[backend=biber, style=tubs-fiwi, citestyle=authoryear, sorting=nyt, maxitems=1]{biblatex}
 
-\DefineBibliographyStrings{german}{%    % Verändert beim zitieren "u.a." zu "et al." und "und" zu "and"
-  andothers = {et al.},
-  %and       = {and}
-}
 \addbibresource{11_literatur.bib}       % Fügt die Literaturverzeichnisdatei ein
-\setlength{\bibitemsep}{10pt}           % Stellt den Zeilenabstand zwischen den Literaturverzeichnis Einträgen ein
+
+
+%-------------------------------------------
+%% Pakete für das Erstellen von Referenzen
+\usepackage{varioref}
+\usepackage{hyperref} % Erweitert die Referenzmöglichkeiten
+\usepackage{cleveref}
+\urlstyle{same}
+
+
+%-------------------------------------------
+%% Pakete für das Erstellen von Verzeichnissen
+\usepackage[abbreviations,symbols,nomain,nogroupskip,automake,nonumberlist,style=super]{glossaries-extra} %
+\makeglossaries
+\input{verzeichnisdefinition.tex}
+\setlength{\glsdescwidth}{0.85\textwidth}    % Stellt die Spaltenbreite der Beschreibungen ein
+
+\renewcommand{\cftsecleader}{\textbf{\cftdotfill{\cftdotsep}}} % Füllt den Leerraum der Sectionenangaben im Inhaltsverzeichnis mit Punkten bis zur Seitenzahl (standardmäßig bei article-class nur ab subsections)
+
+
 %-------------
 %% Erstellt ein Makro welches prüft ob die eingegebene Variable leer ist
 \def\ifempty#1{% 
@@ -177,8 +219,9 @@
 
 %-------------------------------------------
 %% Pakete für das Erstellen von Bildern/Grafiken
+\usepackage{graphicx}                   % Ermöglicht das Einbinden von Bildern
 \usepackage{pdfpages}                   % Ermöglicht das Einbinden von PDF Dokumenten (wird verwendet für die Einbindung der Aufgabenstellung)
-\usepackage[showboxes,absolute]{textpos}   % Ermöglicht das Setzen von Inhalt an einem beliebigen Ort
+\usepackage[absolute]{textpos}          % Ermöglicht das Setzen von Inhalt an einem beliebigen Ort. Mit [showboxes] können die Umrisse angezeigt werden
 \usepackage{pgf,tikz}                   % Ermöglicht das Erstellen von Grafiken
 \usepackage{tikz-cd}
 \usetikzlibrary{arrows,calc,intersections,shapes}
@@ -194,6 +237,30 @@
 %\usepgfplotslibrary{external}
 %\tikzexternalize
 %%-------------------------------------------------------%%
+
+%-------------------------------------------
+%% Einstellungen zum kommentieren von Quellcode
+
+\definecolor{dark_green}{RGB}{0, 128, 0}
+\definecolor{maron}{RGB}{128, 0, 0}
+\definecolor{Blue}{RGB}{0, 0, 255}
+
+\lstset{language=C++,
+        basicstyle=\small\ttfamily,
+        keywordstyle=\color{Blue},
+        stringstyle=\color{maron},
+        commentstyle=\color{dark_green},
+        morecomment=[l][\color{magenta}]{\#},
+        numbers=left,
+        stepnumber=1,    
+        firstnumber=1,
+        numberfirstline=true,
+        numbersep=5pt,
+        xleftmargin=35pt,
+        breaklines=true,
+        tabsize=5,
+        showstringspaces=false,
+}
 
 
 \newcommand\Mygrid{%                        % Erzeugt ein Grid für textpos mit \Mygrid        
@@ -248,20 +315,12 @@
 }
 
 
-%\usepackage{adjustbox}
 
-\setlength{\parindent}{0pt}             % Entfernt den Einzug der ersten Zeile
 
-\pagestyle{fancy}                       % Ermöglicht benutzerdefinierte Kopf- und Fußzeilen
-\lhead{}
-\chead{}
-\rhead{\thepage}                        % Seitenangabe oben rechts
-\cfoot{} 
-\renewcommand{\headrulewidth}{0pt}      % Breite des Dekostriches in der Kopfzeile
-\renewcommand{\footrulewidth}{0pt}      % Breite des Dekostriches in der Fußzeile
+
 
 \newcommand{\titel}{Modellierung und Prognose von Strompreisen durch Neuronale Netze}   % Erstellt eine Variable mit dem Titel der Arbeit
-\newcommand{\abgabedatum}{!!13. April 2018!!}   % Erstellt eine Variable mit dem Abgabedatum der Arbeit
+\newcommand{\abgabedatum}{\farbig{!!13. April 2018!!}}   % Erstellt eine Variable mit dem Abgabedatum der Arbeit
 \newcommand{\name}{Dennis Albrecht}     % Erstellt eine Variable mit dem Namen des Verfassers
 
 \newcommand\blankpage{%                 % Ermöglicht die Erstellung leerer Seiten mit \blankpage
@@ -270,7 +329,7 @@
     \newpage%
 }
 
-\renewcommand{\cftsecleader}{\textbf{\cftdotfill{\cftdotsep}}} % Füllt den Leerraum der Sectionenangaben im Inhaltsverzeichnis mit Punkten bis zur Seitenzahl (standardmäßig bei article-class nur ab subsections)
+
 
 %-------------------------------------------
 %% Einstellungen für die richtige Nummerierung von Fußnoten und Hyperlinks

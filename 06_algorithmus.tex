@@ -4,12 +4,14 @@
 %---------------------------------------------------------------------------------
 %% Algorithmen
 
-\section{Herleitung und Vergleich des Backpropagation und Levenberg-Marquardt Algorithmus}\label{sec:algorithm}
+\section{Herleitung und Vergleich ausgewählter Algorithmen}\label{sec:algorithm}
 
-Im \autoref{sec:ANN-Modelle} wurden Modelle künstlicher neuronaler Netze verschiedener Kategorien vorgestellt, stärken sowie schwächen aufgezeigt und in mögliche Anwendungsgebiete eingeteilt. In \autoref{sec:strompreis} wurden die spezifischen Eigenschaften von Strompreisen aufgeführt und Modelle genannt die zur Vorhersage eingesetzt wurden. Vor dem Hintergrund der Beiden Kapitel erfolgt in diesem Abschnitt die Vorstellung der am häufigsten eingesetzten Algorithmen. Aus \autoref{sec:literaturueberblick} ist zu entnehmen, dass zur Modellierung und Vorhersage von Strompreisen das MLP das am meisten genutzte Netzwerk ist. Darüber hinaus wird das Backpropagation gefolgt vom Levenberg-Marquardt Lernalgorythmus am häufigsten eingesetzt. In diesem Abschnitt werden beide Algorithmen hergeleitet und vorgestellt. Anschließend werden die Vorzüge bzw. die Nachteile diskutiert. 
+Im \autoref{sec:ANN-Modelle} wurden Modelle künstlicher neuronaler Netze verschiedener Kategorien vorgestellt, Stärken sowie Schwächen aufgezeigt und in mögliche Anwendungsgebiete eingeteilt. In \autoref{sec:strompreis} wurden die spezifischen Eigenschaften von Strompreisen aufgeführt und Modelle genannt, die zur Vorhersage eingesetzt wurden. Vor dem Hintergrund der beiden Kapitel erfolgt in diesem Abschnitt die Vorstellung der am häufigsten eingesetzten Algorithmen. Aus \autoref{sec:literaturueberblick} ist zu entnehmen, dass zur Modellierung und Vorhersage von Strompreisen das MLP das am häufigsten genutzte Netzwerk ist. Darüber hinaus wird das Backpropagation, gefolgt vom Levenberg-Marquardt Lernalgorythmus, am häufigsten eingesetzt. In diesem Abschnitt werden beide Algorithmen hergeleitet und vorgestellt. Anschließend werden die Vorzüge bzw. die Nachteile diskutiert. 
 
 \subsection{Gemeinsame Grundlage}
-Für beide Algorithmen wird wie bereits zu beginn des Abschnittes erwähnt das MLP-Netz benutzt. Das zu betrachtende Netzwerk besteht aus $(X_{i}, i=1,\dots,I)$ Eingabeneuronen, gefolgt von $(Z_{h}, h=1,\dots,H)$ verdeckten Neuronen und schließlich $(Y_{o}, o=1,\dots,O)$ Ausgabeneuronen. Hieraus ergeben sich drei Schichten an Neuronen und zwei Schichten an trainierbaren Gewichten $w_{hi}$ und $w_{oh}$. Zusätzlich sind die Aktivierungsfunktionen aller Neuronen gleich und Differenzierbar. In \autoref{fig:MLP-Algorithm} ist das betrachtete Netzwerk abgebildet.
+Für beide Algorithmen wird wie bereits zu Beginn des Abschnittes, erwähnt das MLP-Netz benutzt. Das zu betrachtende Netzwerk besteht aus $(\gls{xin}, i=1,\dots,\gls{I})$ Eingabeneuronen, gefolgt von $(\gls{zhn}, h=1,\dots,\gls{H})$ verdeckten Neuronen und schließlich $(\gls{yon}, o=1,\dots,\gls{O})$ Ausgabeneuronen. Hieraus ergeben sich drei Schichten an Neuronen und zwei Schichten an trainierbaren Gewichten $w_{hi}$ und $w_{oh}$. Weiterhin sind die Aktivierungsfunktionen aller Neuronen gleich und differenzierbar. Zusätzlich besteht die Menge an Lernbeispielen $P$ aus einem Trainingsbeispiel $p$ und der zugehörigen Lösung $t$ und kann zusammengefasst dargestellt werden als $(p,t)$. In \autoref{fig:MLP-Algorithm} ist das betrachtete Netzwerk abgebildet.
+
+%\todo{sagen dass die Lernbeispiele aus Trainingspaaren bestehen auch eine Lösung enthalten}
 
 \begin{figure}[!htb]
     \centering
@@ -17,38 +19,39 @@ Für beide Algorithmen wird wie bereits zu beginn des Abschnittes erwähnt das M
         %% MLP-Algorithm
         %-----------------------------------------
         \input{Bilder/Netzwerke/MLP_Algorithm.tex}
-    \caption{MLP Das bei der Herleitung des Backpropagation und Levenberg-Marquardt Algorithmuses betrachtet wird.}
+    \caption{MLP das bei der Herleitung des Backpropagation und Levenberg-Marquardt Algorithmus betrachtet wird.}
     \label{fig:MLP-Algorithm}
 \end{figure}
 
 
 \subsection{Backpropagation}\label{sec:Backpropagation}
 %\todo{MLP \citet[90]{dkriesel07}}
-Das Backpropagation ist die Kurzform des englischen Begriffes \textit{Backpropagation of error} und zählt zu den Gradientenabstiegsverfahren bei denen die Fehlerverteilung als \glqq hügelige\grqq Landschaft angesehen wird (siehe \autoref{fig:Fehlerlandschaft}). Beim Beginn des Trainings wird die Richtung gesucht in die der Gradient abfällt und ein Schritt in diese Richtung unternommen. Anschließend wiederholt man die Prozedur mehrmals bis es entweder keine Trainingsbeispiele mehr gibt oder der Fehler sich nicht mehr groß verändert und somit ein Fehlerminimum erreicht ist. Das Backpropagation ist eine Erweiterung der Deltaregel und wird analog Hergeleitet. In diesem Abschnitt werden die spezifischen Schritte dargestellt die für das Backpropagation benötigt werden, zur detaillierten Herleitung der Deltaregel wir an dieser Stelle auf den \autoref{sec:deltaregel} verwiesen.
-Betrachtet wird nun ein Neuron $Z_h$ in der Mitte des Netzwerkes. Dieses Neuron besitzt eine Menge $H \cdot I$ Verbindungen die zu ihm aber auch eine Menge $O \cdot H$ die von ihm weg führen. Somit übertragen die vorgelagerten Neuronen die gewichtete Information an das Neuron $h$. Formal ergibt sich die Netzeingabe $net_{h}$ des Neurons $h$:
+Das Backpropagation-Verfahren ist die Kurzform des englischen Begriffes \textit{Backpropagation of error} und zählt zu den Gradientenabstiegsverfahren. Das Gradientenabstiegsverfahren wird in \autoref{sec:gradient} näher beschrieben. Es wird zunächst die Fehlerverteilung als \glqq hügelige\grqq~Landschaft angesehen (siehe \autoref{fig:Fehlerlandschaft}) und das Ziel ist es das \glqq Tal\grqq~dieser Landschaft zu finden. Das Tal entspricht der geringsten Abweichung zwischen dem errechneten und beobachteten Wert. Hierbei wird zu Beginn des Trainings die Richtung gesucht, in die der Gradient abfällt und ein Schritt in diese Richtung unternommen. Anschließend wiederholt man die Prozedur mehrmals bis es entweder keine Trainingsbeispiele mehr gibt oder der Fehler sich nicht mehr groß verändert und somit ein Fehlerminimum erreicht ist. Das Backpropagation-Verfahren ist eine Erweiterung der Delta-Regel und wird analog hergeleitet. In diesem Abschnitt werden die spezifischen Schritte dargestellt die für das Backpropagation-Verfahren benötigt werden. Zur detaillierten Herleitung der Delta-Regel wir an dieser Stelle auf den Anhang \ref{sec:deltaregel} verwiesen.
+\todo{sagen warum man bei der Herleitung in der mitte des Netzwerkes beginnt.}
+Betrachtet wird nun ein Neuron $Z_h$ in der Mitte des Netzwerkes. Dieses Neuron besitzt eine Menge $H \cdot I$ Verbindungen, die zu ihm aber auch eine Menge $O \cdot H$, die von ihm weg führen. Somit übertragen die vorgelagerten Neuronen die gewichtete Information an das Neuron $h$. Formal ergibt sich die Netzeingabe $net_{h}$ des Neurons $h$:
 \begin{equation}
-net_{h} = \sum_{i \in I} w_{hi} \cdot x_{i} .
+\gls{net}[_{h}] = \sum_{i \in I} \gls{w}[_{hi}] \cdot \gls{xi} .
 \label{gl:neth}
 \end{equation}
 
 Nach der Verarbeitung der Eingabeinformationen durch die Aktivierungsfunktion kann die Ausgabe des Neurons $h$ beschrieben werden als:
 \begin{equation}
-z_{h}= f_{akt}(net_{h}) .
+\gls{zh}= \gls{fa}[(net_{h})] . %f_{akt}(net_{h}) .
 \label{gl:aktiv}
 \end{equation}
 
-Wie nun in der Deltaregel zu beobachten war ist die Änderung eines Gewichtes $w_{hi}$ proportional zur negativen Ableitung der Fehlerfunktion nach dem betrachtetem Gewicht. Formal betrachtet ergibt sich
+Wie nun in der Deltaregel zu beobachten war, ist die Änderung eines Gewichtes $w_{hi}$ proportional zur negativen Ableitung der Fehlerfunktion nach dem betrachtetem Gewicht. Formal betrachtet ergibt sich
 \begin{equation*}
-\Delta w_{hi} \propto -  \frac{\partial Err(W_{hi})}{\partial w_{hi}}.
+\Delta w_{hi} \propto -  \frac{\partial \gls{err}[(W_{hi})]}{\partial w_{hi}}.
 \end{equation*}
 
-Die Änderung der Fehlerfunktion nach dem Gewicht kann auch als Produkt aus der Änderung des Fehlers als Funktion der Änderung der Netzeingabe und der Auswirkung eines Veränderten Gewichtes auf die Netzeingabe betrachtet werden. Dies kann auch geschrieben werden als:
+Die Änderung der Fehlerfunktion nach dem Gewicht kann auch als Produkt aus der Änderung des Fehlers, als Funktion der Änderung der Netzeingabe und der Auswirkung eines veränderten Gewichtes auf die Netzeingabe betrachtet werden. Dies kann auch geschrieben werden als:
 \begin{equation}
 \frac{\partial Err(W_{hi})}{\partial w_{hi}} = \frac{\partial Err(W_{hi})}{\partial net_{h}} \cdot \frac{\partial net_{h}}{\partial w_{hi}}.
 \label{gl:zerlket2}
 \end{equation}
 
-Auch \autoref{gl:vor_xi}, \autoref{gl:xi} und \autoref{gl:neth} kann der zweite Faktor auch geschrieben werden als:
+Aus der \autoref{gl:vor_xi}, \autoref{gl:xi} und \autoref{gl:neth} folgernd kann der zweite Faktor auch geschrieben werden als:
 \begin{equation}
 \frac{\partial net_{h}}{\partial w_{hi}} = \frac{\partial }{\partial w_{hi}} \sum\limits_{i \in I} w_{hi} x_{i} = x_{i} .
 \label{gl:ok_bak}
@@ -60,39 +63,39 @@ Aus der Analogie zwischen der \autoref{gl:zerlket} und \autoref{gl:zerlket2} kan
 \label{gl:deltah_bak}
 \end{equation}
 
-Für den Fall das unser betrachtetes Neuron $h$ ein Ausgabeneuron wäre könnte aus der Betrachtung der \autoref{gl:errp} die Fehlerfunktion $Err(W_{hi})$ auch geschrieben werden als
+Für den Fall, dass unser betrachtetes Neuron $h$ ein Ausgabeneuron ist, kann aus der Betrachtung der \autoref{gl:errp} die Fehlerfunktion $Err(W_{hi})$ auch geschrieben werden als:
 \begin{equation}
 Err(W_{hi})= \frac{1}{2} (t_{h}-z_{h})^2 ,
 \label{gl:fehler_bak}
 \end{equation}
-dies wird an dieser Stelle angenommen, um zu verdeutlichen das $Err(W_{hi})$ nur von $z_{h}$ abhängig ist. Es wird nun unterstellt dass $t_h$ unabhängig von $z_h$ ist, was für den Fall eines Ausgabeneurons auch stimmen würde (die Betrachtung des inneren Neurons erfolgt im Anschluss). Unter Berücksichtigung der \autoref{gl:aktiv} kann jetzt $\frac{\partial Err(W_{hi})}{\partial net_{h}}$ mit der Kettenregel umgeformt werden in:
+dies wird an dieser Stelle angenommen, um zu verdeutlichen das $Err(W_{hi})$ nur von $z_{h}$ abhängig ist. Es wird nun unterstellt, dass $t_h$ unabhängig von $z_h$ ist, was für den Fall eines Ausgabeneurons auch stimmen würde (die Betrachtung des inneren Neurons erfolgt im Anschluss). Unter Berücksichtigung der \autoref{gl:aktiv} kann jetzt $\frac{\partial Err(W_{hi})}{\partial net_{h}}$ mit der Kettenregel umgeformt werden in:
 \begin{equation}
 \frac{\partial Err(W_{hi})}{\partial net_{h}} = \frac{\partial Err(W_{hi})}{\partial z_{h}} \cdot \frac{\partial z_{h}}{\partial net_{h}}.
 \label{gl:ohket_bak}
 \end{equation}
 Ebenfalls mit Hilfe der \autoref{gl:aktiv} ergibt sich der rechte Faktor zu:
 \begin{equation}
-\frac{\partial z_{h}}{\partial net_{h}} = f_{akt}'(net_h),
+\frac{\partial z_{h}}{\partial net_{h}} = \gls{fb}['(net_h)],
 \label{gl:aktiv_neth_bak}
 \end{equation}
 welches die Ableitung der Aktivierungsfunktion beinhaltet.
 
-Falls $h$ ein Ausgabeneuron wäre, würde aus der Definition für $Err(W_{hi})$ aus \autoref{gl:fehler_bak} folgen:
+Für den Fall, dass $h$ ein Ausgabeneuron ist, folgt aus der Definition für $Err(W_{hi})$ aus \autoref{gl:fehler_bak}:
 \begin{equation}
 \frac{\partial Err(W_{hi})}{\partial z_{h}} = -(t_h - z_h).
 \end{equation}
 
-Befindet sich das zu Betrachtende Neuron aber im inneren des Netzwerkes (wie zu Beginn angenommen) ist $t_h$ abhängig von den nachfolgenden Neuronen. Hieraus Folgt dass $t_h$ eine Funktion von $net_o$ ist und der Fehler $Err(W_{hi})$ ebenfalls von $net_o$ abhängig ist. Somit ergibt sich folgender Formalismus:
+Befindet sich das zu betrachtende Neuron aber im inneren des Netzwerkes (wie zu Beginn angenommen) ist $t_h$ abhängig von den nachfolgenden Neuronen. Hieraus folgt dass $t_h$ eine Funktion von $net_o$ ist und der Fehler $Err(W_{hi})$ ebenfalls von $net_o$ abhängig ist. Somit ergibt sich folgender Formalismus:
 \begin{equation*}
 Err(W_{hi}) \propto \sum\limits_{o \in O} net_o,
 \end{equation*}
-wobei $net_o$ gegeben ist durch
+wobei $net_o$ gegeben ist durch:
 \begin{equation}
 net_{o} = \sum_{h \in H} w_{oh} \cdot z_{h} .
 \label{gl:netl}
 \end{equation}
 
-Damit kann $\frac{\partial Err(W_{hi})}{\partial z_{h}}$ mit Hilfer der Kettenregel umgeformt werden in
+Damit kann $\frac{\partial Err(W_{hi})}{\partial z_{h}}$ mit Hilfe der Kettenregel umgeformt werden in:
 \begin{equation}
 \frac{\partial Err(W_{hi})}{\partial z_{h}} =\sum\limits_{o \in O} \left (  \frac{\partial Err(W_{hi})}{\partial net_{o}} \cdot \frac{\partial net_{o}}{\partial z_{h}} \right ).
 \label{gl:sumket_bak}
@@ -120,7 +123,7 @@ Gefolgt vom Einsetzen der \autoref{gl:sumketlos_bak} und \autoref{gl:aktiv_neth_
 \label{gl:deltahinnen_bak}
 \end{equation}
 
-Aus \autoref{gl:deltahinnen_bak}, \autoref{gl:ok_bak} und \autoref{gl:fertig_delta} kann schließlich die Änderung des Gewichtes $w_{hi}$ eines innerhalb des Netzwerkes liegenden Neurons $h$ bestimmt werden durch
+Aus \autoref{gl:deltahinnen_bak}, \autoref{gl:ok_bak} und \autoref{gl:fertig_delta} kann schließlich die Änderung des Gewichtes $w_{hi}$ eines, innerhalb des Netzwerkes liegenden, Neurons $h$ bestimmt werden durch:
 \begin{equation}
 \Delta w_{hi} = \alpha \cdot x_{i} \cdot f_{akt}'(net_h) \cdot \sum\limits_{o \in O}  \delta_o \cdot w_{oh}  .
 \label{gl:fertiginnen_bak}
@@ -141,19 +144,19 @@ Allgemein betrachtet kann, unter Berücksichtigung der Deltaregel für das Onlin
 
 \textbf{Algorithmus:}\,\citef[289]{Fausett1993}
 
-Das  Backpropagation-Verfahrens besteht aus drei Schritten. Zunächst werden die Information von der Eingabe zur Ausgabeschicht und somit nach "vorne" (engl.: forward) durchgegeben. Als nächstes wird die Abweichung (auch als Fehler bezeichnet) zwischen dem errechneten und gewünschten Wert bestimmt. Die Abweichung wird anschließend von der Ausgebe hin zur Eingabeschicht "zurück" (engl.: back) gereicht und dazu genutzt die Gewichte der einzelnen Schichten anzupassen.
+Das Backpropagation-Verfahren zählt zu den überwachten Lernverfahren und besteht aus drei Schritten feed-foreward, backpropagation und Anpassen der Gewichte. Zunächst werden die Information von der Eingabe zur Ausgabeschicht und somit nach \glqq vorne\grqq~(engl.: forward) durchgegeben. Als nächstes wird die Abweichung (auch als Fehler bezeichnet) zwischen dem errechneten und gewünschten Wert bestimmt. Die Abweichung wird anschließend von der Ausgabe hin zur Eingabeschicht \glqq zurück\grqq~(engl.: back) gereicht und dazu genutzt, die Gewichte der einzelnen Schichten anzupassen.
 
 \begin{itemize}
 \item[\textbf{$\bullet$}] Schritt 1: Initialisiere die Gewichte zu kleinen zufälligen Werten.
-\item[\textbf{$\bullet$}] Schritt 2: Solange die Abbruchbedingung falsch ist widerhole Schritt 3--10.
-\item[\textbf{$\bullet$}] Schritt 3: Wiederhole für jedes Trainingspaar Schritt 4--9.
+%\item[\textbf{$\bullet$}] Schritt 2: Solange die Abbruchbedingung falsch ist widerhole Schritt 3--10.
+\item[\textbf{$\bullet$}] Schritt 2: Wiederhole für jedes Trainingspaar Schritt 3--8.
 \end{itemize}
 
-\textbf{\textit{Feedforward:}}
+\textbf{\textit{Feed-Forward:}}
 \begin{itemize}
-\item[\textbf{$\bullet$}] Schritt 4: Jedes Eingabeneuron $(X_{i}, i=1,\dots,I)$ bekommt das Eingabesignal $x_{i}$ und leitet es zu jedem Neuron der nachfolgenden Schicht (verdeckte Schicht).
+\item[\textbf{$\bullet$}] Schritt 3: Jedes Eingabeneuron $(X_{i}, i=1,\dots,I)$ bekommt das Eingabesignal $x_{i}$ und leitet es zu jedem Neuron der nachfolgenden Schicht (verdeckte Schicht).
 
-\item[\textbf{$\bullet$}] Schritt 5: Jedes der verdeckten Neuronen $(Z_{h}, h=1,\dots,H)$ summiert das gewichtete Eingabesignal
+\item[\textbf{$\bullet$}] Schritt 4: Jedes der verdeckten Neuronen $(Z_{h}, h=1,\dots,H)$ summiert das gewichtete Eingabesignal
 \begin{equation}
 net_{h}=\sum\limits_{i \in I} x_{i}w_{hi},
 \end{equation}
@@ -163,7 +166,7 @@ z_{h}=f_{akt}(net_{h})
 \end{equation}
 und leitet das Resultat an jedes Neuron der nachfolgenden Schicht (Ausgabeschicht).
 
-\item[\textbf{$\bullet$}] Schritt 6: Jedes der Ausgabeneuronen $(Y_{o}, o=1,\dots,O)$ summiert das gewichtete Eingabesignal 
+\item[\textbf{$\bullet$}] Schritt 5: Jedes der Ausgabeneuronen $(Y_{o}, o=1,\dots,O)$ summiert das gewichtete Eingabesignal 
 \begin{equation}
 net_{o}=\sum\limits_{h \in H} z_{h}w_{oh},
 \end{equation}
@@ -175,7 +178,7 @@ y_{o}=f_{akt}(net_{o}).
 
 \textbf{\textit{Backpropagation:}}
 \begin{itemize}
-\item[\textbf{$\bullet$}] Schritt 7: Jedes Ausgabeneuron $(Y_{o}, o=1,\dots,O)$ bekommt die zum Eingabesignal passende Lösung $t_{o}$ und berechnet den Fehleranpassungsterm 
+\item[\textbf{$\bullet$}] Schritt 6: Jedes Ausgabeneuron $(Y_{o}, o=1,\dots,O)$ bekommt die zum Eingabesignal passende Lösung $t_{o}$ und berechnet den Fehleranpassungsterm 
 \begin{equation}
 \delta_{o}=(t_{o}-y_{o})f_{akt}'(net_{o}),
 \end{equation}
@@ -185,7 +188,7 @@ kalkuliert anschließend die Gewichtsänderung
 \end{equation}
 und leitet den Fehleranpassungsterm $\delta_{o}$ an die unterliegende Schicht.
 
-\item[\textbf{$\bullet$}] Schritt 8: Jedes verdeckte Neuron $(Z_{h}, h=1,\dots,H)$ bekommt die Summe aus Fehleranpassungsthermen $\delta_o$ und Gewichten $w_{oh}$ von der vorgelagerten Schicht und multipliziert die Summe mit der abgeleiteten Aktivierungsfunktion, um seinen Fehleranpassungstherm 
+\item[\textbf{$\bullet$}] Schritt 7: Jedes verdeckte Neuron $(Z_{h}, h=1,\dots,H)$ bekommt die Summe aus Fehleranpassungsthermen $\delta_o$ und Gewichten $w_{oh}$ von der vorgelagerten Schicht und multipliziert die Summe mit der abgeleiteten Aktivierungsfunktion, um seinen Fehleranpassungstherm 
 \begin{equation}
 \delta_{h}=f_{akt}'(net_{h}) \cdot \sum\limits_{o \in O} \delta_{o} \cdot w_{oh}
 \end{equation}
@@ -198,7 +201,7 @@ zu berechnen.
 
 \textbf{\textit{Anpassen der Gewichte:}}
 \begin{itemize}
-\item[\textbf{$\bullet$}] Schritt 9: Jedes Ausgabeneuron $(Y_{o}, o=1,\dots,O)$ passt seine Gewichte an: 
+\item[\textbf{$\bullet$}] Schritt 8: Jedes Ausgabeneuron $(Y_{o}, o=1,\dots,O)$ passt seine Gewichte an: 
 \begin{equation}
 w_{oh}(\text{neu})=w_{oh}(\text{alt})+\Delta w_{oh}.
 \end{equation}
@@ -207,15 +210,13 @@ Jedes verdeckte Neuron $(Z_{h}, h=1,\dots,H)$ passt seine Gewichte an:
 w_{hi}(\text{neu})=w_{hi}(\text{alt})+\Delta w_{hi}.
 \end{equation}
 
-\item[\textbf{$\bullet$}] Schritt 9: Überprüfe die Abbruchbedingung.
+%\item[\textbf{$\bullet$}] Schritt 10: Überprüfe die Abbruchbedingung.
 \end{itemize}
 
 \subsection{Levenberg-Marquardt}\label{sec:LM_herleitung}
 
 
-
-%\subsubsection{Levenberg-Marquardt}
-Der Levenberg-Marquardt (LM)-Algorithmus baut auf dem klassischen Gradientenabstiegsverfahren auf, welches auch als Backpropagation bezeichnet und in \autoref{sec:Backpropagation} hergeleitet wird. Es wird an dieser Stelle nun auch von der Fehlerfunktion $Err_{po}(W)$ über alle Trainingsbeispiele $P$ in der folgenden Form Ausgegangen:
+Der Levenberg-Marquardt (LM)-Algorithmus baut, wie auch das Backpropagation-Verfahren, auf dem Gradientenabstiegsverfahren auf. Daher wird an dieser Stelle nun von der Fehlerfunktion $Err_{po}(W)$ über alle Trainingsbeispiele $P$ in der folgenden Form Ausgegangen:
 
 \begin{equation}
 Err_{po}(W)= \frac{1}{2} \sum\limits_{p \in P} \sum\limits_{o \in O} e_{po}^2,
@@ -231,7 +232,7 @@ Das Gradientenabstiegsverfahren beruht auf der ersten Ableitung der Fehlerfunkti
 \nabla Err_{po}(W)= \frac{\partial Err_{po}(W)}{\partial w_{on}}= \left [ \frac{Err_{1p}(W)}{\partial w_{11}} , \frac{Err_{1p}(W)}{\partial w_{12}}, \dots,  \frac{\partial Err_{po}(W)}{\partial w_{on}}  \right ]^T,
 \label{gl:LM_bp_err}
 \end{equation}
-mit $n \in N$ und $N= I \cdot H + H \cdot O$ als Menge aller Gewichte eines Netzwerks.
+mit $n \in \gls{N}$ und $N= I \cdot H + H \cdot O$ als Menge aller Gewichte eines Netzwerks.
 
 Der Trainingsprozess des Algorythmuses konvergiert asymptotisch und nah an einem Minimum werden die Komponenten des Gradientenvektors sehr klein und somit die Gewichtsänderung sehr gering. Der Übersichtshalber wird die Ableitung der Fehlerfunktion umbenannt in einen Gradienten $g$ mit:
 \begin{equation}
@@ -246,7 +247,7 @@ Mit der \autoref{gl:LM_gradient} kann die Gewichtsänderung des Gradientenabstie
 \end{equation}
 wobei $\alpha$ die Schrittweite bzw. die Lernrate repräsentiert.
 
-Bei der Newtonmethode wird nun angenommen, dass die Gradienten $g_{po}$ aller Trainingsbeispiele $P$ des Ausgabeneurons $o$ in einer nichtlinearen Beziehung $F_{po}$ zwischen den Gewichten $w_{oh}$ und den jeweiligen Komponenten der Gradienten stehen. Formel kann dies ausgedrückt werden in
+Bei der Newtonmethode wird nun angenommen, dass die Gradienten $g_{po}$ aller Lernbeispiele $P$ des Ausgabeneurons $o$ in einer nichtlinearen Beziehung $\gls{fpo}[_{po}]$ zwischen den Gewichten $w_{oh}$ und den jeweiligen Komponenten der Gradienten stehen. Formell kann dies ausgedrückt werden in
 \begin{align}
 \left \{
 \begin{aligned}
@@ -278,7 +279,7 @@ g_{po} \approx g_{po}(w_{o0}) + \sum\limits_{n \in N} \frac{\partial^2 Err_{po}(
 \label{gl:LM_g4}
 \end{equation}
 
-Um nun ein Minimum der Fehlerfunktion zu finden müssen die Gradienten Nullgesetzt werden. Somit wird aus \autoref{gl:LM_g4}
+Um nun ein Minimum der Fehlerfunktion zu finden, müssen die Gradienten Null gesetzt werden. Somit wird aus \autoref{gl:LM_g4}
 \begin{equation}
 0 \approx g_{po}(w_{o0}) + \sum\limits_{n \in N} \frac{\partial^2 Err_{po}(W)}{\partial w_{on} \partial w_{on}} \Delta w_{on} .
 \label{gl:LM_g5}
@@ -323,9 +324,9 @@ Hieraus ergeben sich $P \text{mal} O$ Gleichungen. Durch das Lösen dieser Gleic
 \label{gl:LM_matrix-schreibweise}
 \end{equation}
 
-Die Ableitungen zweiter Ordnung enthaltene Matrix wird auch als Hesse-Matrix $H$ bezeichnet
+Die Ableitungen zweiter Ordnung enthaltene Matrix wird auch als Hesse-Matrix $\gls{Hm}$ bezeichnet
 \begin{equation}
-H
+H_m
  =
  \begin{bmatrix}
     \frac{\partial^2 Err_{p1}}{\partial w_{1n} \partial w_{o1}} & \frac{\partial^2 Err_{p1}}{\partial w_{1n} \partial w_{o2}}  & \dots  & \frac{\partial^2 Err_{p1}(W)}{\partial w_{on} \partial w_{on}} \\
@@ -339,18 +340,18 @@ H
 
 Die \autoref{gl:LM_matrix-schreibweise} kann in Kurzform dargestellt werden als:
 \begin{equation}
--g=H \cdot \Delta w
+-g=H_m \cdot \Delta w
 \end{equation}
 
 und die Umstellung nach $\Delta w$ ergibt
 \begin{equation}
-\Delta w =-H^{-1} \cdot g.
+\Delta w =-H_m^{-1} \cdot \gls{g}.
 \label{gl:LM_hesse}
 \end{equation}
 
 Beim Vergleich der \autoref{gl:LM_bp_delta-w} und \autoref{gl:LM_hesse} wird ersichtlich, dass die Hesse-Matrix beim Gradientenabstieg die passenden Schrittweiten liefert.
 
-Wenn man die Newtonmethode zur Gewichtsanpassung verwenden möchte, so müssen die Ableitungen zweiter Ordnung berechnet werden, um die Hesse-Matrix zu erhalten. dies erweist sich in einigen fällen als nicht trivial. Um diesen Prozess zu vereinfachen wird beim Gauss-Newton-Algorithmus die Jacobi-Matrix $J$ eingeführt
+Wenn man die Newton-Methode zur Gewichtsanpassung verwenden möchte, so müssen die Ableitungen zweiter Ordnung berechnet werden, um die Hesse-Matrix zu erhalten. dies erweist sich in einigen Fällen als nicht trivial. Um diesen Prozess zu vereinfachen, wird beim Gauss-Newton-Algorithmus die Jacobi-Matrix $\gls{J}$ eingeführt
 \begin{equation}
 J
 =
@@ -394,7 +395,7 @@ g = Je,
 \end{equation}
 wobei der Fehlervektor folgende Form aufweist
 \begin{equation}
-e= \left [ e_{11}, e_{12}, \dots, e_{1o}, \dots, e_{p1}, e_{p2}, \dots, e_{po} \right ]^T.
+\gls{e}= \left [ e_{11}, e_{12}, \dots, e_{1o}, \dots, e_{p1}, e_{p2}, \dots, e_{po} \right ]^T.
 \label{gl:LM_bp}
 \end{equation}
 
@@ -412,7 +413,7 @@ S_{on} = \sum_{p \in P} \sum_{o \in O} \frac{\partial^2 e_{po}}{\partial w_{on} 
 \label{gl:LM_S}
 \end{equation}
 
-Bei der Newtonmethode wird nun angenommen, dass $S_{on}$ annähernd Null ist\,\citef[990]{Hagan1994} und somit kann die Hesse-Matrix ausgedrückt werden als:
+Bei der Newton-Methode wird nun angenommen, dass $S_{on}$ annähernd Null ist\,\citef[990]{Hagan1994} und somit kann die Hesse-Matrix ausgedrückt werden als:
 \begin{equation}
 H = J^T J.
 \label{gl:LM_JJ}
@@ -424,13 +425,13 @@ Durch die Kombination der \autoref{gl:LM_hesse}, \autoref{gl:LM_Je} und \autoref
 \label{gl:LM_GNA}
 \end{equation}
 
-Der Vorteil des Gauss-Newton-Algorithmuses gegenüber dem Newtonmethode besteht darin, dass anstatt der zweifachen Ableitung der Fehlerfunktion durch die Jacobi-Matix nur noch die einfache Ableitung benötigt wird. Einen Nachteil den aber beide Ansätze gemeinsam haben ist, dass die Hesse-Matrix bzw. die $J^T J$-Matrix in einigen Fällen nicht invertierbar sind. Um sicher zu gehen dass die angenäherte Hesse-Matrix invertierbar ist, wird im Levenberg-Marquardt-Algorithmus ein zusätzlicher Term eingeführt:
+Der Vorteil des Gauss-Newton-Algorithmuses gegenüber der Newton-Methode besteht darin, dass anstatt der zweifachen Ableitung der Fehlerfunktion durch die Jacobi-Matix, nur noch die einfache Ableitung benötigt wird. Einen Nachteil, den aber beide Ansätze gemeinsam haben ist dass die Hesse-Matrix bzw. die $J^T J$-Matrix in einigen Fällen nicht invertierbar sind. Um sicher zu gehen, dass die angenäherte Hesse-Matrix invertierbar ist, wird im Levenberg-Marquardt-Algorithmus ein zusätzlicher Term eingeführt:
 \begin{equation}
 H \approx J^T J + \mu I.
 \label{gl:LM_lm-H}
 \end{equation}
 
-Hierbei ist $\mu$ stets positiv und wird als Kombinationskoeffizient bezeichnet. I ist die Einheitsmatrix.
+Hierbei ist $\gls{mu}$ stets positiv und wird als Kombinationskoeffizient bezeichnet. I ist die Einheitsmatrix.
 
 Durch den zusätzlichen Term in \autoref{gl:LM_lm-H} wird die Hauptdiagonale der Hesse-Matrix größer als Null sein und damit ist sichergestellt, dass $H$ immer invertierbar ist. Mit \autoref{gl:LM_GNA} und \autoref{gl:LM_lm-H} kann der Levenberg-Marquard-Algorithmus ausgedrückt werden als:
 \begin{equation}
@@ -438,26 +439,26 @@ Durch den zusätzlichen Term in \autoref{gl:LM_lm-H} wird die Hauptdiagonale der
 \label{gl:LM_lm-delta-w}
 \end{equation}
 
-Der Levenberg-Marquard-Algorithmus kann als Kombination zwischen dem klassischen Gradientenabstiegsverfahren und dem Gauss-Newton-Algorithmus angesehen werden. Wenn der Kombinationskoeffizient $\mu$ sich sehr nah an der Null befindet so nährt sich die \autoref{gl:LM_lm-delta-w} der \autoref{gl:LM_GNA} an und damit dem Gauss-Newton-Algorithmus. Ist der Kombinationskoeffizient aber sehr groß so nähert sich die \autoref{gl:LM_lm-delta-w} der \autoref{gl:LM_bp_delta-w} an und so bekommt das klassische Gradientenabstiegsverfahren die größere Gewichtung. Für den Fall, dass $\mu$ sehr Groß wird kann es als Lernrate mit folgender Beziehung angesehen werden:\,\citef[12-1 ff]{Wilamowski2011}
+Der Levenberg-Marquard Algorithmus kann als Kombination zwischen dem klassischen Gradientenabstiegsverfahren und dem Gauss-Newton-Algorithmus angesehen werden. Wenn der Kombinationskoeffizient $\mu$ sich sehr nah an der Null befindet, so nährt sich die \autoref{gl:LM_lm-delta-w} der \autoref{gl:LM_GNA} an und damit dem Gauss-Newton-Algorithmus. Ist der Kombinationskoeffizient aber sehr groß, so nähert sich die \autoref{gl:LM_lm-delta-w} der \autoref{gl:LM_bp_delta-w} an und so bekommt das klassische Gradientenabstiegsverfahren die größere Gewichtung. Für den Fall, dass $\mu$ sehr groß wird, kann es als Lernrate mit folgender Beziehung angesehen werden:\,\citef[12-1 ff]{Wilamowski2011}
 \begin{equation}
 \alpha = \frac{1}{\mu}.
 \label{gl:LM_lernrate}
 \end{equation}
 
-Der klassische LM-Albgorithmus ist eine Offline-Lernmethode in der die Jacobi-Matrix alle Gewichte eines Netzwerks enthält und somit die Gewichtsänderung aller Gewichte in einem Schritt berechnet. Dies hat zur Folge, dass mit steigender Anzahl der Neuronen eines Netzwerks die Anzahl der Gewichte dieses Netzwerks ebenfalls steigt. Dies resultiert in einer größeren Jacobimatrix, was zu einem hohen Speicher- und Berechnungsaufwand führen kann. Um den Speicherbedarf gering zu halten wurde in dieser Arbeit der \textit{Layer-by-Layer} LM-Algorithmus von \citet{Kwak2012} in abgewandelter Form implementiert. Hier wird eine eigene Jacobi-Matrix für jede Gewichtsschicht erstellt und dementsprechend auch die Gewichtsänderung für die jeweilige Schicht einzeln berechnet. Durch die geringere Anzahl an Gewichten werden die einzelnen Jacobi-Matrizen kleiner und somit sinkt auch der Specherbedarf pro Matrix.\\
+Der klassische LM-Albgorithmus ist eine Offline-Lernmethode in der die Jacobi-Matrix alle Gewichte eines Netzwerks enthält und somit die Gewichtsänderung aller Gewichte in einem Schritt berechnet. Dies hat zur Folge, dass mit steigender Anzahl der Neuronen eines Netzwerks die Anzahl der Gewichte dieses Netzwerks ebenfalls steigt. Dies resultiert in einer größeren Jacobimatrix, was zu einem hohen Speicher- und Berechnungsaufwand führen kann. Um den Speicherbedarf gering zu halten, wurde in dieser Arbeit der \textit{Layer-by-Layer} LM-Algorithmus von \citet{Kwak2012} in abgewandelter Form implementiert. Hier wird eine eigene Jacobi-Matrix für jede Gewichtsschicht erstellt und dementsprechend auch die Gewichtsänderung für die jeweilige Schicht einzeln berechnet. Durch die geringere Anzahl an Gewichten, werden die einzelnen Jacobi-Matrizen kleiner und somit sinkt auch der Speicherbedarf pro Matrix.\\
 
 \textbf{Algorithmus:}\,\citef{Kwak2012}\\
-Im Allgemeinen besteht der LM-Algorithmus aus den gleichen drei Schritten wie das Backpropagation Verfahren. Zunächst werden die Informationen der Eingabeschicht zur Ausgabeschicht durchgereicht. Im nächsten Schritt werden die Abweichungen zwischen errechneten Werten und der erwarteten Lösung berechnet. Anschließend werden die Änderungen genutzt, um die Gewichte der einzelnen Schichten anzupassen. Der Unterschied liegt in der Art wie die Abweichungen genutzt werden, um die Gewichtsänderung zu bestimmen.
+Im Allgemeinen besteht der LM-Algorithmus aus den gleichen drei Schritten wie das Backpropagation Verfahren. Zunächst werden die Informationen der Eingabeschicht zur Ausgabeschicht durchgereicht. Im nächsten Schritt werden die Abweichungen zwischen errechneten Werten und der erwarteten Lösung berechnet. Anschließend werden die Änderungen genutzt, um die Gewichte der einzelnen Schichten anzupassen. Der Unterschied liegt in der Art, wie die Abweichungen genutzt werden, um die Gewichtsänderung zu bestimmen.
 
 \begin{itemize}
-\item[\textbf{$\bullet$}] Schritt 1: Initialisiere die Gewichte zu kleinen zufälligen Werten und lege die Kombinationskoeffizienten $\mu_o$, $\mu_h$ und den Abklingfaktor $\lambda$ sowie die maximale Anzahl an Iterationen und den vertretbaren Durchschnittsfehler $Err$ fest.
+\item[\textbf{$\bullet$}] Schritt 1: Initialisiere die Gewichte zu kleinen zufälligen Werten und lege die Kombinationskoeffizienten $\mu_o$, $\mu_h$ und den Abklingfaktor $\\gls{lambda}$ sowie die maximale Anzahl an Iterationen und den vertretbaren Durchschnittsfehler $Err$ fest.
 
 \item[\textbf{$\bullet$}] Schritt 2: Solange die maximale Anzahl an Iterationen nicht überschritten ist oder der Durchschnittsfehler
 \begin{equation}
 Err= \frac{1}{p} \sum\limits_{p \in P} \sum\limits_{o \in O} e_{po}^2, \quad e_{po}=(t_{po}-y_{po})
 \label{gl:alg_LM_err}
 \end{equation}
-nicht unter den gewünschten Wert fällt wiederhole Schritt 3--14.
+nicht unter den gewünschten Wert fällt, wiederhole Schritt 3--14.
 
 \item[\textbf{$\bullet$}] Schritt 3: Jedes Eingabeneuron $(X_{i}, i=1,\dots,I)$ bekommt das Eingabesignal $x_{i}$ und leitet es zu jedem Neuron der nachfolgenden Schicht (verdeckte Schicht).
 
@@ -559,12 +560,12 @@ Sonst
 
 \subsection{Vergleich der Lernalgorithmen}\label{sec:vergleich_la}
 
-Bei der Betrachtung beider Lernalgorithmen ist das standard Backpropagation-Verfahren simpler aufgebaut als der LM-Algorithmus. Das BP benötigt weder die Hesse- noch die Jacobi-Matrix und lässt sich somit einfacher implementieren. Andererseits muss die Schrittweite $\alpha$ iterativ für jeden Einsatzzweck neu bestimmt werden. Zusätzlich muss auch die optimale Anzahl der Epochen\,\footnote{Als Epoche wird ein Trainingsdurchlauf mit den gesamten Trainingsdaten bezeichnet. Die Anzahl der Epochen gibt also an wie oft das Netzwerk mit den selben Daten trainiert wurde.%
+Bei der Betrachtung beider Lernalgorithmen ist das Standard Backpropagation-Verfahren simpler aufgebaut als der LM-Algorithmus. Das BP benötigt weder die Hesse- noch die Jacobi-Matrix und lässt sich somit einfacher implementieren. Andererseits muss die Schrittweite $\alpha$ iterativ für jeden Einsatzzweck neu bestimmt werden. Zusätzlich muss auch die optimale Anzahl der Epochen\,\footnote{Als Epoche wird ein Trainingsdurchlauf mit den gesamten Trainingsdaten bezeichnet. Die Anzahl der Epochen gibt also an, wie oft das Netzwerk mit den selben Daten trainiert wurde.%
 %Bei mehreren Epochen wird das Netzwerk also mehrmals mit den gleichen Daten trainiert.
-} iterativ bestimmt werden. Da es zur bestimmung dieser keine Patentrezepte gibt. Je höher die Anzahl der Epochen ist desto besser Lernt das Netzwerk die Trainingsdaten, braucht aber gleichzeitig länger für das Training. Bei einer zu hohen Anzahl an verdeckten Neuronen oder Epochen kann das Netzwerk die Trainingsdaten auch \glqq Auswendiglernen\grqq~dies bedeutet, dass das Netzwerk zwar die Trainingsdaten gut wiedergeben kann aber schlecht generalisiert und bei zuvor \glqq ungesehenen\grqq~Daten zu fehlerhaften Ergebnissen führt. In der Literatur wird hierfür empfohlen den Datensatz in ein Trainings- und Testset zu unterteilen. Wobei das Testset zur Evaluierung des Netzwerkes dient.\,\citef[58 ff]{dkriesel07}
+} iterativ bestimmt werden, da es zur Bestimmung dieser keine Patentrezepte gibt. Je höher die Anzahl der Epochen ist desto besser lernt das Netzwerk die Trainingsdaten, braucht aber gleichzeitig länger für das Training. Bei einer zu hohen Anzahl an verdeckten Neuronen oder Epochen kann das Netzwerk die Trainingsdaten auch \glqq Auswendig lernen\grqq~dies bedeutet, dass das Netzwerk zwar die Trainingsdaten gut wiedergeben kann, aber schlecht generalisiert und bei zuvor \glqq ungesehenen\grqq~Daten zu fehlerhaften Ergebnissen führt. In der Literatur wird hierfür empfohlen den Datensatz in ein Trainings- und Testset zu unterteilen. Wobei das Testset zur Evaluierung des Netzwerkes dient.\,\citef[58 ff]{dkriesel07}
 
-Der Levenberg-Marquardt Algorithmus weist einen komplexeren Algorithmus auf. So müssen zu Beginn zwar die Anfangswerte für die Kombinationskoeffizienten manuell gesetzt werden, die optimalen Werte aber werden während des Trainings autonom gesetzt. Zusätzlich muss der vertretbare Durchschnittsfehler und die maximale Anzahl an Iterationen zu Beginn festgelegt werden. Hier ist zu beachten, dass das Netzwerk so oft versuchen wird den angegebenen Fehler zu unterschreiten bis die Anzahl an Iterationen erreicht ist. Da der Algorithmus bei jeder Schicht die Kombinationskoeffizienten solange verändert bis ein kleinerer Fehler erreicht wird kann das Netzwerk bei zu klein eingestellten vertretbaren Fehler und hoher Anzahl an Iterationen sehr lange für das Training benötigen. Zusätzlich ist es möglich dass der Algorithmus in der dargestellten Form trotz Veränderung der Kombinationskoeffizienten keinen geringeren Fehler Wert erreicht und so in eine Endlosschleife gerät. Bei der Implementierung des Algorithmus wurde daher eine Zählervariable hinzugefügt die den Versuch einen geringeren Fehler zu erreichen nach dem 10. Mal abbricht. Unterschreitet das Netzwerk beim Training den vordefinierten Fehlerwert bevor die Iterationen ihren Maximalwert erreichen so wird das Training ebenfalls beendet und so ein \glqq Auswendiglernen\grqq~vermieden. In der Literatur wird dem LM-Algorithmus zusätzlich eine schnellere Konvergenz zugesprochen.\,\citef[12-7]{Wilamowski2011} Dies ist vergleichbar mit einem schnelleren Lernprozess. Da die Jacobi-Matrix in dem klassischen LM-Algorithmus zu hohem Speicherbedarf führen kann, ist dieser Algorithmus aber auf Leistungsfähige Computer angewiesen. 
+Der Levenberg-Marquardt Algorithmus weist einen komplexeren Algorithmus auf. So müssen zu Beginn zwar die Anfangswerte für die Kombinationskoeffizienten manuell gesetzt werden, die optimalen Werte aber werden während des Trainings autonom gesetzt. Zusätzlich muss der vertretbare Durchschnittsfehler und die maximale Anzahl an Iterationen zu Beginn festgelegt werden. Hier ist zu beachten, dass das Netzwerk so oft versuchen wird den angegebenen Fehler zu unterschreiten, bis die Anzahl an Iterationen erreicht ist. Da der Algorithmus bei jeder Schicht die Kombinationskoeffizienten solange verändert, bis ein kleinerer Fehler erreicht wird, kann das Netzwerk bei zu klein eingestellten vertretbaren Fehler und hoher Anzahl an Iterationen sehr lange für das Training benötigen. Zusätzlich ist es möglich, dass der Algorithmus in der dargestellten Form, trotz Veränderung der Kombinationskoeffizienten, keinen geringeren Fehler Wert erreicht und so in eine Endlosschleife gerät. Bei der Implementierung des Algorithmus wurde daher eine Zählervariable hinzugefügt, die den Versuch einen geringeren Fehler zu erreichen nach dem 10. Mal abbricht. Unterschreitet das Netzwerk beim Training den vordefinierten Fehlerwert bevor die Iterationen ihren Maximalwert erreichen, so wird das Training ebenfalls beendet und so ein \glqq Auswendiglernen\grqq~vermieden. In der Literatur wird dem LM-Algorithmus zusätzlich eine schnellere Konvergenz zugesprochen.\,\citef[12-7]{Wilamowski2011} Dies ist vergleichbar mit einem schnelleren Lernprozess. Da die Jacobi-Matrix in dem klassischen LM-Algorithmus zu hohem Speicherbedarf führen kann, ist dieser Algorithmus aber auf leistungsfähige Computer angewiesen. 
 
-Im Hinblick auf die Vorhersagegenauigkeit sind beide Algorithmen von den spezifischen Eigenschaften des MLP abhängig. In beiden Algorithmen werden die Gewichte zu Beginn des Trainings zufällig initialisiert. Somit startet jedes Training an einem anderen Ort in der Fehlerlandschaft (siehe \autoref{fig:Fehlerlandschaft}) und kann in unterschiedlichen lokalen Minima münden. Dies bedeutet, dass Netzwerke mit gleichem Aufbau und gleicher Anzahl an Neuronen in jeder Schicht aber mit unterschiedlichen Anfangsgewichten nach dem Training mit den selben Daten zu unterschiedlichen Ergebnissen führen können. In der Literatur wird bei der Bestimmung der optimalen Netzparameter ein Netzwerk mit gleichen Parametern mehrmals initialisiert, trainiert und die Ergebnisse gemittelt, um die Einflüsse von \glqq schlechten\grqq~Minima zu reduzieren. Einen Konsens über die zum Mittelwert beitragenden Neuinitialisierungen gebt es aber nicht. So führen \citet{Domanski2017} fünf, \citet{Keles2016} sechs und \citet{Monteiro2016} 20 Neuinitialisierungen durch. Eine höhere Anzahl führt hier zu einem geringeren Einfluss der \glqq schlechten\grqq~Minima erhöht aber gleichzeitig die Berechnungsdauer.
+Im Hinblick auf die Vorhersagegenauigkeit, sind beide Algorithmen von den spezifischen Eigenschaften des MLP abhängig. In beiden Algorithmen werden die Gewichte zu Beginn des Trainings zufällig initialisiert. Somit startet jedes Training an einem anderen Ort in der Fehlerlandschaft (siehe \autoref{fig:Fehlerlandschaft}) und kann in unterschiedlichen lokalen Minima münden. Dies bedeutet, dass Netzwerke mit gleichem Aufbau und gleicher Anzahl an Neuronen in jeder Schicht, aber mit unterschiedlichen Anfangsgewichten nach dem Training mit den selben Daten zu unterschiedlichen Ergebnissen führen können. In der Literatur wird bei der Bestimmung der optimalen Netzparameter ein Netzwerk mit gleichen Parametern mehrmals initialisiert, trainiert und die Ergebnisse gemittelt, um die Einflüsse von \glqq schlechten\grqq~Minima zu reduzieren. Einen Konsens über die zum Mittelwert beitragenden Neuinitialisierungen gibt es jedoch nicht. So führen \citet{Domanski2017} fünf, \citet{Keles2016} sechs und \citet{Monteiro2016} 20 Neuinitialisierungen durch. Eine höhere Anzahl führt hier zu einem geringeren Einfluss der \glqq schlechten\grqq~Minima, erhöht aber gleichzeitig die Berechnungsdauer.
 
-Desweiteren ist die Anzahl der Eingabeneuronen durch die Anzahl an Eingabevariablen und die Anzahl der Ausgabeneuronen durch die zu bestimmenden Größen bedingt. Die optimale Anzahl an verdeckten Neuronen muss aber in beiden Algorithmen bei jeder Aufgabe neu bestimmt werden. Des weiteren übt die Aktivierungsfunktion einen Einfluss auf die Vorhersagegenauigkeit aus. Während lineare Aktivierungsfunktionen in der Lage sind lineare Zusammenhänge in Daten zu erkennen so bedarf es nichtlinearer Aktivierungsfunktionen, um nichtlineare Zusammenhänge abbilden zu können.\,\citef[194]{dkriesel07} Zusätzlich wird bei der Implementierung der Algorithmen oft ein sogenanntes Bias-Neuron zur Eingabe- und jeder verdeckten Schicht hinzugefügt. Das Bias-Neuron verfügt ebenfalls über eine gewichtete Verbindung zur nachfolgenden Schicht, gibt aber im Vergleich zu jedem anderen Neuron stets eine Eins aus. Hierdurch ist es möglich die Schwellenwerte der Aktivierungsfunktion während des Trainings mit zu trainieren, was zu einem schnelleren Lernen des Netzes führen soll.\,\citef[47]{dkriesel07}
+Desweiteren ist die Anzahl der Eingabeneuronen durch die Anzahl an Eingabevariablen und die Anzahl der Ausgabeneuronen durch die zu bestimmenden Größen bedingt. Die optimale Anzahl an verdeckten Neuronen muss aber in beiden Algorithmen bei jeder Aufgabe neu bestimmt werden. Des weiteren übt die Aktivierungsfunktion einen Einfluss auf die Vorhersagegenauigkeit aus. Während lineare Aktivierungsfunktionen in der Lage sind lineare Zusammenhänge in Daten zu erkennen, so bedarf es nichtlinearer Aktivierungsfunktionen, um nichtlineare Zusammenhänge abbilden zu können.\,\citef[194]{dkriesel07} Zusätzlich wird bei der Implementierung der Algorithmen oft ein sogenanntes Bias-Neuron zur Eingabe- und jeder verdeckten Schicht hinzugefügt. Das Bias-Neuron verfügt ebenfalls über eine gewichtete Verbindung zur nachfolgenden Schicht, gibt aber im Vergleich zu jedem anderen Neuron stets eine Eins aus. Hierdurch ist es möglich, die Schwellenwerte der Aktivierungsfunktion während des Trainings mit zu trainieren, was zu einem schnelleren Lernen des Netzes führen soll.\,\citef[47]{dkriesel07}

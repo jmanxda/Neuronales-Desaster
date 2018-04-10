@@ -3,7 +3,7 @@
 %% Institut für Finanzwirtschaft an der TU-Braunschweig bereitgestellt wird, erstellt.
 
 %\input{000_Einstellungen_anfang.tex}
-\documentclass[a4paper, 12pt, titlepage]{scrartcl}  % Schrift- und Papiergröße werden eingestellt 
+\documentclass[a4paper, 12pt, titlepage, listof=totoc]{scrartcl}  % Schrift- und Papiergröße werden eingestellt 
 \usepackage{000_Einstellungen-Anfang}               % Pakete und Einstellungen werden importiert
 
 \begin{document}
@@ -34,11 +34,7 @@
 \input{05_literatur}
 \input{06_algorithmus}
 \input{07_analyse}
-%\input{08_zusammenfassung}
-%\input{09_ausblick}
-
-%%\input{07_diskussion}
-
+\input{08_zusammenfassung}
 
 
 %---------------------------------------------------------------------------------
@@ -46,7 +42,6 @@
 %---------------------------------------------------------------------------------
 %% Anhang
 
-%\pagenumbering{roman}
 
 \input{10_anhang}
 
@@ -61,15 +56,6 @@
 \section{Literaturverzeichnis}
 
 \printbibliography
-
-
-%\bibliographystyle{alpha}               % Stil des Literaturverzeichnisses 
-%\bibliography{10_literatur}             % Aufruf des Literaturverzeichnisses
-
-
-
-
-
 
 \input{000_Einstellungen_ende.tex}
 \end{document}
