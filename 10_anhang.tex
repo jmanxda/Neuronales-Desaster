@@ -53,7 +53,7 @@ Der Ausgang dieses Gatters ist dann~\glqq 1\grqq~wenn eine ungerade Anzahl an Ei
 
 \subsection{Gradientenabstiegsverfahren}\label{sec:gradient}
 
-\begin{figure}[tb]
+\begin{figure}[!htb]
     \centering
         \includegraphics[width=0.9\textwidth]{Bilder/misc/Gradientenabstieg.png}
     \caption[Gradientenabstieg]{Gradientenabstieg bei einer 2-dimensionalen Funktion links und rechts bei einer 3-dimensionalen Funktion.\protect\footnotemark{}}
@@ -63,7 +63,7 @@ Der Ausgang dieses Gatters ist dann~\glqq 1\grqq~wenn eine ungerade Anzahl an Ei
 \addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
 \wrapfigfoot\footnotetext{\autoref{fig:gradient} links wurde aus \citet{Rashid2016} Abbildung 1-80 angepasst und rechts wurde aus \citet[64]{dkriesel07} Abbildung 4.3 übernommen.}
 
-Der Gradientenabstieg (engl.: gradient descent) ist ein Verfahren welches eingesetzt wird, um Maxima oder Minima einer Funktion zu finden. Der Gradient $g$ ist hierbei ein Vektor der an jedem Punkt einer differenzierbaren Funktion definiert ist. Der Vektor zeigt in Richtung des steilsten Anstieges und sein Betrag $|g|$ gibt den Steigungsgrad in diese Richtung an. Hieraus folgt, dass ein negativer Gradient $-g$ die Richtung des steilsten Abstieges weist. Bei dem Gradientenabstig wird von einem beliebigen Startpunkt einer Funktion schrittweise in die Richtung des negativen Gradienten gegangen, um das Minimum einer Funktion zu finden.\,\citef[63 ff]{dkriesel07} In \autoref{fig:gradient} wird dieses Verfahren anhand einer 2- und 3-dimensionalen Funktion veranschaulicht.
+Der Gradientenabstieg (engl.: gradient descent) ist ein Verfahren welches eingesetzt wird, um Maxima oder Minima einer Funktion zu finden. Der Gradient $g$ ist hierbei ein Vektor der an jedem Punkt einer differenzierbaren Funktion definiert ist. Der Vektor zeigt in Richtung des steilsten Anstieges und sein Betrag $|g|$ gibt den Steigungsgrad in diese Richtung an. Hieraus folgt, dass ein negativer Gradient $-g$ in die Richtung des steilsten Abstieges weist. Bei dem Gradientenabstig wird von einem beliebigen Startpunkt einer Funktion schrittweise in die Richtung des negativen Gradienten gegangen, um das Minimum einer Funktion zu finden.\,\citef[63 ff]{dkriesel07} In \autoref{fig:gradient} wird dieses Verfahren anhand einer 2- und 3-dimensionalen Funktion veranschaulicht.
 
 %\todo{sagen dass die Delta-Regel ein Gradientenabstiegsverfahren ist und das Verfahren beschreiben}
 
@@ -72,7 +72,7 @@ Der Gradientenabstieg (engl.: gradient descent) ist ein Verfahren welches einges
     %http://www.theprojectspot.com/tutorial-post/introduction-to-artificial-neural-networks-part-2-learning/8
 
 %\todo{Grafik: SLP mit Linearer Aktivierungsfunktion und Abkürzungsübersicht}
-Die Deltaregel basiert auf dem Graientenabstiegsverfahren und wird als Lernverfahren für einschichtige Netzwerke eingesetzt.\,\footnote{Vgl. \citet[79 ff]{dkriesel07} und \citet[322 ff]{Rumelhart1986}.} Das bei der Herleitung zu betrachtende Netzwerk besteht aus $(X_{i}, i=1,\dots,I)$ Eingabeneuronen und $(Y_{o}, o=1,\dots,O)$ Ausgabeneuronen. Hieraus ergeben sich zwei Schichten an Neuronen und eine Schicht an trainierbaren Gewichten $w_{oi}$. Zusätzlich werden lineare Aktivierungsfunktionen betrachtet. In \autoref{fig:SLP_a} ist das betrachtete Netzwerk abgebildet.
+Die Deltaregel basiert auf dem Graientenabstiegsverfahren und wird als Lernverfahren für einschichtige Netzwerke eingesetzt .\,\footnote{Vgl. \citet[79 ff]{dkriesel07} und \citet[322 ff]{Rumelhart1986}.} Das bei der Herleitung zu betrachtende Netzwerk besteht aus $(X_{i}, i=1,\dots,I)$ Eingabeneuronen und $(Y_{o}, o=1,\dots,O)$ Ausgabeneuronen. Hieraus ergeben sich zwei Schichten an Neuronen und eine Schicht an trainierbaren Gewichten $w_{oi}$. Zusätzlich werden lineare Aktivierungsfunktionen betrachtet. In \autoref{fig:SLP_a} ist das betrachtete Netzwerk abgebildet.
 
 
 \begin{figure}[!htb]
@@ -85,11 +85,11 @@ Die Deltaregel basiert auf dem Graientenabstiegsverfahren und wird als Lernverfa
     \label{fig:SLP_a}
 \end{figure}
 
-Zunächst wird die Verarbeitung von Informationen in dem in \autoref{fig:SLP_a} dargestellten Netzwerk betrachtet. Die Information jedes Eingabeneurons $x_i$ wird mit einem Gewicht $w_{oi}$ versehen und an das Ausgabeneuron weitergeleitet. Die Propagierungsfunktion (die in diesem Fall die Summe darstellt) verarbeitet die Eingabe zu Netzeingabe $net_o$
+Zunächst wird die Verarbeitung von Informationen in dem in \autoref{fig:SLP_a} dargestellten Netzwerk betrachtet. Die Information jedes Eingabeneurons $x_i$ wird mit einem Gewicht $w_{oi}$ versehen und an das Ausgabeneuron weitergeleitet. Die Propagierungsfunktion (die in diesem Fall die Summe darstellt) verarbeitet die Eingabe zur Netzeingabe $net_o$
 \begin{equation}
 net_o= \sum^{i=1}_n w_{oi} \cdot x_i
 \end{equation}
-und reicht diese an die Aktivierungsfunktion $f_{akt}$ weiter. Das Ergebniss der Aktivierungsfunktion ist dann die Ausgabe $y_o$ des Ausgabeneurons $o$
+und reicht diese an die Aktivierungsfunktion $f_{akt}$ weiter. Das Ergebnis der Aktivierungsfunktion ist dann die Ausgabe $y_o$ des Ausgabeneurons $o$
 \begin{equation}
 \gls{yo}= f_{akt}(net_o).
 \end{equation}
@@ -99,7 +99,7 @@ y_o= net_o= \sum_{i=1}^n w_{oi} \cdot x_i.
 \label{gl:ausgang}
 \end{equation}
 
-Nun Soll das Netzwerk mit einer Menge an Lernbeispielen $P$ trainiert werden. Wobei die Menge $\gls{P}$ sich aus der Trainingseingabe $\gls{p}$ und der zugehörigen Lösung $\gls{t}$ also $(p,t)$ zusammensetzt.
+Nun soll das Netzwerk mit einer Menge an Lernbeispielen $P$ trainiert werden, wobei die Menge $\gls{P}$ sich aus der Trainingseingabe $\gls{p}$ und der zugehörigen Lösung $\gls{t}$ also $(p,t)$ zusammensetzt.
 Das Ziel des Trainings ist nun, dass die Ausgabe $y$ bei allen Trainingsbeispielen sich der zugehörigen Lösung $t$ möglichst angleicht bzw. die Differenz $\delta$ (auch als Fehler bezeichnet) 
 \begin{equation}
 \gls{delta}=t-y
@@ -111,10 +111,10 @@ aus Lösung und Ausgabe möglichst klein  wird, also soll formal gelten
 \forall p:y \approx t \quad \text{bzw.} \quad \forall p:\delta \approx 0.
 \end{equation*}
 
-Bei einem Netzwerk mit zwei Eingabeneuronen und einem Ausgabeneuron (ergo zwei Gewichten) für ein Lernbeispiel eine Fehlerfläche $Err_p(W)$ (dargestellt in \autoref{fig:Fehlerlandschaft}), wobei $W$ die Menge aller Gewichte darstellt.
+Bei einem Netzwerk mit zwei Eingabeneuronen und einem Ausgabeneuron (ergo zwei Gewichten) ist eine mögliche Fehlerfläche in \autoref{fig:Fehlerlandschaft} dargestellt, wobei $W$ die Menge aller Gewichte darstellt.
 
 %\todo{Grafik: Fehlerfläche \citet[80]{dkriesel07}}
-\begin{figure}[tb]
+\begin{figure}[!htb]
     \centering
         \includegraphics[width=0.5\textwidth]{Bilder/misc/Fehlerlandschaft.png}
     \caption[Beispiel einer Fehlerfläche eines künstlichen neuronalen Netzes]{Beispiel einer Fehlerfläche eines neuronalen Netzes mit zwei trainierbaren Gewichten. Bei weiteren Gewichten entsteht pro Gewicht eine zusätzliche Dimension in der Fehlerlandschaft. Was zu höherer Komplexität und zerklüfteter \glqq Oberfläche\grqq~führt.\protect\footnotemark{}}
@@ -124,19 +124,20 @@ Bei einem Netzwerk mit zwei Eingabeneuronen und einem Ausgabeneuron (ergo zwei G
 \addtocounter{Hfootnote}{-1}    % -1 times total number of footnote(mark)s in the wrapfigure
 \wrapfigfoot\footnotetext{\autoref{fig:Fehlerlandschaft} wurde aus \citet[80]{dkriesel07} übernommen.}
 
-Durch Anwendung des Gradientenabstigverfahrens\,\citef[63 f]{dkriesel07} kann nun vom Ausgangspunkt gesehen das nächste Minimum gefunden werden. Mit
+Durch Anwendung des Gradientenabstigverfahrens kann nun vom Ausgangspunkt gesehen das nächste Minimum gefunden werden. Mit
 \begin{equation}
 \Delta w = - \alpha \nabla Err(W)
 \end{equation}
-erhält man nun die Information wie die Gewichte verändert werden können, um das Fehlerminimum zu finden.
-Wobei $\gls{alpha}$ eine Proportionalitätskonstante darstellt, welche für die Schrittweite beim Gradientenabstieg verantwortlich ist.
+erhält man nun die Information wie die Gewichte verändert werden können, um das Fehlerminimum zu finden,
+wobei $\gls{alpha}$ eine Proportionalitätskonstante darstellt, welche für die Schrittweite beim Gradientenabstieg verantwortlich ist.
 Um zu erfahren wie jedes Gewicht verändert werden soll muss die Fehlerfunktion $Err(W)$ nach dem entsprechenden Gewicht $w_{oi}$ abgeleitet werden
 \begin{equation}
 \Delta w_{oi} = - \alpha \frac{\partial Err(W)}{\partial w_{oi}} .
 \label{gl:gewaend}
 \end{equation}
-
-Die Fehlerfunktion $Err_p(W)$ für ein Trainingsbeispiel $p$ lässt sich auf unterschiedliche Weise bestimmen\,\footnote{\citet[60 f]{dkriesel07} gibt hierfür einige Beispiele an.}, an dieser Stelle wird der quadratische Abstand genutzt. Damit kann die Fehlerfunktion über alle Ausgabeneuronen berechnet werden mit:
+\begin{sloppypar}
+Die Fehlerfunktion $Err_p(W)$ für ein Trainingsbeispiel $p$ lässt sich auf unterschiedliche Weise bestimmen\footnote{\citet[60 f]{dkriesel07} gibt hierfür einige Beispiele an.}, an dieser Stelle wird der quadratische Abstand genutzt. Damit kann die \hbox{Fehlerfunktion} über alle Ausgabeneuronen berechnet werden mit:
+\end{sloppypar}
 \begin{equation}
 Err_p(W)= \frac{1}{2} \sum^k_{o=1} (t_{po}-y_{po})^2 .
 \end{equation}
@@ -170,10 +171,10 @@ Durch das Ableiten der \autoref{gl:errp} nach $y_{po}$ und einsetzen von \autore
 
 Unter Betrachtung der \autoref{gl:ausgang} kann der Ausdruck $ \frac{\partial y_{po}}{\partial w_{oi}}$ nun auch geschrieben werden als 
 \begin{equation}
-\frac{\partial y_{po}}{\partial w_{oi}} = \frac{\partial \sum\limits_{i=1}^n w_{oi} \cdot x_{pi}}{\partial w_{oi}} .
+\frac{\partial y_{po}}{\partial w_{oi}} = \frac{\partial \sum\limits_{i=1}^n w_{oi} \cdot x_{pi}}{\partial w_{oi}} ,
 \label{gl:vor_xi}
 \end{equation}
-Wobei die abzuleitende Funktion zwar aus vielen Summanden zusammengesetzt ist aber nur der Summand $w_{oi} x_{pi}$ enthält die Variable $w_{oi}$ nach der abgeleitet wird. Es gilt also
+wobei die abzuleitende Funktion zwar aus vielen Summanden zusammengesetzt ist aber nur der Summand $w_{oi} x_{pi}$ enthält die Variable $w_{oi}$ nach der abgeleitet wird. Es gilt also
 \begin{equation}
 \frac{\partial y_{po}}{\partial w_{oi}} = x_{pi}.
 \label{gl:xi}
@@ -195,6 +196,18 @@ Für das Offlinelernverfahren muss noch die Summe über alle Trainingsbeispiele 
 
 
 
+
+\subsection{Bias-Neuron}\label{sec:biasneuron}
+
+\begin{figure}[!htb]
+    \centering
+        \input{Bilder/Netzwerke/Bias-Neuron.tex}
+    \caption[MLP mit Bias-Neuronen]{Darstellung eines MLP mit Bias-Neuronen $b$.}
+    \label{fig:biasneuron}
+\end{figure}
+
+In \autoref{fig:biasneuron} ist eine MLP mit Bias-Neuronen dargestellt. Das Bias-Neuron verfügt ebenfalls, wie jedes andere Neuron der gleichen Schicht, über eine gewichtete Verbindung zur nachfolgenden Schicht, gibt aber im Vergleich zu jedem anderen Neuron stets eine 1 aus. Hierdurch ist es möglich, die Schwellenwerte der Aktivierungsfunktion während des Trainings mitzutrainieren, was zu einem schnelleren Lernen des Netzes führen soll.\,\citef[47]{dkriesel07}
+
 %\subsection{Ergebnisse von \citet{Aggarwal2009} und \citet{Panapakidis2016}}\label{sec:andere_ergebnisse}
 
 %\todo{Liste der Märkte aus \citet{Cerjan2013}}
@@ -202,7 +215,7 @@ Für das Offlinelernverfahren muss noch die Summe über alle Trainingsbeispiele 
 %\todo{Tabellen einfügen und Hinweiß dass SVM keine ANN sind}
 \newpage
 \subsection{Performancemaße}\label{sec:perfmas}
-In diesem Abschnitt werden die Maße zur Evaluierung der Vorhersagegenauigkeit (weiterhin als Performancemaße bezeichnet) aufgeführt die in der Literaturrecherche zur Strompreismodellierung in \autoref{sec:strompreis} und weiterer Literatur\,\citef[5]{Guertler2017} genannt wurden. Hierbei sind $\gls{yi}$ und $\hat{\gls{yih}}_i$ die tatsächlichen und vorhergesagten Preise zum Zeitpunkt $i$ und $\gls{T}$ stellt die Menge aller, bei der Prognose, betrachteten Zeitpunkte dar. Außerdem gibt $\mean{\gls{ym}}$ den Mittelwert der tatsächlichen Preise und $\mean{\gls{ymt}}_{train}$ den Preismittelwert der Trainingsdaten an.
+In diesem Abschnitt werden die Maße zur Evaluierung der Vorhersagegenauigkeit (weiterhin als Performancemaße bezeichnet) aufgeführt, die in der Literaturrecherche zur Strompreismodellierung in \autoref{sec:strompreis} und weiterer Literatur\,\citef[5]{Guertler2017} genannt wurden. Hierbei sind $\gls{yi}$ und $\hat{\gls{yih}}_i$ die tatsächlichen und vorhergesagten Preise zum Zeitpunkt $i$ und $\gls{T}$ stellt die Menge aller, bei der Prognose, betrachteten Zeitpunkte dar. Außerdem gibt $\mean{\gls{ym}}$ den Mittelwert der tatsächlichen Preise und $\mean{\gls{ymt}}_{train}$ den Preismittelwert der Trainingsdaten an.
 
 Der Absolute Percentage Error (\gls{APE}) liefert Informationen über die Fehlerverteilung in der Nähe der Null.\,\citef[14\label{foot:Domanski2017}]{Domanski2017}
 %
@@ -213,7 +226,7 @@ APE= \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{y_i}.
 \end{equation}
 %
 %
-Der Mean Absolute Percentage Error (\gls{MAPE}) gibt einen prozentualen Mittelwert über den Fehlerbetrag an. Da das Ursprungsmaß (in dieser Arbeit als $MAPE_1$ bezeichnet) bei sehr kleinen Preisen einen hohen Werte liefert und bei einem Preis von Null sogar gegen Unendlich gehen wurden Mehrere Verbesserungen vorgeschlagen. Diese äußern sich durch einen Mittelwert über alle gemessenen Preise bei $MAPE_2$ oder durch einen Mittelwert aus der Betragssumme der des tatsächlichen und vorhergesagten Preises bei $sMAPE$ im Nenner. Hierbei steht ein Wert von 0\,\% für eine exakte und Werte um die 10\,\% für eine akkurate Vorhersage.\,\footnote{Vgl. \citet[17]{Bobinaite2016}, \citet[2105]{Amjady2009} und \citet[894]{Lago2018}.}   
+Der Mean Absolute Percentage Error (\gls{MAPE}) gibt einen prozentualen Mittelwert über den Fehlerbetrag an. Da das Ursprungsmaß (in dieser Arbeit als $MAPE_1$ bezeichnet) bei sehr kleinen Preisen einen hohen Werte liefert und bei einem Preis von Null sogar gegen Unendlich gehen kann, wurden Mehrere Verbesserungen vorgeschlagen. Diese äußern sich durch einen Mittelwert über alle gemessenen Preise bei $MAPE_2$ oder durch einen Mittelwert aus der Betragssumme des tatsächlichen und vorhergesagten Preises bei $sMAPE$ im Nenner. Hierbei steht ein Wert von 0\,\% für eine exakte und Werte um die 10\,\% für eine akkurate Vorhersage .\,\footnote{Vgl. \citet[17]{Bobinaite2016}, \citet[2105]{Amjady2009} und \citet[894]{Lago2018}.}   
 % MAPE
 \begin{equation}
 MAPE_1= \frac{100}{T} \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{y_i},
@@ -232,7 +245,7 @@ sMAPE= \frac{100}{T} \sum\limits_{i \in T} \frac{\abs{y_i-\hat{y}_i}}{(\abs{y_i}
 \label{gl:sMAPE}
 \end{equation}
 %
-Der Mean Squared Error (\gls{MSE}) gibt den quadratischen Mittelwert der der Fehler an und gibt an wie weit die vorhergesagten Daten von den tatsächlichen Werten liegen. Ein kleine Wert deutet auf eine gute vorhersage hin.\,\footnoteref{foot:Domanski2017}
+Der Mean Squared Error (\gls{MSE}) gibt den quadratischen Mittelwert der Fehler an und gibt an wie weit die vorhergesagten Daten von den tatsächlichen Werten liegen. Ein kleine Wert deutet auf eine gute vorhersage hin .\,\footnoteref{foot:Domanski2017}
 % MSE
 \begin{equation}
 MSE= \frac{1}{T} \sum\limits_{i \in T} (y_i-\hat{y}_i)^2.
@@ -240,7 +253,7 @@ MSE= \frac{1}{T} \sum\limits_{i \in T} (y_i-\hat{y}_i)^2.
 \end{equation}
 %
 %
-Der Root Mean Squared Error (\gls{RMSE}) ist die Quadratwurzel des MSE und ist hierdurch sehr ähnlich. Der RMSE weist kleinere Werte auf, der Aussagegehalt ist aber ähnlich zu MSE.
+Der Root Mean Squared Error (\gls{RMSE}) ist die Quadratwurzel des MSE und ist hierdurch sehr ähnlich zu diesem Maß. Der RMSE weist kleinere Werte auf, der Aussagegehalt ist aber ähnlich zum MSE.
 % RMSE
 \begin{equation}
 RMSE= \sqrt{ \frac{1}{T} \sum\limits_{i \in T} (y_i-\hat{y}_i)^2}.
@@ -255,7 +268,7 @@ MAE= \frac{1}{T} \sum\limits_{i \in T} \abs{y_i-\hat{y}_i}.
 \end{equation}
 %
 %
-Der Normalized Mean Square Error (\gls{NMSE}) ist ein Schätzwert über alle Abweichungen zwischen vorhergesagten und gemessenen Werten. Zeigt ein Modell einen sehr geringen NMSE so weist es eine gute örtliche und zeitliche Performance auf. Andererseits bedeuten hohe $NMSE$-Werte nicht, dass das betrachtete Modell komplett falsch ist.
+Der Normalized Mean Square Error (\gls{NMSE}) ist ein Schätzwert über alle Abweichungen zwischen vorhergesagten und gemessenen Werte. Zeigt ein Modell einen sehr geringen NMSE so weist es eine gute örtliche und zeitliche Performance auf. Andererseits bedeuten hohe $NMSE$-Werte nicht, dass das betrachtete Modell komplett falsch ist.
 % NMSE
 \begin{gather}
 \begin{aligned}
@@ -266,14 +279,15 @@ NMSE &= \frac{1}{\Delta^2 T} \sum\limits_{i \in T} (y_i-\hat{y}_i)^2,\\
 \end{gather}
 %
 %
-Die Error Variance (\gls{EV}) gibt einen Wert über die nicht erklärten Informationen nach dem Fitten des Modells. Je kleiner der Wert ist desto präziser ist die Vorhersage.\,\citef{Peter2016}
+Die Error Variance (\gls{EV}) gibt einen Wert über die nicht erklärten Informationen nach dem Fitten des Modells an. Je kleiner der Wert ist desto präziser ist die Vorhersage.\,\citef{Peter2016}
 % EV
+
 \begin{equation}
 EV= \sigma^2 = \frac{1}{T} \sum\limits_{i \in T} \left ( \frac{\abs{y_i-\hat{y}_i}}{\mean{y}} - MAPE_2  \right ) ^2.
 \label{gl:EV}
 \end{equation}
 %
-Pearson Korrelationskoeffizient bewertet die Linearität zwischen der Kovarianz zweier Variablen und dem Produkt der Standardabweichung dieser Variablen. Der Wertebereich dieses Maßes ist [-1,1] und er gibt Auskunft, wie Ähnlich der zeitliche Verlauf zwischen dem tatsächlichen Preis und der Vorhersage ist. Ein Wert von Eins deutet auf eine perfekte vorhersage hin.\,\citef{Davo2016} 
+Der Pearson Korrelationskoeffizient bewertet die Linearität zwischen der Kovarianz zweier Variablen und dem Produkt der Standardabweichung dieser Variablen. Der Wertebereich dieses Maßes ist [-1,1] und er gibt Auskunft darüber wie Ähnlich der zeitliche Verlauf zwischen dem tatsächlichen Preis und der Vorhersage ist. Ein Wert von Eins deutet auf eine perfekte vorhersage hin.\,\citef{Davo2016} 
 % cor
 \begin{equation}
 \gls{COR} = \frac{cov(y_i,\hat{y}_i)}{\sqrt{sd(y_i)sd(\hat{y}_i)}} .
@@ -281,7 +295,7 @@ Pearson Korrelationskoeffizient bewertet die Linearität zwischen der Kovarianz 
 \end{equation}
 %
 %
-Theils Koeffizienten der Ungleichheit \gls{U}[1] und U2 unterscheiden sich in der Anwesenheit bzw. Abwesenheit eines $\hat{y}_i$ im Nenner. Hierbei steht der Wert von Null in beiden fällen für Gleichheit und somit für eine ideale Vorhersage. Bei einem Wert von Eins spricht man von einer maximalen Ungleichheit. Dies kann bei U1 der Fall sein wenn eine negative Proportionalität besteht oder einer der Terme im Nenner Null ist. Bei dem U2 kann dies der Fall sein, wenn die Vorhersagemethode eine \textit{Na\"{i}ve-No-Change-Extrapolation}\,\citef[6]{Lattyak2011} ist oder wenn U2 zu der gleichen Standardabweichung des Prognosefehlers führt wie die Vorhersagemethode.\,\citef[444 f]{Bliemel1973}
+Theils Koeffizienten der Ungleichheit \gls{U}[1] und U2 unterscheiden sich in der Anwesenheit bzw. Abwesenheit eines $\hat{y}_i$ im Nenner. Hierbei steht der Wert von Null in beiden fällen für Gleichheit und somit für eine ideale Vorhersage. Bei einem Wert von 1 spricht man von einer maximalen Ungleichheit. Dies kann bei U1 der Fall sein wenn eine negative Proportionalität besteht oder einer der Terme im Nenner Null ist. Bei dem U2 kann dies der Fall sein, wenn die Vorhersagemethode eine \textit{Na\"{i}ve-No-Change-Extrapolation}\,\citef[6]{Lattyak2011} ist oder wenn U2 zu der gleichen \hbox{Standardabweichung} des Prognosefehlers führt wie die Vorhersagemethode.\,\citef[444 f]{Bliemel1973}
 % U1
 \begin{equation}
 U1 = \frac{\sqrt{\frac{1}{T} \sum_{i \in T} (y_i-\hat{y}_i)^2}}{ \sqrt{\frac{1}{T} \sum_{i \in T} y_i^2} + \sqrt{\frac{1}{T} \sum_{i \in T} \hat{y}_i^2}},
@@ -355,20 +369,20 @@ REL= \frac{\sum_{i \in T} (\hat{y}_i-y_i)}{\sum_{i \in T} y_i} .
 \newpage
 \subsection{Überblick und Benutzung der Programme}\label{sec:program}
 
-Die programmiertechnischen Umsetzungen der beschriebenen Algorithmen befinden sich im digitalen Anhang auf der CD. In dem Ordner \verb|Programme\Datensatz\| befindet sich der Ordner \verb|raw| und die Datei \verb|Datensatz.dta|. In dem Ordner \verb|raw| befinden sich die Rohdaten in Excel-Format und die Datei \verb|Datensatz.dta| beinhaltet den Datensatz dieser Arbeit und kann direkt in Stata eingebunden werden.
-
+Die programmiertechnischen Umsetzungen der in \autoref{sec:algorithm} beschriebenen Algorithmen befinden sich im digitalen Anhang auf der CD in dem Ordner \verb|Programme\|. In dem Unterordner \verb|Programme\Datensatz\| befindet sich der Ordner \verb|raw| und die Datei \verb|Datensatz.dta|. In dem Ordner \verb|raw| befinden sich die Rohdaten in Excel-Format und die Datei \verb|Datensatz.dta| beinhaltet den Datensatz dieser Arbeit. Der Datensatz kann direkt in Stata eingebunden werden.
+\begin{sloppypar}
 In dem Ordner \verb|Programme\Stata\| befinden sich die Ordner \verb|ann|, \verb|sub| und die Dateien \verb|cr_annlib.do| und \verb|lannlib.mlib|. Die Datei \verb|cr_annlib.do| ist eine Bibliothek, welche die einzelnen Netzwerke enthält. Die einzelnen Netzwerke befinden sich in der entsprechenden \verb|*.mata| Datei in dem Ordner \verb|ann|. Die Datei \verb|lannlib.mlib| wird auf Grundlage von \verb|cr_annlib.do| automatisch erzeugt und dient der schnelleren Kalkulation der Netzwerke.
-
+\end{sloppypar}
 In dem Ordner \verb|sub| befinden sich die Programme zum herausfinden der optimalen Parameter (\verb|optimize_*.do|) und Evaluation (\verb|evaluate_*.do|) der einzelnen Netzwerke.
-Für jeden Lernalgorithmus gibt es eine eigene Datei. Wobei die Dateien \verb|optimize_*.do| und \verb|evaluate_*.do| ähnlich strukturiert sind. 
+Für jeden Lernalgorithmus gibt es eine eigene Datei, wobei die Dateien \verb|optimize_*.do| und \verb|evaluate_*.do| ähnlich strukturiert sind. Da die Datei \verb|lannlib.mlib| bei jedem Programm neu erzeugt wird, ist es wichtig den Ordner \verb|Programme\| samt Inhalt auf einen lokalen Datenspeicher zu kopieren. 
 Es werden nun die Codezeilen angegeben, die angepasst werden müssen damit die Programme gestartet werden können.\\
 
 \begin{Verbatim}[commandchars=\\\{\}]
 \textbf{optimize_*.do:}
 \end{Verbatim}
-Bevor ein Netzwerk die gewünschte Ausgabe liefern kann müssen zunächst die optimalen Werte der Lernalgorithmen bestimmt werden. Die Nachfolgend beschriebenen Programme dienen diesem Zweck. Es werden mehrere Schleifen durchlaufen wobei der zu untersuchende Parameter in einer bestimmten Schrittweite Verändert wird. Die Programme speichern dabei die berechneten Werte, zur nachfolgenden Auswertung, in eine Ausgabedatei im Excel-Format.
+Bevor ein Netzwerk die gewünschte Ausgabe liefern kann müssen zunächst die optimalen Werte der Lernalgorithmen bestimmt werden. Die Nachfolgend beschriebenen Programme dienen diesem Zweck. Es werden mehrere Schleifen durchlaufen, wobei der zu untersuchende Parameter in einer bestimmten Schrittweite Verändert wird. Die Programme speichern dabei die berechneten Werte, zur nachfolgenden Auswertung, in eine Ausgabedatei im Excel-Format.
 
-Bei beiden Lernalgorithmen muss zunächst der Ordnerpfad angegeben werden in dem sich die \verb|cr_annlib.do| befindet.\footnote{Um mögliche Sprachbarrieren abzubauen sind die Kommentare in den Quelldateien in englischer Sprache verfasst.}
+Bei beiden Lernalgorithmen muss zunächst der Ordnerpfad angegeben werden in dem sich die \verb|cr_annlib.do| befindet .\,\footnote{Um mögliche Sprachbarrieren abzubauen sind die Kommentare in den Quelldateien in englischer Sprache verfasst.}
 
 {
 \setstretch{1} 
@@ -439,7 +453,7 @@ ANN = 2 //"mlp_LM_sig_bias"
 \end{lstlisting}
 }
 
-Dies geschieht indem die Netzwerkkonstellation die nicht gewünscht sind mit \verb|//| auskommentiert werden. Es kann nur eine Konstellation gewählt sein. In dem dargestellten Ausschnitt der \verb|optimize_mlp_BP.do| Datei ist das Netzwerk in Zeile \verb|215| ausgewählt und im Ausschnitt der \verb|optimize_mlp_LM.do| Datei ist das Netzwerk in Zeile \verb|216| ausgewählt.
+Dies geschieht indem die Netzwerkkonstellation die nicht gewünscht sind mit \glqq \verb|//|\grqq~auskommentiert werden. Dabei kann nur eine Konstellation gleichzeitig gewählt sein. In dem dargestellten Ausschnitt der \verb|optimize_mlp_BP.do| Datei ist das Netzwerk in Zeile \verb|216| ausgewählt und im Ausschnitt der \verb|optimize_mlp_LM.do| Datei ist das Netzwerk in Zeile \verb|217| ausgewählt.
 
 Nachfolgend werden, abhängig vom Lernalgorithmus die Netzwerkparameter eingestellt.
 
@@ -481,7 +495,7 @@ n.result_tr = train_raw[1+24::rows(train_raw),1] // Lösungen für Trainingsbeis
 \end{lstlisting}
 }
 
-Wobei Parameter deren optimale Werte zu untersuchen sind, an dieser Stelle auskommentiert werden (in \verb|optimize_mlp_BP.do| Zeile \verb|283| und in \verb|optimize_mlp_LM.do| Zeile \verb|280|).
+Dabei werden Parameter deren optimale Werte zu untersuchen sind, an dieser Stelle auskommentiert (in \verb|optimize_mlp_BP.do| Zeile \verb|284| und in \verb|optimize_mlp_LM.do| Zeile \verb|281|).
 Diese Parameter werden schließlich innerhalb der Berechnungsschleife eingefügt.
 
 \begin{Verbatim}
@@ -525,7 +539,7 @@ rounds = 20 // Mittelwert über
 \end{lstlisting}
 }
 
-Nachdem alle Einstellungen durchgeführt wurden kann die do-File im Stata-Editor mit der Tastenkombination \verb|[Strg] + [D]| ausgeführt werden. Wenn der erste Wert berechnet wurde, wird im angegebenen Pfad eine Excel-Datei mit dem aktuellen Datum erstellt und der Wert dort gespeichert. Die Reiter der Excel-Dateien werden nach der Stunde benannt zu der die Messung begonnen hat. Jeder weitere Wert wird in dem gleichen Reiter gespeichert. Nachdem 200 Werte in einer Datei gesichert wurden, wird eine neue Datei erstellt, um die Zugriffszeiten bei der Berechnung zu minimieren.\\
+Nachdem alle Einstellungen durchgeführt wurden, kann die do-File im Stata-Editor mit der Tastenkombination \verb|[Strg] + [D]| ausgeführt werden. Wenn der erste Wert berechnet wurde, wird im angegebenen Pfad eine Excel-Datei mit dem aktuellen Datum erstellt und der Wert dort gespeichert. Die Reiter der Excel-Dateien werden nach der Stunde benannt zu der die Messung begonnen hat. Jeder weitere Wert wird in dem gleichen Reiter gespeichert. Nachdem 200 Werte in einer Datei gesichert wurden, wird eine neue Datei erstellt, um die Zugriffszeiten bei der Berechnung zu minimieren.\\
 
 %\newpage
 
@@ -589,7 +603,7 @@ ANN = 1 //"mlp_BP_sig"
 \end{lstlisting}
 }
 
-\newpage
+%\newpage
 
 \begin{Verbatim}
 evaluate_mlp_LM.do:
@@ -607,9 +621,9 @@ ANN = 2 //"mlp_LM_sig_bias"
 \end{lstlisting}
 }
 
-Dies geschieht indem die Netzwerkkonstellation die nicht gewünscht sind mit \verb|//| auskommentiert werden. Es kann nur eine Konstellation gewählt sein. In dem dargestellten Ausschnitt der \verb|optimize_mlp_BP.do| Datei ist das Netzwerk in Zeile \verb|263| ausgewählt und im Ausschnitt der \verb|optimize_mlp_LM.do| Datei ist das Netzwerk in Zeile \verb|264| ausgewählt.
+Dies geschieht indem die Netzwerkkonstellation die nicht gewünscht sind mit \glqq \verb|//|\grqq~auskommentiert werden. Dabei kann nur eine Konstellation gleichzeitig gewählt sein. In dem dargestellten Ausschnitt der \verb|optimize_mlp_BP.do| Datei ist das Netzwerk in Zeile \verb|264| ausgewählt und im Ausschnitt der \verb|optimize_mlp_LM.do| Datei ist das Netzwerk in Zeile \verb|265| ausgewählt.
 
-Nachfolgend werden, abhängig vom Lernalgorithmus die Netzwerkparameter eingestellt. Wobei hier die ermittelten optimalen Parameter eingetragen werden. Durch die Anzahl der Neuinitialisierungen kann festgelegt werden wie oft ein Netzwerk mit den gleichen Parametern initialisiert wird. Dabei wird bei jeder Neuinitialisierung die berechnete Prognose gespeichert.
+Nachfolgend werden, abhängig vom Lernalgorithmus die Netzwerkparameter eingestellt, wobei hier die ermittelten optimalen Parameter eingetragen werden. Durch die Anzahl der Neuinitialisierungen kann festgelegt werden wie oft ein Netzwerk mit den gleichen Parametern initialisiert wird. Dabei wird bei jeder Neuinitialisierung die berechnete Prognose gespeichert.
 
 \begin{Verbatim}
 evaluate_mlp_BP.do:
@@ -651,4 +665,4 @@ rounds    = 20			    // Anzahl der Neuinitialisierungen
 \end{lstlisting}
 }
 
-Nachdem alle Einstellungen durchgeführt wurden kann die do-File im Stata-Editor mit der Tastenkombination \verb|[Strg] + [D]| ausgeführt werden. Wenn der erste Wert berechnet wurde, wird im angegebenen Pfad eine Excel-Datei mit dem aktuellen Datum erstellt und der Wert dort gespeichert. Die Reiter der Excel-Dateien werden nach der Stunde benannt zu der die Messung begonnen hat. Jeder weitere Wert wird in dem gleichen Reiter gespeichert. Wobei alle Prognosen in einem separaten Reiter gesichert werden. Die Benennung der Prognosen erfolgt durch aufsteigende Ziffern, die der Neuinitialisierung entsprechen in der die Prognose erstellt wurde.
+Nachdem alle Einstellungen durchgeführt wurden, kann die do-File im Stata-Editor mit der Tastenkombination \verb|[Strg] + [D]| ausgeführt werden. Wenn der erste Wert berechnet wurde, wird im angegebenen Pfad eine Excel-Datei mit dem aktuellen Datum erstellt und der Wert dort gespeichert. Die Reiter der Excel-Dateien werden nach der Stunde benannt zu der die Messung begonnen hat. Jeder weitere Wert wird in dem gleichen Reiter gespeichert, wobei alle Prognosen in einem separaten Reiter gesichert werden. Die Benennung der Prognosen erfolgt durch aufsteigende Ziffern, die der Neuinitialisierung entsprechen in der die jeweilige Prognose erstellt wurde.

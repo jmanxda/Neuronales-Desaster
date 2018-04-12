@@ -24,10 +24,9 @@
 %-------------------------------------------
 %% Pakete zum einstellen des Seitenlayouts
 %\documentclass[a4paper, 12pt, titlepage]{scrartcl} % Schrift- und Papiergröße werden eingestellt  
-\usepackage[top=2.5cm, bottom=2cm, left=2.5cm, right=2.5cm]{geometry} % Korrekturrand wird eingestellt
+\usepackage[top=2cm, bottom=1.7cm, left=2.5cm, right=2.5cm]{geometry} % Korrekturrand wird eingestellt
 \usepackage[ngerman]{babel}             % Dokumentsprache wird auf deutsch gesetzt
 \usepackage{fancyhdr}                   % Ermöglicht die freie Bearbeitung der Fuß und Kopfzeilen
-\usepackage[titles]{tocloft}            % Ermöglicht das anpassen des Inhaltsverzeichnisses
 \usepackage{fancyvrb}                   % Erweitert die Verbatimumgebung
 \usepackage{listings}                   % Ermöglicht hervorgehobenen Quellcode
 \usepackage{inconsolata}                % Fügt das Font "Consolata" ein
@@ -42,7 +41,7 @@
 \pagestyle{fancy}                       % Ermöglicht benutzerdefinierte Kopf- und Fußzeilen
 \lhead{}
 \chead{}
-\rhead{\thepage}                        % Seitenangabe oben rechts
+\rhead{\vspace*{\baselineskip}\thepage}                        % Seitenangabe oben rechts
 \cfoot{} 
 \renewcommand{\headrulewidth}{0pt}      % Breite des Dekostriches in der Kopfzeile
 \renewcommand{\footrulewidth}{0pt}      % Breite des Dekostriches in der Fußzeile
@@ -56,7 +55,6 @@
 %% Stellt Zeilenabstand auf Word vergleichbaren Abstand von 1,5 
 \usepackage{setspace}                   % Ermöglicht das Einstellen des Zeilenabstandes
 \setstretch{1.428}                      % Zeilenabstand wird auf 1,5 gesetzt
-
 
 
 %-------------------------------------------
@@ -121,6 +119,7 @@
 
 %-------------------------------------------
 %% Pakete für die richtige Darstellung von Fußnoten
+%% Quellen: https://tex.stackexchange.com/questions/60477/remove-space-after-figure-and-before-text
 \usepackage[bottom,hang]{footmisc}           % Setzt die Fußnoten ans Ende der Seite
 \usepackage{caption}
 %\usepackage{bigfoot}
@@ -130,6 +129,9 @@
 \setkomafont{footnote}{\fontsize{10pt}{10.5pt}\selectfont}  % Stellt die Fußnotengröße auf 10 ein
 \setlength{\footnotesep}{13.5pt}                              % Sellt den Fußnotenzeilenabstand auf einfachen Zeilenabstand ein
 \setlength\footnotemargin{10pt}                             % Stellt den Abstand zwischen Fußnote und Text ein
+%\setlength{\belowcaptionskip}{-5pt}
+\setlength{\textfloatsep}{6pt plus 2.5pt minus 2.5pt}        % Gestaltet den Abstand zwischen Graphen variabel
+\setlength{\intextsep}{6pt plus 2.5pt minus 2.5pt}
 
 %% Quelle: https://tex.stackexchange.com/questions/35043/reference-different-places-to-the-same-footnote#35044
 \makeatletter
@@ -154,8 +156,23 @@
 \urlstyle{same}
 
 
+
+
+
 %-------------------------------------------
 %% Pakete für das Erstellen von Verzeichnissen
+%% Quellen: https://arthur-schiwon.de/formatierung-von-tabellen-und-abbildungsverzeichnis-mit-latex
+\usepackage[titles]{tocloft}            % Ermöglicht das anpassen des Inhaltsverzeichnisses
+
+\renewcommand{\cftfigpresnum}{Abb. }
+\renewcommand{\cfttabpresnum}{Tab. }
+\renewcommand{\cftfigaftersnum}{:}
+\renewcommand{\cfttabaftersnum}{:}
+\setlength{\cftfignumwidth}{2cm}
+\setlength{\cfttabnumwidth}{2cm}
+\setlength{\cftfigindent}{0cm}
+\setlength{\cfttabindent}{0cm}
+
 \usepackage[abbreviations,symbols,nomain,nogroupskip,automake,nonumberlist, style=super]{glossaries-extra} %
 \makeglossaries
 \input{verzeichnisdefinition.tex}
@@ -320,7 +337,7 @@
 
 
 \newcommand{\titel}{Modellierung und Prognose von Strompreisen durch Neuronale Netze}   % Erstellt eine Variable mit dem Titel der Arbeit
-\newcommand{\abgabedatum}{\farbig{!!13. April 2018!!}}   % Erstellt eine Variable mit dem Abgabedatum der Arbeit
+\newcommand{\abgabedatum}{13. April 2018}   % Erstellt eine Variable mit dem Abgabedatum der Arbeit
 \newcommand{\name}{Dennis Albrecht}     % Erstellt eine Variable mit dem Namen des Verfassers
 
 \newcommand\blankpage{%                 % Ermöglicht die Erstellung leerer Seiten mit \blankpage
